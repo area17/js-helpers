@@ -10,13 +10,19 @@ It's not a npm package yet. So copy the `src` folder and the `index.js` into a f
 All the other files in this repo is for testing purpose.
 
 All helpers are imported into index.js and then exported. When using it, it can either be imported as 
+
     import helpers from 'a17-helpers'
+    
 or cheey pick like this
-		import { getCurrentMediaQuery, resized } from 'a17-helpers'
+
+    import { getCurrentMediaQuery, resized } from 'a17-helpers'
 
 ## Test
 
 You can write test case in `test/test.js` file then run:
-		npm run compile
+
+    npm run compile
+
 then
-		npm run test
+
+    npm run test
