@@ -4,7 +4,8 @@
   "description": "A version of a17-helpers using es module",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec"
+    "compile": "webpack",
+    "test": "mocha ./test/testBundle.js"
   },
   "repository": {
     "type": "git",
@@ -13,7 +14,11 @@
   "author": "Bing <bing@area17.com> (https://area17.com/)",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
     "chai": "^4.1.2",
-    "mocha": "^3.5.3"
+    "mocha": "^3.5.3",
+    "webpack": "^3.6.0"
   }
 }
