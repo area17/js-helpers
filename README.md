@@ -26,3 +26,12 @@ You can write test case in `test/test.js` file then run:
 then
 
     npm run test
+
+
+## Update Log
+
+**0.2.0**
+Add all the helpers from [original version](https://code.area17.com/mike/a17-js-helpers)
+
+**0.1.0**
+Basic structure and testing function 

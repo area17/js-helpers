@@ -1740,6 +1740,28 @@ describe('#jsHelpers', function () {
 	it('bundle', function () {
 		expect(jsHelpers).to.be.a('object');
 	});
+
+	it('module import', function () {
+		expect(jsHelpers.cookieHandler.read).to.be.a('function');
+		expect(jsHelpers.cookieHandler.delete).to.be.a('function');
+		expect(jsHelpers.cookieHandler.create).to.be.a('function');
+		expect(jsHelpers.ajaxRequest).to.be.a('function');
+		expect(jsHelpers.getOffset).to.be.a('function');
+		expect(jsHelpers.scrollToY).to.be.a('function');
+		expect(jsHelpers.escapeString).to.be.a('function');
+		expect(jsHelpers.extend).to.be.a('function');
+		expect(jsHelpers.getIndex).to.be.a('function');
+		expect(jsHelpers.getMetaContentByName).to.be.a('function');
+		expect(jsHelpers.getUrlParameterByName).to.be.a('function');
+		expect(jsHelpers.jsonpRequest).to.be.a('function');
+		expect(jsHelpers.keycodes).to.be.a('object');
+		expect(jsHelpers.message).to.be.a('function');
+		expect(jsHelpers.objectifyForm).to.be.a('function');
+		expect(jsHelpers.oritentationChangeFix).to.be.a('function');
+		expect(jsHelpers.sendEventToSegmentio).to.be.a('function');
+		expect(jsHelpers.turnObjectToQueryString).to.be.a('function');
+		expect(jsHelpers.turnQueryStringToObject).to.be.a('function');
+	});
 });
 
 /***/ }),
@@ -11047,6 +11069,159 @@ Object.defineProperty(exports, 'resized', {
   }
 });
 
+var _cookieHandler = __webpack_require__(45);
+
+Object.defineProperty(exports, 'cookieHandler', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_cookieHandler).default;
+  }
+});
+
+var _ajaxRequest = __webpack_require__(46);
+
+Object.defineProperty(exports, 'ajaxRequest', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_ajaxRequest).default;
+  }
+});
+
+var _getOffset = __webpack_require__(47);
+
+Object.defineProperty(exports, 'getOffset', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_getOffset).default;
+  }
+});
+
+var _scrollToY = __webpack_require__(48);
+
+Object.defineProperty(exports, 'scrollToY', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_scrollToY).default;
+  }
+});
+
+var _escapeString = __webpack_require__(49);
+
+Object.defineProperty(exports, 'escapeString', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_escapeString).default;
+  }
+});
+
+var _extend = __webpack_require__(50);
+
+Object.defineProperty(exports, 'extend', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_extend).default;
+  }
+});
+
+var _getIndex = __webpack_require__(51);
+
+Object.defineProperty(exports, 'getIndex', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_getIndex).default;
+  }
+});
+
+var _getMetaContentByName = __webpack_require__(52);
+
+Object.defineProperty(exports, 'getMetaContentByName', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_getMetaContentByName).default;
+  }
+});
+
+var _getUrlParameterByName = __webpack_require__(53);
+
+Object.defineProperty(exports, 'getUrlParameterByName', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_getUrlParameterByName).default;
+  }
+});
+
+var _jsonpRequest = __webpack_require__(54);
+
+Object.defineProperty(exports, 'jsonpRequest', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_jsonpRequest).default;
+  }
+});
+
+var _keycodes = __webpack_require__(55);
+
+Object.defineProperty(exports, 'keycodes', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_keycodes).default;
+  }
+});
+
+var _message = __webpack_require__(56);
+
+Object.defineProperty(exports, 'message', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_message).default;
+  }
+});
+
+var _objectifyForm = __webpack_require__(57);
+
+Object.defineProperty(exports, 'objectifyForm', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_objectifyForm).default;
+  }
+});
+
+var _oritentationChangeFix = __webpack_require__(58);
+
+Object.defineProperty(exports, 'oritentationChangeFix', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_oritentationChangeFix).default;
+  }
+});
+
+var _sendEventToSegmentio = __webpack_require__(59);
+
+Object.defineProperty(exports, 'sendEventToSegmentio', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_sendEventToSegmentio).default;
+  }
+});
+
+var _turnObjectToQueryString = __webpack_require__(60);
+
+Object.defineProperty(exports, 'turnObjectToQueryString', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_turnObjectToQueryString).default;
+  }
+});
+
+var _turnQueryStringToObject = __webpack_require__(61);
+
+Object.defineProperty(exports, 'turnQueryStringToObject', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_turnQueryStringToObject).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
@@ -11227,6 +11402,793 @@ var resized = function resized() {
 };
 
 exports.default = resized;
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var cookieHandler = {
+	create: function create(name, value, days) {
+		var expires = '';
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+			expires = '; expires=' + date.toGMTString();
+		}
+		document.cookie = name + '=' + value + expires + '; path=/';
+	},
+	delete: function _delete(name) {
+		if (name) {
+			A17.Helpers.cookieCreate(name, '', -1);
+		}
+	},
+	read: function read(name) {
+		if (name) {
+			var nameEQ = name + '=';
+			var ca = document.cookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) === ' ') {
+					c = c.substring(1, c.length);
+				}
+				if (c.indexOf(nameEQ) === 0) {
+					return c.substring(nameEQ.length, c.length);
+				}
+			}
+			return null;
+		}
+		return null;
+	}
+};
+
+exports.default = cookieHandler;
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var ajaxRequest = function ajaxRequest(settings) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-ajaxRequest
+
+  var options = settings;
+  var request = new XMLHttpRequest();
+  var requestUrl = options.url;
+
+  options.queryString = '';
+  if (options.data !== undefined) {
+    if (A17.Helpers.turnObjectToQueryString) {
+      options.queryString = A17.Helpers.turnObjectToQueryString(options.data);
+    } else {
+      throw new ReferenceError('Missing: A17.Helpers.turnObjectToQueryString');
+    }
+  }
+
+  if (options.type !== 'POST') {
+    requestUrl += requestUrl.indexOf('?') > 0 ? options.queryString.replace('?', '&') : options.queryString;
+  }
+
+  request.open(options.type, requestUrl, true);
+
+  request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+  if (options.type === 'POST') {
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  }
+
+  if (options.requestHeaders !== undefined && options.requestHeaders.length > 0) {
+    for (var i = 0; i < options.requestHeaders.length; i++) {
+      var header = options.requestHeaders[i].header;
+      var value = options.requestHeaders[i].value;
+      if (header !== undefined && value !== undefined) {
+        request.setRequestHeader(header, value);
+      }
+    }
+  }
+
+  request.onload = function () {
+    if (request.status >= 200 && request.status < 400) {
+
+      // Success!
+      if (_typeof(options.onSuccess).toLowerCase() === 'function') {
+        options.onSuccess.call(this, request.responseText, request.status);
+      }
+    } else {
+      if (_typeof(options.onError).toLowerCase() === 'function') {
+        options.onError.call(this, request.responseText, request.status);
+      }
+      console.log('We reached our target server, but it returned an error: ' + request.statusText);
+    }
+  };
+
+  request.onerror = function () {
+    console.log('There was a connection error of some sort');
+    if (_typeof(options.onError).toLowerCase() === 'function') {
+      options.onError.call(this, request.responseText, request.status);
+    }
+  };
+
+  request.send(options.type === 'POST' ? options.queryString.replace('?', '') : '');
+};
+
+exports.default = ajaxRequest;
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var getOffset = function getOffset(node) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-getOffset
+
+  if (node) {
+    var rect = node.getBoundingClientRect();
+    return {
+      top: rect.top + (document.documentElement.scrollTop || document.body.scrollTop),
+      left: rect.left + (document.documentElement.scrollLeft || document.body.scrollLeft)
+    };
+  } else {
+    return null;
+  }
+};
+
+exports.default = getOffset;
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var scrollToY = function scrollToY(options) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-scrollToY
+
+  var settings = {
+    el: document,
+    offset: 0,
+    duration: 250,
+    easing: 'linear'
+  };
+  var start = Date.now();
+  var from = 0;
+  var isDocument = false;
+  var easingEquations = {
+
+    // Easing functions taken from: https://gist.github.com/gre/1650294
+    // -
+    // no easing, no acceleration
+    linear: function linear(t) {
+      return t;
+    },
+
+    // accelerating from zero velocity
+    easeIn: function easeIn(t) {
+      return t * t * t;
+    },
+
+    // decelerating to zero velocity
+    easeOut: function easeOut(t) {
+      return --t * t * t + 1;
+    },
+
+    // acceleration until halfway, then deceleration
+    easeInOut: function easeInOut(t) {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    }
+  };
+  var useRequestAnimationFrame = window.requestAnimationFrame;
+  var scrollInterval;
+
+  for (var def in options) {
+    if (typeof options[def] !== 'undefined') {
+      settings[def] = options[def];
+    }
+  }
+
+  if (settings.el === document) {
+    isDocument = true;
+    settings.el = document.documentElement.scrollTop ? document.documentElement : document.body;
+  }
+
+  from = settings.el.scrollTop;
+
+  if (from === settings.offset) {
+    // Prevent scrolling to the offset point if already there
+    return;
+  }
+
+  function min(a, b) {
+    return a < b ? a : b;
+  }
+
+  function cancelInterval() {
+    if (useRequestAnimationFrame) {
+      try {
+        cancelAnimationFrame(scrollInterval);
+      } catch (err) {
+        // continue execution in case cancelAnimationFrame fails
+      }
+    } else {
+      clearTimeout(scrollInterval);
+    }
+  }
+
+  function scroll() {
+    if (isDocument && from === 0) {
+      // eugh Firefox! (https://miketaylr.com/posts/2014/11/document-body-scrollTop.html)
+      document.documentElement.scrollTop = 1;
+      document.body.scrollTop = 1;
+      from = 1;
+      settings.el = document.documentElement.scrollTop ? document.documentElement : document.body;
+      requestAnimationFrame(scroll);
+    } else {
+      var currentTime = Date.now();
+      var time = min(1, (currentTime - start) / settings.duration);
+      var easedT = easingEquations[settings.easing](time);
+
+      settings.el.scrollTop = easedT * (settings.offset - from) + from;
+
+      if (time < 1) {
+        doScroll();
+      } else {
+        cancelInterval();
+        if (_typeof(settings.onComplete).toLowerCase() === 'function') {
+          settings.onComplete.call(this);
+        }
+      }
+    }
+  }
+
+  function doScroll() {
+    if (useRequestAnimationFrame) {
+      scrollInterval = requestAnimationFrame(scroll);
+    } else {
+      scrollInterval = setTimeout(function () {
+        scroll();
+      }, 1000 / 60);
+    }
+  }
+
+  doScroll();
+};
+
+exports.default = scrollToY;
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var escapeString = function escapeString(str) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-escapeString
+
+  if (typeof str === 'string') {
+    var div = document.createElement('div');
+    var text = document.createTextNode(str.replace(/<[^>]*>?/g, ''));
+    div.appendChild(text);
+    return encodeURIComponent(div.textContent);
+  } else {
+    return '';
+  }
+};
+
+exports.default = escapeString;
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var extend = function extend() {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-extend
+
+  var obj = {};
+  var i = 0;
+  var argumentsLength = arguments.length;
+  var key;
+
+  for (; i < argumentsLength; i++) {
+    for (key in arguments[i]) {
+      if (arguments[i].hasOwnProperty(key)) {
+        obj[key] = arguments[i][key];
+      }
+    }
+  }
+
+  return obj;
+};
+
+exports.default = extend;
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var getIndex = function getIndex(node, nodeList) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-getIndex
+
+  var nodes = nodeList || node.parentNode.childNodes;
+  var nodesLength = nodes.length;
+  var n = 0;
+
+  for (var i = 0; i < nodesLength; i++) {
+    if (nodes[i] === node) {
+      return n;
+    }
+    if (nodes[i].nodeType === 1) {
+      n++;
+    }
+  }
+
+  return -1;
+};
+
+exports.default = getIndex;
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var getMetaContentByName = function getMetaContentByName(name) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-getMetaContentByName
+
+  return document.querySelector('meta[name=\'' + name + '\']').getAttribute('content');
+};
+
+exports.default = getMetaContentByName;
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var getUrlParameterByName = function getUrlParameterByName(name, url) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-getUrlParameterByName
+
+  var qsObj = A17.Helpers.turnQueryStringToObject(url || undefined);
+  return qsObj[name] !== undefined ? qsObj[name] : undefined;
+};
+
+exports.default = getUrlParameterByName;
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var jsonpRequest = function jsonpRequest(settings) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-jsonpRequest
+
+  var options = settings;
+  var script = document.createElement('script');
+
+  // sort out the data object
+  options.data = options.data || {};
+  options.data.callback = options.callback || 'callback';
+
+  // make a query string from the data objects
+  options.queryString = '';
+  if (options.data !== undefined) {
+    if (A17.Helpers.turnObjectToQueryString) {
+      options.queryString = A17.Helpers.turnObjectToQueryString(options.data);
+    } else {
+      console.log('Missing: A17.Helpers.turnObjectToQueryString');
+    }
+  }
+
+  // give the script some attributes
+  script.type = 'text/javascript';
+  script.src = options.url + options.queryString;
+
+  // look for timeouts
+  var timeout = setTimeout(function () {
+    // wipe callback function
+    window[options.data.callback] = function () {};
+
+    // run error function if specified
+    if (_typeof(options.onError).toLowerCase() === 'function') {
+      options.onError.call(this);
+    }
+  }, (options.timeout || 5) * 1000);
+
+  // set up the callback
+  window[options.data.callback] = function (data) {
+    // no need to clear timeout
+    clearTimeout(timeout);
+
+    // run success function if specified
+    if (_typeof(options.onSuccess).toLowerCase() === 'function') {
+      options.onSuccess.call(this, data);
+    }
+  };
+
+  // append the script (or go go go!)
+  document.getElementsByTagName('head')[0].appendChild(script);
+};
+
+exports.default = jsonpRequest;
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var keyCodes = {
+  tab: 9,
+  enter: 13,
+  esc: 27,
+  space: 32,
+  left: 37,
+  up: 38,
+  right: 39,
+  down: 40
+};
+
+exports.default = keyCodes;
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var messages = function messages() {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-messages
+
+  var target = document.querySelectorAll('[data-message-target]');
+
+  if (target.length > 0) {
+    target = target[0];
+  } else {
+    return;
+  }
+
+  var messageVisible = false;
+  var messageTimer;
+  var messages = [];
+  var loadMessage = target.getAttribute('data-message') || false;
+  var loadMessageType = target.getAttribute('data-message-type') || '';
+
+  function createMessage(message, type) {
+    var div = document.createElement('div');
+    var span = document.createElement('span');
+    span.textContent = message;
+    div.appendChild(span);
+    div.className = type !== '' ? 'message message--' + type + ' message--hide' : 'message message--hide';
+    return div;
+  }
+
+  function hideMessage(div) {
+    div.className += ' message--hide';
+    setTimeout(function () {
+      div.parentNode.removeChild(div);
+    }, 250);
+  }
+
+  function showMessage(div, time) {
+    messageVisible = true;
+    target.appendChild(div);
+    div.className = div.className.replace(new RegExp('(^|\\b)' + 'message--hide'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    messageTimer = setTimeout(function () {
+      hideMessage(div);
+      messageVisible = false;
+      messages = [];
+    }, time || 3000);
+  }
+
+  function newMessage(data) {
+    messages.push(createMessage(data.data.message, data.data.type || ''));
+    if (!messageVisible) {
+      showMessage(messages[messages.length - 1], data.data.time || false);
+    } else {
+      clearTimeout(messageTimer);
+      hideMessage(messages[messages.length - 2]);
+      showMessage(messages[messages.length - 1], data.data.time || false);
+    }
+  }
+
+  document.addEventListener('message', newMessage, false);
+
+  if (loadMessage && loadMessage.length > 0) {
+    var loadMessageData = {
+      data: {
+        message: loadMessage,
+        time: 5000,
+        type: loadMessageType
+      }
+    };
+    newMessage(loadMessageData);
+  }
+};
+
+exports.default = messages;
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var objectifyForm = function objectifyForm(form) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-objectifyForm
+
+  var field;
+  var obj = {};
+
+  if ((typeof form === 'undefined' ? 'undefined' : _typeof(form)) === 'object' && form.nodeName === 'FORM') {
+    var len = form.elements.length;
+    for (var i = 0; i < len; i++) {
+      field = form.elements[i];
+      if (field.name && !field.disabled && field.type !== 'file' && field.type !== 'reset' && field.type !== 'submit' && field.type !== 'button') {
+        if (field.type === 'select-multiple') {
+          for (var j = form.elements[i].options.length - 1; j >= 0; j--) {
+            if (field.options[j].selected) {
+              obj[field.name] = field.options[j].value;
+            }
+          }
+        } else if (field.type !== 'checkbox' && field.type !== 'radio' || field.checked) {
+          obj[field.name] = field.value;
+        }
+      }
+    }
+  }
+  return obj;
+};
+
+exports.default = objectifyForm;
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var oritentationChangeFix = function oritentationChangeFix() {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-oritentationChangeFix
+
+  if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
+    var viewportmeta = document.querySelector('meta[name="viewport"]');
+    if (viewportmeta) {
+      viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0';
+      document.body.addEventListener('gesturestart', function () {
+        viewportmeta.content = 'width=device-width, minimum-scale=0.25, maximum-scale=1.6';
+      }, false);
+    }
+  }
+};
+
+exports.default = oritentationChangeFix;
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var sendEventToSegmentio = function sendEventToSegmentio() {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-sentEventToSegmentio
+
+  var analyticsReady = false;
+  var tempStore = [];
+
+  function pushAnalytics(data) {
+    if (Object.getOwnPropertyNames(data).length > 0) {
+      switch (data.type.toLowerCase()) {
+        case 'track':
+          analytics.track(data.name, data.properties || {});
+          break;
+        case 'page':
+          analytics.page(data.category || '', data.name || '', data.properties || {});
+          break;
+        case 'identify':
+          analytics.identify(data.userID || '', data.properties || {});
+          break;
+      }
+    }
+  }
+
+  function pushOrStore(data) {
+    if (analyticsReady) {
+      pushAnalytics(data);
+    } else {
+      tempStore.push(data);
+    }
+  }
+
+  function pushStored() {
+    tempStore.forEach(function (obj, i) {
+      pushAnalytics(obj);
+      tempStore.splice(i, 1);
+    });
+  }
+
+  function identify() {
+    var userInfo = document.querySelector('meta[name=\'' + name + '\']').getAttribute('content');
+    if (userInfo) {
+      userInfo = userInfo.split(',');
+      var identifyProps = {};
+      userInfo.forEach(function (item) {
+        var pair = item.split(':');
+        identifyProps[pair[0]] = pair[1];
+      });
+      pushOrStore({
+        type: 'identify',
+        userID: identifyProps.id || '',
+        properties: identifyProps
+      });
+    }
+  }
+
+  function init() {
+    if ((typeof analytics === 'undefined' ? 'undefined' : _typeof(analytics)) !== undefined) {
+      analytics.ready(function () {
+        analytics.debug(false);
+        analyticsReady = true;
+        identify();
+        pushStored();
+      });
+    } else {
+      setTimeout(init, 1000);
+    }
+  }
+
+  document.addEventListener('analytics', function (event) {
+    pushOrStore(event.data);
+  });
+
+  document.addEventListener('analytics_identify', identify);
+
+  init();
+};
+
+exports.default = sendEventToSegmentio;
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var turnObjectToQueryString = function turnObjectToQueryString(obj) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnObjectToQueryString
+
+  var queryString = '';
+  var count = 0;
+
+  if (Object.getOwnPropertyNames(obj).length > 0) {
+    queryString = '?';
+    for (var key in obj) {
+      if (!obj.hasOwnProperty(key)) {
+        continue;
+      }
+      queryString += (count > 0 ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()]/g, '').replace(/\*/g, '%2A').replace(/%2B/ig, '+');
+      count++;
+    }
+  }
+
+  return queryString;
+};
+
+exports.default = turnObjectToQueryString;
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var turnQueryStringToObject = function turnQueryStringToObject(url) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnQueryStringToObject
+
+  if (typeof url !== 'string') {
+    return {};
+  }
+
+  var qsObj = {};
+  var search = url && url.indexOf('?') > -1 ? url.split('?')[1] : location.search;
+  search.replace(new RegExp('([^?=&]+)(=([^&]*))?', 'g'), function ($0, $1, $2, $3) {
+    qsObj[$1] = $3;
+  });
+  return qsObj;
+};
+
+exports.default = turnQueryStringToObject;
 
 /***/ })
 /******/ ]);
