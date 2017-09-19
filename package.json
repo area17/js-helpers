@@ -11,5 +11,9 @@
     "url": "https://code.area17.com/mike/a17-js-helpers.git"
   },
   "author": "Bing <bing@area17.com> (https://area17.com/)",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3"
+  }
 }
