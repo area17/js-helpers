@@ -1,0 +1,15 @@
+{
+  "name": "a17-helpers",
+  "version": "0.1.0",
+  "description": "A version of a17-helpers using es module",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://code.area17.com/mike/a17-js-helpers.git"
+  },
+  "author": "Bing <bing@area17.com> (https://area17.com/)",
+  "license": "ISC"
+}
