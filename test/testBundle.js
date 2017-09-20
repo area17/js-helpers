@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -124,13 +124,13 @@ exports.version = '4.1.2';
  * Assertion Error
  */
 
-exports.AssertionError = __webpack_require__(9);
+exports.AssertionError = __webpack_require__(10);
 
 /*!
  * Utils for plugins (not exported)
  */
 
-var util = __webpack_require__(19);
+var util = __webpack_require__(21);
 
 /**
  * # .use(function)
@@ -168,35 +168,35 @@ exports.config = config;
  * Primary `Assertion` prototype
  */
 
-var assertion = __webpack_require__(36);
+var assertion = __webpack_require__(38);
 exports.use(assertion);
 
 /*!
  * Core Assertions
  */
 
-var core = __webpack_require__(37);
+var core = __webpack_require__(39);
 exports.use(core);
 
 /*!
  * Expect interface
  */
 
-var expect = __webpack_require__(38);
+var expect = __webpack_require__(40);
 exports.use(expect);
 
 /*!
  * Should interface
  */
 
-var should = __webpack_require__(39);
+var should = __webpack_require__(41);
 exports.use(should);
 
 /*!
  * Assert interface
  */
 
-var assert = __webpack_require__(40);
+var assert = __webpack_require__(42);
 exports.use(assert);
 
 
@@ -358,9 +358,9 @@ module.exports = function transferFlags(assertion, object, includeAll) {
 // This is (almost) directly from Node.js utils
 // https://github.com/joyent/node/blob/f8c335d0caf47f16d31413f89aa28eda3878e3aa/lib/util.js
 
-var getName = __webpack_require__(11);
-var getProperties = __webpack_require__(12);
-var getEnumerableProperties = __webpack_require__(24);
+var getName = __webpack_require__(12);
+var getProperties = __webpack_require__(13);
+var getEnumerableProperties = __webpack_require__(26);
 var config = __webpack_require__(2);
 
 module.exports = inspect;
@@ -844,7 +844,7 @@ module.exports = function addLengthGuard (fn, assertionName, isChainable) {
 
 var config = __webpack_require__(2);
 var flag = __webpack_require__(0);
-var getProperties = __webpack_require__(12);
+var getProperties = __webpack_require__(13);
 var isProxyEnabled = __webpack_require__(5);
 
 /*!
@@ -1348,6 +1348,38 @@ module.exports.typeDetect = module.exports;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var turnObjectToQueryString = function turnObjectToQueryString(obj) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnObjectToQueryString
+
+  var queryString = '';
+  var count = 0;
+
+  if (Object.getOwnPropertyNames(obj).length > 0) {
+    queryString = '?';
+    for (var key in obj) {
+      if (!obj.hasOwnProperty(key)) {
+        continue;
+      }
+      queryString += (count > 0 ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()]/g, '').replace(/\*/g, '%2A').replace(/%2B/ig, '+');
+      count++;
+    }
+  }
+
+  return queryString;
+};
+
+exports.default = turnObjectToQueryString;
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 /*!
@@ -1469,7 +1501,7 @@ AssertionError.prototype.toJSON = function (stack) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*!
@@ -1495,7 +1527,7 @@ module.exports = function getActual(obj, args) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1546,7 +1578,7 @@ module.exports = getFuncName;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 /*!
@@ -1588,7 +1620,7 @@ module.exports = function getProperties(object) {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -1644,7 +1676,7 @@ module.exports = function objDisplay(obj) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /*!
@@ -1677,7 +1709,7 @@ module.exports = function getOwnEnumerablePropertySymbols(obj) {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1705,7 +1737,7 @@ var getCurrentMediaQuery = function getCurrentMediaQuery() {
 exports.default = getCurrentMediaQuery;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1727,14 +1759,41 @@ var triggerCustomEvent = function triggerCustomEvent(el, type, data) {
 exports.default = triggerCustomEvent;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var expect = __webpack_require__(18).expect;
-var jsHelpers = __webpack_require__(41);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var turnQueryStringToObject = function turnQueryStringToObject(url) {
+  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnQueryStringToObject
+
+  if (typeof url !== 'string') {
+    return {};
+  }
+
+  var qsObj = {};
+  var search = url && url.indexOf('?') > -1 ? url.split('?')[1] : location.search;
+  search.replace(new RegExp('([^?=&]+)(=([^&]*))?', 'g'), function ($0, $1, $2, $3) {
+    qsObj[$1] = $3;
+  });
+  return qsObj;
+};
+
+exports.default = turnQueryStringToObject;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var expect = __webpack_require__(20).expect;
+var jsHelpers = __webpack_require__(43);
 
 describe('#jsHelpers', function () {
 	it('bundle', function () {
@@ -1765,14 +1824,14 @@ describe('#jsHelpers', function () {
 });
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(1);
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -1785,13 +1844,13 @@ module.exports = __webpack_require__(1);
  * Dependencies that are used for multiple exports are required here only once
  */
 
-var pathval = __webpack_require__(20);
+var pathval = __webpack_require__(22);
 
 /*!
  * test utility
  */
 
-exports.test = __webpack_require__(21);
+exports.test = __webpack_require__(23);
 
 /*!
  * type utility
@@ -1802,19 +1861,19 @@ exports.type = __webpack_require__(8);
 /*!
  * expectTypes utility
  */
-exports.expectTypes = __webpack_require__(22);
+exports.expectTypes = __webpack_require__(24);
 
 /*!
  * message utility
  */
 
-exports.getMessage = __webpack_require__(23);
+exports.getMessage = __webpack_require__(25);
 
 /*!
  * actual utility
  */
 
-exports.getActual = __webpack_require__(10);
+exports.getActual = __webpack_require__(11);
 
 /*!
  * Inspect util
@@ -1826,7 +1885,7 @@ exports.inspect = __webpack_require__(4);
  * Object Display util
  */
 
-exports.objDisplay = __webpack_require__(13);
+exports.objDisplay = __webpack_require__(14);
 
 /*!
  * Flag utility
@@ -1844,7 +1903,7 @@ exports.transferFlags = __webpack_require__(3);
  * Deep equal utility
  */
 
-exports.eql = __webpack_require__(25);
+exports.eql = __webpack_require__(27);
 
 /*!
  * Deep path info
@@ -1862,67 +1921,67 @@ exports.hasProperty = pathval.hasProperty;
  * Function name
  */
 
-exports.getName = __webpack_require__(11);
+exports.getName = __webpack_require__(12);
 
 /*!
  * add Property
  */
 
-exports.addProperty = __webpack_require__(26);
+exports.addProperty = __webpack_require__(28);
 
 /*!
  * add Method
  */
 
-exports.addMethod = __webpack_require__(27);
+exports.addMethod = __webpack_require__(29);
 
 /*!
  * overwrite Property
  */
 
-exports.overwriteProperty = __webpack_require__(28);
+exports.overwriteProperty = __webpack_require__(30);
 
 /*!
  * overwrite Method
  */
 
-exports.overwriteMethod = __webpack_require__(29);
+exports.overwriteMethod = __webpack_require__(31);
 
 /*!
  * Add a chainable method
  */
 
-exports.addChainableMethod = __webpack_require__(30);
+exports.addChainableMethod = __webpack_require__(32);
 
 /*!
  * Overwrite chainable method
  */
 
-exports.overwriteChainableMethod = __webpack_require__(31);
+exports.overwriteChainableMethod = __webpack_require__(33);
 
 /*!
  * Compare by inspect method
  */
 
-exports.compareByInspect = __webpack_require__(32);
+exports.compareByInspect = __webpack_require__(34);
 
 /*!
  * Get own enumerable property symbols method
  */
 
-exports.getOwnEnumerablePropertySymbols = __webpack_require__(14);
+exports.getOwnEnumerablePropertySymbols = __webpack_require__(15);
 
 /*!
  * Get own enumerable properties method
  */
 
-exports.getOwnEnumerableProperties = __webpack_require__(33);
+exports.getOwnEnumerableProperties = __webpack_require__(35);
 
 /*!
  * Checks error against a given set of criteria
  */
 
-exports.checkError = __webpack_require__(34);
+exports.checkError = __webpack_require__(36);
 
 /*!
  * Proxify util
@@ -1946,11 +2005,11 @@ exports.isProxyEnabled = __webpack_require__(5);
  * isNaN method
  */
 
-exports.isNaN = __webpack_require__(35);
+exports.isNaN = __webpack_require__(37);
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2248,7 +2307,7 @@ module.exports = {
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -2282,7 +2341,7 @@ module.exports = function test(obj, args) {
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -2305,7 +2364,7 @@ module.exports = function test(obj, args) {
  * @api public
  */
 
-var AssertionError = __webpack_require__(9);
+var AssertionError = __webpack_require__(10);
 var flag = __webpack_require__(0);
 var type = __webpack_require__(8);
 
@@ -2339,7 +2398,7 @@ module.exports = function expectTypes(obj, types) {
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -2353,9 +2412,9 @@ module.exports = function expectTypes(obj, types) {
  */
 
 var flag = __webpack_require__(0)
-  , getActual = __webpack_require__(10)
+  , getActual = __webpack_require__(11)
   , inspect = __webpack_require__(4)
-  , objDisplay = __webpack_require__(13);
+  , objDisplay = __webpack_require__(14);
 
 /**
  * ### .getMessage(object, message, negateMessage)
@@ -2396,7 +2455,7 @@ module.exports = function getMessage(obj, args) {
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports) {
 
 /*!
@@ -2428,7 +2487,7 @@ module.exports = function getEnumerableProperties(object) {
 
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2890,7 +2949,7 @@ function isPrimitive(value) {
 
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -2968,7 +3027,7 @@ module.exports = function addProperty(ctx, name, getter) {
 
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3042,7 +3101,7 @@ module.exports = function addMethod(ctx, name, method) {
 
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3140,7 +3199,7 @@ module.exports = function overwriteProperty(ctx, name, getter) {
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3238,7 +3297,7 @@ module.exports = function overwriteMethod(ctx, name, method) {
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3396,7 +3455,7 @@ module.exports = function addChainableMethod(ctx, name, method, chainingBehavior
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3471,7 +3530,7 @@ module.exports = function overwriteChainableMethod(ctx, name, method, chainingBe
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3508,7 +3567,7 @@ module.exports = function compareByInspect(a, b) {
 
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3521,7 +3580,7 @@ module.exports = function compareByInspect(a, b) {
  * Module dependancies
  */
 
-var getOwnEnumerablePropertySymbols = __webpack_require__(14);
+var getOwnEnumerablePropertySymbols = __webpack_require__(15);
 
 /**
  * ### .getOwnEnumerableProperties(object)
@@ -3543,7 +3602,7 @@ module.exports = function getOwnEnumerableProperties(obj) {
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3722,7 +3781,7 @@ module.exports = {
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports) {
 
 /*!
@@ -3754,7 +3813,7 @@ module.exports = Number.isNaN || isNaN;
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -3925,7 +3984,7 @@ module.exports = function (_chai, util) {
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7660,7 +7719,7 @@ module.exports = function (chai, _) {
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7700,7 +7759,7 @@ module.exports = function (chai, util) {
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports) {
 
 /*!
@@ -7910,7 +7969,7 @@ module.exports = function (chai, util) {
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports) {
 
 /*!
@@ -11014,7 +11073,7 @@ module.exports = function (chai, util) {
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11024,7 +11083,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getCurrentMediaQuery = __webpack_require__(15);
+var _getCurrentMediaQuery = __webpack_require__(16);
 
 Object.defineProperty(exports, 'getCurrentMediaQuery', {
   enumerable: true,
@@ -11033,7 +11092,7 @@ Object.defineProperty(exports, 'getCurrentMediaQuery', {
   }
 });
 
-var _manageBehaviors = __webpack_require__(42);
+var _manageBehaviors = __webpack_require__(44);
 
 Object.defineProperty(exports, 'manageBehaviors', {
   enumerable: true,
@@ -11042,7 +11101,7 @@ Object.defineProperty(exports, 'manageBehaviors', {
   }
 });
 
-var _purgeProperties = __webpack_require__(43);
+var _purgeProperties = __webpack_require__(45);
 
 Object.defineProperty(exports, 'purgeProperties', {
   enumerable: true,
@@ -11051,7 +11110,7 @@ Object.defineProperty(exports, 'purgeProperties', {
   }
 });
 
-var _triggerCustomEvent = __webpack_require__(16);
+var _triggerCustomEvent = __webpack_require__(17);
 
 Object.defineProperty(exports, 'triggerCustomEvent', {
   enumerable: true,
@@ -11060,7 +11119,7 @@ Object.defineProperty(exports, 'triggerCustomEvent', {
   }
 });
 
-var _resized = __webpack_require__(44);
+var _resized = __webpack_require__(46);
 
 Object.defineProperty(exports, 'resized', {
   enumerable: true,
@@ -11069,7 +11128,7 @@ Object.defineProperty(exports, 'resized', {
   }
 });
 
-var _cookieHandler = __webpack_require__(45);
+var _cookieHandler = __webpack_require__(47);
 
 Object.defineProperty(exports, 'cookieHandler', {
   enumerable: true,
@@ -11078,7 +11137,7 @@ Object.defineProperty(exports, 'cookieHandler', {
   }
 });
 
-var _ajaxRequest = __webpack_require__(46);
+var _ajaxRequest = __webpack_require__(48);
 
 Object.defineProperty(exports, 'ajaxRequest', {
   enumerable: true,
@@ -11087,7 +11146,7 @@ Object.defineProperty(exports, 'ajaxRequest', {
   }
 });
 
-var _getOffset = __webpack_require__(47);
+var _getOffset = __webpack_require__(49);
 
 Object.defineProperty(exports, 'getOffset', {
   enumerable: true,
@@ -11096,7 +11155,7 @@ Object.defineProperty(exports, 'getOffset', {
   }
 });
 
-var _scrollToY = __webpack_require__(48);
+var _scrollToY = __webpack_require__(50);
 
 Object.defineProperty(exports, 'scrollToY', {
   enumerable: true,
@@ -11105,7 +11164,7 @@ Object.defineProperty(exports, 'scrollToY', {
   }
 });
 
-var _escapeString = __webpack_require__(49);
+var _escapeString = __webpack_require__(51);
 
 Object.defineProperty(exports, 'escapeString', {
   enumerable: true,
@@ -11114,7 +11173,7 @@ Object.defineProperty(exports, 'escapeString', {
   }
 });
 
-var _extend = __webpack_require__(50);
+var _extend = __webpack_require__(52);
 
 Object.defineProperty(exports, 'extend', {
   enumerable: true,
@@ -11123,7 +11182,7 @@ Object.defineProperty(exports, 'extend', {
   }
 });
 
-var _getIndex = __webpack_require__(51);
+var _getIndex = __webpack_require__(53);
 
 Object.defineProperty(exports, 'getIndex', {
   enumerable: true,
@@ -11132,7 +11191,7 @@ Object.defineProperty(exports, 'getIndex', {
   }
 });
 
-var _getMetaContentByName = __webpack_require__(52);
+var _getMetaContentByName = __webpack_require__(54);
 
 Object.defineProperty(exports, 'getMetaContentByName', {
   enumerable: true,
@@ -11141,7 +11200,7 @@ Object.defineProperty(exports, 'getMetaContentByName', {
   }
 });
 
-var _getUrlParameterByName = __webpack_require__(53);
+var _getUrlParameterByName = __webpack_require__(55);
 
 Object.defineProperty(exports, 'getUrlParameterByName', {
   enumerable: true,
@@ -11150,7 +11209,7 @@ Object.defineProperty(exports, 'getUrlParameterByName', {
   }
 });
 
-var _jsonpRequest = __webpack_require__(54);
+var _jsonpRequest = __webpack_require__(56);
 
 Object.defineProperty(exports, 'jsonpRequest', {
   enumerable: true,
@@ -11159,7 +11218,7 @@ Object.defineProperty(exports, 'jsonpRequest', {
   }
 });
 
-var _keycodes = __webpack_require__(55);
+var _keycodes = __webpack_require__(57);
 
 Object.defineProperty(exports, 'keycodes', {
   enumerable: true,
@@ -11168,7 +11227,7 @@ Object.defineProperty(exports, 'keycodes', {
   }
 });
 
-var _message = __webpack_require__(56);
+var _message = __webpack_require__(58);
 
 Object.defineProperty(exports, 'message', {
   enumerable: true,
@@ -11177,7 +11236,7 @@ Object.defineProperty(exports, 'message', {
   }
 });
 
-var _objectifyForm = __webpack_require__(57);
+var _objectifyForm = __webpack_require__(59);
 
 Object.defineProperty(exports, 'objectifyForm', {
   enumerable: true,
@@ -11186,7 +11245,7 @@ Object.defineProperty(exports, 'objectifyForm', {
   }
 });
 
-var _oritentationChangeFix = __webpack_require__(58);
+var _oritentationChangeFix = __webpack_require__(60);
 
 Object.defineProperty(exports, 'oritentationChangeFix', {
   enumerable: true,
@@ -11195,7 +11254,7 @@ Object.defineProperty(exports, 'oritentationChangeFix', {
   }
 });
 
-var _sendEventToSegmentio = __webpack_require__(59);
+var _sendEventToSegmentio = __webpack_require__(61);
 
 Object.defineProperty(exports, 'sendEventToSegmentio', {
   enumerable: true,
@@ -11204,7 +11263,7 @@ Object.defineProperty(exports, 'sendEventToSegmentio', {
   }
 });
 
-var _turnObjectToQueryString = __webpack_require__(60);
+var _turnObjectToQueryString = __webpack_require__(9);
 
 Object.defineProperty(exports, 'turnObjectToQueryString', {
   enumerable: true,
@@ -11213,7 +11272,7 @@ Object.defineProperty(exports, 'turnObjectToQueryString', {
   }
 });
 
-var _turnQueryStringToObject = __webpack_require__(61);
+var _turnQueryStringToObject = __webpack_require__(18);
 
 Object.defineProperty(exports, 'turnQueryStringToObject', {
   enumerable: true,
@@ -11225,7 +11284,7 @@ Object.defineProperty(exports, 'turnQueryStringToObject', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11337,7 +11396,7 @@ var manageBehaviors = function manageBehaviors(Behaviors, options) {
 exports.default = manageBehaviors;
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11357,7 +11416,7 @@ var purgeProperties = function purgeProperties(obj) {
 exports.default = purgeProperties;
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11367,11 +11426,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _getCurrentMediaQuery = __webpack_require__(15);
+var _getCurrentMediaQuery = __webpack_require__(16);
 
 var _getCurrentMediaQuery2 = _interopRequireDefault(_getCurrentMediaQuery);
 
-var _triggerCustomEvent = __webpack_require__(16);
+var _triggerCustomEvent = __webpack_require__(17);
 
 var _triggerCustomEvent2 = _interopRequireDefault(_triggerCustomEvent);
 
@@ -11404,7 +11463,7 @@ var resized = function resized() {
 exports.default = resized;
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11425,7 +11484,7 @@ var cookieHandler = {
 	},
 	delete: function _delete(name) {
 		if (name) {
-			A17.Helpers.cookieCreate(name, '', -1);
+			this.create(name, '', -1);
 		}
 	},
 	read: function read(name) {
@@ -11450,7 +11509,7 @@ var cookieHandler = {
 exports.default = cookieHandler;
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11462,6 +11521,12 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _turnObjectToQueryString = __webpack_require__(9);
+
+var _turnObjectToQueryString2 = _interopRequireDefault(_turnObjectToQueryString);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var ajaxRequest = function ajaxRequest(settings) {
   // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-ajaxRequest
 
@@ -11471,10 +11536,10 @@ var ajaxRequest = function ajaxRequest(settings) {
 
   options.queryString = '';
   if (options.data !== undefined) {
-    if (A17.Helpers.turnObjectToQueryString) {
-      options.queryString = A17.Helpers.turnObjectToQueryString(options.data);
+    if (_turnObjectToQueryString2.default) {
+      options.queryString = (0, _turnObjectToQueryString2.default)(options.data);
     } else {
-      throw new ReferenceError('Missing: A17.Helpers.turnObjectToQueryString');
+      throw new ReferenceError('Missing: turnObjectToQueryString');
     }
   }
 
@@ -11528,7 +11593,7 @@ var ajaxRequest = function ajaxRequest(settings) {
 exports.default = ajaxRequest;
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11554,7 +11619,7 @@ var getOffset = function getOffset(node) {
 exports.default = getOffset;
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11681,7 +11746,7 @@ var scrollToY = function scrollToY(options) {
 exports.default = scrollToY;
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11706,7 +11771,7 @@ var escapeString = function escapeString(str) {
 exports.default = escapeString;
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11737,7 +11802,7 @@ var extend = function extend() {
 exports.default = extend;
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11768,7 +11833,7 @@ var getIndex = function getIndex(node, nodeList) {
 exports.default = getIndex;
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11786,7 +11851,7 @@ var getMetaContentByName = function getMetaContentByName(name) {
 exports.default = getMetaContentByName;
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11795,17 +11860,24 @@ exports.default = getMetaContentByName;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _turnQueryStringToObject = __webpack_require__(18);
+
+var _turnQueryStringToObject2 = _interopRequireDefault(_turnQueryStringToObject);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var getUrlParameterByName = function getUrlParameterByName(name, url) {
   // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-getUrlParameterByName
 
-  var qsObj = A17.Helpers.turnQueryStringToObject(url || undefined);
+  var qsObj = (0, _turnQueryStringToObject2.default)(url || undefined);
   return qsObj[name] !== undefined ? qsObj[name] : undefined;
 };
 
 exports.default = getUrlParameterByName;
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11816,6 +11888,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _turnObjectToQueryString = __webpack_require__(9);
+
+var _turnObjectToQueryString2 = _interopRequireDefault(_turnObjectToQueryString);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var jsonpRequest = function jsonpRequest(settings) {
   // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-jsonpRequest
@@ -11830,10 +11908,10 @@ var jsonpRequest = function jsonpRequest(settings) {
   // make a query string from the data objects
   options.queryString = '';
   if (options.data !== undefined) {
-    if (A17.Helpers.turnObjectToQueryString) {
-      options.queryString = A17.Helpers.turnObjectToQueryString(options.data);
+    if (_turnObjectToQueryString2.default) {
+      options.queryString = (0, _turnObjectToQueryString2.default)(options.data);
     } else {
-      console.log('Missing: A17.Helpers.turnObjectToQueryString');
+      console.log('Missing: turnObjectToQueryString');
     }
   }
 
@@ -11870,7 +11948,7 @@ var jsonpRequest = function jsonpRequest(settings) {
 exports.default = jsonpRequest;
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11893,7 +11971,7 @@ var keyCodes = {
 exports.default = keyCodes;
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11974,7 +12052,7 @@ var messages = function messages() {
 exports.default = messages;
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12015,7 +12093,7 @@ var objectifyForm = function objectifyForm(form) {
 exports.default = objectifyForm;
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12041,7 +12119,7 @@ var oritentationChangeFix = function oritentationChangeFix() {
 exports.default = oritentationChangeFix;
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12130,65 +12208,6 @@ var sendEventToSegmentio = function sendEventToSegmentio() {
 };
 
 exports.default = sendEventToSegmentio;
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var turnObjectToQueryString = function turnObjectToQueryString(obj) {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnObjectToQueryString
-
-  var queryString = '';
-  var count = 0;
-
-  if (Object.getOwnPropertyNames(obj).length > 0) {
-    queryString = '?';
-    for (var key in obj) {
-      if (!obj.hasOwnProperty(key)) {
-        continue;
-      }
-      queryString += (count > 0 ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()]/g, '').replace(/\*/g, '%2A').replace(/%2B/ig, '+');
-      count++;
-    }
-  }
-
-  return queryString;
-};
-
-exports.default = turnObjectToQueryString;
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var turnQueryStringToObject = function turnQueryStringToObject(url) {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnQueryStringToObject
-
-  if (typeof url !== 'string') {
-    return {};
-  }
-
-  var qsObj = {};
-  var search = url && url.indexOf('?') > -1 ? url.split('?')[1] : location.search;
-  search.replace(new RegExp('([^?=&]+)(=([^&]*))?', 'g'), function ($0, $1, $2, $3) {
-    qsObj[$1] = $3;
-  });
-  return qsObj;
-};
-
-exports.default = turnQueryStringToObject;
 
 /***/ })
 /******/ ]);

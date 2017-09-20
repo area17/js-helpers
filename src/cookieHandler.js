@@ -10,7 +10,7 @@ var cookieHandler = {
 	},
 	delete(name) {
 		if (name) {
-			A17.Helpers.cookieCreate(name, '', -1);
+			this.create(name, '', -1);
 		}	
 	},
 	read(name) {

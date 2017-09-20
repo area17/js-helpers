@@ -1,3 +1,5 @@
+import turnObjectToQueryString from './turnObjectToQueryString'
+
 var ajaxRequest = function(settings) {
   // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-ajaxRequest
 
@@ -7,10 +9,10 @@ var ajaxRequest = function(settings) {
 
   options.queryString = '';
   if (options.data !== undefined) {
-    if (A17.Helpers.turnObjectToQueryString) {
-      options.queryString = A17.Helpers.turnObjectToQueryString(options.data);
+    if (turnObjectToQueryString) {
+      options.queryString = turnObjectToQueryString(options.data);
     } else {
-      throw new ReferenceError('Missing: A17.Helpers.turnObjectToQueryString');
+      throw new ReferenceError('Missing: turnObjectToQueryString');
     }
   }
 
