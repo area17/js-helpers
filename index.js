@@ -18,5 +18,5 @@ export { default as message } from './src/message.js';
 export { default as objectifyForm } from './src/objectifyForm.js';
 export { default as oritentationChangeFix } from './src/oritentationChangeFix.js';
 export { default as sendEventToSegmentio } from './src/sendEventToSegmentio.js';
-export { default as turnObjectToQueryString } from './src/turnObjectToQueryString.js';
-export { default as turnQueryStringToObject } from './src/turnQueryStringToObject.js';
+export { default as queryStringHandler } from './src/queryStringHandler';
+export { default as debounce } from './src/debounce';

@@ -1,4 +1,4 @@
-import turnObjectToQueryString from './turnObjectToQueryString'
+import queryStringHandler from './queryStringHandler'
 
 var jsonpRequest = function(settings) {
   // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-jsonpRequest
@@ -13,10 +13,10 @@ var jsonpRequest = function(settings) {
   // make a query string from the data objects
   options.queryString = '';
   if (options.data !== undefined) {
-    if (turnObjectToQueryString) {
-      options.queryString = turnObjectToQueryString(options.data);
+    if (queryStringHandler.fromObject) {
+      options.queryString = queryStringHandler.fromObject(options.data);
     } else {
-      console.log('Missing: turnObjectToQueryString');
+      console.log('Missing: queryStringHandler.fromObject');
     }
   }
 

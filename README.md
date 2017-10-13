@@ -30,6 +30,11 @@ then
 
 ## Update Log
 
+**0.3.0**
+* Merge `tuenObjectToQueryString` and `turnQueryStringToObject` into `queryStringHandler` as `.toObject()` and `.fromObject()` methods
+* Add new `debounce` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-debounce) 
+
+
 **0.2.1**
 Changed dependencies from `a17.helpers` format to module
 

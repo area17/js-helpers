@@ -26,8 +26,48 @@ describe('#jsHelpers', function() {
 		expect(jsHelpers.objectifyForm).to.be.a('function');
 		expect(jsHelpers.oritentationChangeFix).to.be.a('function');
 		expect(jsHelpers.sendEventToSegmentio).to.be.a('function');
-		expect(jsHelpers.turnObjectToQueryString).to.be.a('function');
-		expect(jsHelpers.turnQueryStringToObject).to.be.a('function');
+		expect(jsHelpers.queryStringHandler).to.be.a('object');
+		expect(jsHelpers.debounce).to.be.a('function');
+	});
+
+	it('queryString handler', ()=>{
+		let url = 'http://a17-js-helpers.com?test=ok&fun=yes';
+		let query = '?test=ok&fun=yes';
+		let obj = {
+			test: 'ok',
+      fun: 'yes'
+		};
+
+		//test to obj
+		expect(jsHelpers.queryStringHandler.toObject(url)).to.deep.equal(obj);
+
+		//test from obj
+		expect(jsHelpers.queryStringHandler.fromObject(obj)).to.equal(query);
+	});
+
+	it('debounc', ()=>{
+		let fooStart = 1;
+		let barStart = 1;
+
+		let foo = jsHelpers.debounce((num)=>{
+			fooStart += num;
+		}, 100, true);
+
+		let bar = jsHelpers.debounce((num)=>{
+			barStart += num;
+		},100);
+
+		for(let i = 0; i < 500; i++) {
+			foo(i);
+			bar(i);
+		}
+
+		expect(fooStart).to.equal(1);
+
+		setTimeout(function() {
+			expect(barStart).to.equal(500);
+		}, 100);
+
 	});
 
 
