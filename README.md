@@ -36,10 +36,13 @@ then
 
 
 **0.2.1**
+
 Changed dependencies from `a17.helpers` format to module
 
 **0.2.0**
+
 Add all the helpers from [original version](https://code.area17.com/mike/a17-js-helpers)
 
 **0.1.0**
+
 Basic structure and testing function 
