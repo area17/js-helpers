@@ -6,4 +6,4 @@ var purgeProperties = function(obj) {
   }
 };
 
-export default purgeProperties
+export default purgeProperties;

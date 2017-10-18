@@ -6,8 +6,7 @@ Please refer to See the [original version](https://code.area17.com/mike/a17-js-h
 
 ## Basic
 
-It's not a npm package yet. So copy the `src` folder and the `index.js` into a folder in the project. 
-All the other files in this repo is for testing purpose.
+It can be used as a npm package or just copy the `src` folder and the `index.js` into a folder in the project. All the other files in this repo is for testing purpose.
 
 All helpers are imported into index.js and then exported. When using it, it can either be imported as 
 
