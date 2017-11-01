@@ -1,9 +1,12 @@
 'use strict';
 
+require('jsdom-global')();
+
 let expect = require('chai').expect;
 let jsHelpers = require('../index');
 
 describe('#jsHelpers', function() {
+
 	it('bundle', function() {
 			expect(jsHelpers).to.be.a('object');
 	});
@@ -28,10 +31,13 @@ describe('#jsHelpers', function() {
 		expect(jsHelpers.sendEventToSegmentio).to.be.a('function');
 		expect(jsHelpers.queryStringHandler).to.be.a('object');
 		expect(jsHelpers.debounce).to.be.a('function');
+		expect(jsHelpers.setFocusOnTarget).to.be.a('function');
+		expect(jsHelpers.copyTextToClipboard).to.be.a('function');
 	});
 
 	it('queryString handler', ()=>{
 		let url = 'http://a17-js-helpers.com?test=ok&fun=yes';
+		let updatedUrl = 'http://a17-js-helpers.com?test=ok&fun=no';
 		let query = '?test=ok&fun=yes';
 		let obj = {
 			test: 'ok',
@@ -43,9 +49,12 @@ describe('#jsHelpers', function() {
 
 		//test from obj
 		expect(jsHelpers.queryStringHandler.fromObject(obj)).to.equal(query);
+
+		//test from obj
+		expect(jsHelpers.queryStringHandler.updateParameter(url,'fun','no')).to.equal(updatedUrl);
 	});
 
-	it('debounc', ()=>{
+	it('debounce', ()=>{
 		let fooStart = 1;
 		let barStart = 1;
 
@@ -70,5 +79,10 @@ describe('#jsHelpers', function() {
 
 	});
 
+	it('setFocusOnTarget', ()=>{
+		let div = document.createElement('div');
+		jsHelpers.setFocusOnTarget(div);
+		expect(document.activeElement).to.equal(div);
+	});
 
 });

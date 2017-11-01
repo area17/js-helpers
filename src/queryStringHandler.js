@@ -1,12 +1,13 @@
 var queryStringHandler = {
 	// Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnObjectToQueryString
 	// Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-turnQueryStringToObject
+	// Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-updateParameter
 
 	toObject(url) {
 		if (typeof url !== 'string') {
 			return {};
 		}
-	
+
 		var qsObj = {};
 		var search = (url && url.indexOf('?') > -1) ? url.split('?')[1] : location.search;
 		search.replace(
@@ -33,6 +34,21 @@ var queryStringHandler = {
 		}
 
 		return queryString;
+	},
+
+	updateParameter(url, key, value) {
+		var re = new RegExp('([?&])' + key + '=.*?(&|#|$)', 'i');
+		if (url.match(re)) {
+			return url.replace(re, '$1' + key + '=' + value + '$2');
+		} else {
+			var hash = '';
+			if(url.indexOf('#') !== -1 ){
+				hash = url.replace(/.*#/, '#');
+				url = url.replace(/#.*/, '');
+			}
+			var separator = url.indexOf('?') !== -1 ? '&' : '?';
+			return url + separator + key + '=' + value + hash;
+		}
 	}
 
 };

@@ -20,3 +20,5 @@ export { default as oritentationChangeFix } from './src/oritentationChangeFix.js
 export { default as sendEventToSegmentio } from './src/sendEventToSegmentio.js';
 export { default as queryStringHandler } from './src/queryStringHandler';
 export { default as debounce } from './src/debounce';
+export { default as copyTextToClipboard } from './src/copyTextToClipboard';
+export { default as setFocusOnTarget } from './src/setFocusOnTarget';

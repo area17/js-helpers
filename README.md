@@ -8,10 +8,10 @@ Please refer to See the [original version](https://code.area17.com/mike/a17-js-h
 
 It can be used as a npm package or just copy the `src` folder and the `index.js` into a folder in the project. All the other files in this repo is for testing purpose.
 
-All helpers are imported into index.js and then exported. When using it, it can either be imported as 
+All helpers are imported into index.js and then exported. When using it, it can either be imported as
 
     import helpers from 'a17-helpers'
-    
+
 or cheey pick like this
 
     import { getCurrentMediaQuery, resized } from 'a17-helpers'
@@ -29,9 +29,15 @@ then
 
 ## Update Log
 
+**0.3.1**
+* Added `jsdom` an `jsdom-global` (https://github.com/rstacruz/jsdom-global) to `devDependencies` to test DOM events in Mocha tests.
+* Added `.updateParameter()` method to `queryStringHandler` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-updateParameter)
+* Added new `setFocusOnTarget` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-setFocusOnTarget) (with test)
+* Added new `copyTextToClipboard` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-copyTextToClipboard) (no test, not sure how to test..)
+
 **0.3.0**
 * Merge `tuenObjectToQueryString` and `turnQueryStringToObject` into `queryStringHandler` as `.toObject()` and `.fromObject()` methods
-* Add new `debounce` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-debounce) 
+* Add new `debounce` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-debounce)
 
 
 **0.2.1**
@@ -44,4 +50,4 @@ Add all the helpers from [original version](https://code.area17.com/mike/a17-js-
 
 **0.1.0**
 
-Basic structure and testing function 
+Basic structure and testing function
