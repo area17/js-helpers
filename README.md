@@ -29,6 +29,9 @@ then
 
 ## Update Log
 
+**0.3.2**
+* `resized` checks for and sets `window.A17.currentMediaQuery` when media query changes
+
 **0.3.1**
 * Added `jsdom` an `jsdom-global` (https://github.com/rstacruz/jsdom-global) to `devDependencies` to test DOM events in Mocha tests.
 * Added `.updateParameter()` method to `queryStringHandler` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-updateParameter)

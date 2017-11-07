@@ -19,6 +19,9 @@ var resized = function() {
       // if media query changed, tell everything
       if (newMediaQuery !== mediaQuery) {
         mediaQuery = newMediaQuery;
+        if (window.A17) {
+          window.A17.currentMediaQuery = newMediaQuery;
+        }
         triggerCustomEvent(document, 'mediaQueryUpdated');
       }
     }, 250);
