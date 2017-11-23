@@ -29,6 +29,9 @@ then
 
 ## Update Log
 
+**0.3.3**
+* `getOffset` returns a full fixed `getBoundingClientRect` output (position with scroll) so includes bottom, right, width and height now
+
 **0.3.2**
 * `resized` checks for and sets `window.A17.currentMediaQuery` when media query changes
 
