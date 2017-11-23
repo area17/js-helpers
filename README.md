@@ -29,6 +29,9 @@ then
 
 ## Update Log
 
+**0.3.4**
+* Added `forEach` to loop `querySelectorAll` nodes
+
 **0.3.3**
 * `getOffset` returns a full fixed `getBoundingClientRect` output (position with scroll) so includes bottom, right, width and height now
 
