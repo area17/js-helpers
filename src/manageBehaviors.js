@@ -49,12 +49,12 @@ var manageBehaviors = function(Behaviors, options) {
               try {
                 activeBehaviors[idCounter].behavior.init();
               } catch (err) {
-                //console.log('failed to init behavior: ', activeBehaviors[idCounter].name, '\n', err, activeBehaviors[idCounter]);
+                console.warning('failed to init behavior: ', activeBehaviors[idCounter].name, '\n', err, activeBehaviors[idCounter]);
               }
 
               idCounter++;
             } catch(err) {
-              //console.log(err, currentElement, ThisBehavior);
+              console.error(err, currentElement, ThisBehavior);
             }
           }
         }
