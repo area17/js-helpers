@@ -1,6 +1,6 @@
 {
   "name": "a17-helpers",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "A version of a17-helpers using es module",
   "main": "index.js",
   "scripts": {

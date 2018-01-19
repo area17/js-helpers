@@ -49,7 +49,7 @@ var manageBehaviors = function(Behaviors, options) {
               try {
                 activeBehaviors[idCounter].behavior.init();
               } catch (err) {
-                console.warning('failed to init behavior: ', activeBehaviors[idCounter].name, '\n', err, activeBehaviors[idCounter]);
+                console.warn('failed to init behavior: ', activeBehaviors[idCounter].name, '\n', err, activeBehaviors[idCounter]);
               }
 
               idCounter++;

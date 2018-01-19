@@ -29,6 +29,9 @@ then
 
 ## Update Log
 
+**0.3.6**
+* Updated `manageBehaviors` to not have warning typo...
+
 **0.3.5**
 * Updated `manageBehaviors` to warn when behavior fails to init and not trap JS errors from inside a behavior
 
