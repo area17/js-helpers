@@ -1,7 +1,7 @@
 {
-  "name": "a17-helpers",
+  "name": "@area17/a17-helpers",
   "version": "0.3.6",
-  "description": "A version of a17-helpers using es module",
+  "description": "A js helper package",
   "main": "index.js",
   "scripts": {
     "compile": "webpack",
@@ -11,8 +11,8 @@
     "type": "git",
     "url": "https://code.area17.com/mike/a17-js-helpers.git"
   },
-  "author": "Bing <bing@area17.com> (https://area17.com/)",
-  "license": "ISC",
+  "author": "A17 <dev@area17.com> (https://area17.com/)",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
