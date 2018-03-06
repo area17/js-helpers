@@ -32,7 +32,8 @@ describe('#jsHelpers', function() {
 		expect(jsHelpers.queryStringHandler).to.be.a('object');
 		expect(jsHelpers.debounce).to.be.a('function');
 		expect(jsHelpers.setFocusOnTarget).to.be.a('function');
-		expect(jsHelpers.copyTextToClipboard).to.be.a('function');
+		expect(jsHelpers.forEach).to.be.a('function');
+		expect(jsHelpers.lazyLoad).to.be.a('function');
 	});
 
 	it('queryString handler', ()=>{

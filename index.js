@@ -23,3 +23,4 @@ export { default as debounce } from './src/debounce';
 export { default as copyTextToClipboard } from './src/copyTextToClipboard';
 export { default as setFocusOnTarget } from './src/setFocusOnTarget';
 export { default as forEach } from './src/forEach';
+export { default as lazyLoad } from './src/lazyLoad';

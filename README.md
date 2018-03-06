@@ -1,18 +1,18 @@
 # A17 JS Helpers -- ES module version
 
-This is a test version of a17 js helpers with es module pattern.
+A17 JS Helpers with a ES module pattern.
 
 Please refer to See the [original version](https://code.area17.com/mike/a17-js-helpers) for all the necessary information.
 
 ## Basic
 
-It can be used as a npm package or just copy the `src` folder and the `index.js` into a folder in the project. All the other files in this repo is for testing purpose.
+It can be used as a npm package or just copy the `src` folder and the `index.js` into a folder in the project. All the other files in this repo are for testing purpose.
 
 All helpers are imported into index.js and then exported. When using it, it can either be imported as
 
     import helpers from 'a17-helpers'
 
-or cheey pick like this
+or, cherry picked:
 
     import { getCurrentMediaQuery, resized } from 'a17-helpers'
 
@@ -22,12 +22,15 @@ You can write test case in `test/test.js` file then run:
 
     npm run compile
 
-then
+then:
 
     npm run test
 
 
 ## Update Log
+
+**0.4.0**
+* Added `lazyLoad`, a A17-helperised version of: [https://github.com/area17/lazyload](https://github.com/area17/lazyload)
 
 **0.3.6**
 * Updated `manageBehaviors` to not have warning typo...
