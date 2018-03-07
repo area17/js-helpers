@@ -29,6 +29,9 @@ then:
 
 ## Update Log
 
+**0.4.2**
+* Refactored `debounce`
+
 **0.4.1**
 * Added default success message to `copyTextToClipboard`
 
