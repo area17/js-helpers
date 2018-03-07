@@ -29,6 +29,9 @@ then:
 
 ## Update Log
 
+**0.5.1**
+* Renamed `message` to `messages`, updated `message--hide` to `s-hide`
+
 **0.5.0**
 * Added `fontLoadObserver`
 

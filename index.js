@@ -14,7 +14,7 @@ export { default as getMetaContentByName } from './src/getMetaContentByName.js';
 export { default as getUrlParameterByName } from './src/getUrlParameterByName.js';
 export { default as jsonpRequest } from './src/jsonpRequest.js';
 export { default as keycodes } from './src/keycodes.js';
-export { default as message } from './src/message.js';
+export { default as messages } from './src/messages.js';
 export { default as objectifyForm } from './src/objectifyForm.js';
 export { default as oritentationChangeFix } from './src/oritentationChangeFix.js';
 export { default as sendEventToSegmentio } from './src/sendEventToSegmentio.js';

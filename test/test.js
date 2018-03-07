@@ -25,7 +25,7 @@ describe('#jsHelpers', function() {
     expect(jsHelpers.getUrlParameterByName).to.be.a('function');
     expect(jsHelpers.jsonpRequest).to.be.a('function');
     expect(jsHelpers.keycodes).to.be.a('object');
-    expect(jsHelpers.message).to.be.a('function');
+    expect(jsHelpers.messages).to.be.a('function');
     expect(jsHelpers.objectifyForm).to.be.a('function');
     expect(jsHelpers.oritentationChangeFix).to.be.a('function');
     expect(jsHelpers.sendEventToSegmentio).to.be.a('function');

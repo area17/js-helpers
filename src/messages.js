@@ -20,12 +20,12 @@ var messages = function() {
     var span = document.createElement('span');
     span.textContent = message;
     div.appendChild(span);
-    div.className = (type !== '') ? 'message message--'+type+' message--hide' : 'message message--hide';
+    div.className = (type !== '') ? 'message message--'+type+' s-hide' : 'message s-hide';
     return div;
   }
 
   function hideMessage(div) {
-    div.className += ' message--hide';
+    div.className += ' s-hide';
     setTimeout(function() {
       div.parentNode.removeChild(div);
     }, 250);
@@ -34,7 +34,7 @@ var messages = function() {
   function showMessage(div, time) {
     messageVisible = true;
     target.appendChild(div);
-    div.className = div.className.replace(new RegExp('(^|\\b)' + 'message--hide'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+    div.className = div.className.replace(new RegExp('(^|\\b)' + 's-hide'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
     messageTimer = setTimeout(function() {
       hideMessage(div);
       messageVisible = false;
