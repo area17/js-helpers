@@ -1,5 +1,5 @@
 // A A17-helperised version of: https://github.com/area17/lazyload
-// Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-lazyload
+// Doc: https://code.area17.com/a17/a17-helpers/wikis/lazyload
 
 var lazyLoad = function(opts) {
 

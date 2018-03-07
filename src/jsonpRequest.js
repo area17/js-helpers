@@ -1,7 +1,7 @@
-import queryStringHandler from './queryStringHandler'
+import queryStringHandler from './queryStringHandler';
 
 var jsonpRequest = function(settings) {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-jsonpRequest
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/jsonpRequest
 
   var options = settings;
   var script = document.createElement('script');

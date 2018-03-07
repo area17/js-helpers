@@ -2,7 +2,7 @@ import getCurrentMediaQuery from './getCurrentMediaQuery';
 import triggerCustomEvent from './triggerCustomEvent';
 
 var resized = function() {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-resized
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/resized
 
   var resizeTimer;
   var mediaQuery = getCurrentMediaQuery();

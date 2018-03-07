@@ -1,5 +1,5 @@
 var sendEventToSegmentio = function() {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-sentEventToSegmentio
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/sentEventToSegmentio
 
   var analyticsReady = false;
   var tempStore = [];

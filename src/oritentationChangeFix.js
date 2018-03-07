@@ -1,5 +1,5 @@
 var oritentationChangeFix = function() {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-oritentationChangeFix
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/oritentationChangeFix
 
   if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
     var viewportmeta = document.querySelector('meta[name="viewport"]');

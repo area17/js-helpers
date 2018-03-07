@@ -1,5 +1,5 @@
 var getCurrentMediaQuery = function() {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-getCurrentMediaQuery
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/getCurrentMediaQuery
 
   function parse(str) {
     return str.replace(/'/gi, '').replace(/"/gi, '');

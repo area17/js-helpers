@@ -1,5 +1,5 @@
 var escapeString = function(str) {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-escapeString
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/escapeString
 
   if (typeof str === 'string') {
     var div = document.createElement('div');

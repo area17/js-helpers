@@ -1,5 +1,5 @@
 var debounce = function(func, wait, immediate) {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/debounce
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/debounce
   var timeout;
   return function() {
     var context = this;

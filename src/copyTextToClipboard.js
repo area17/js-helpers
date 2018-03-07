@@ -1,6 +1,6 @@
 var copyTextToClipboard = function(textToCopy,successMsg) {
 
-  // https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-copyTextToClipboard
+  // https://code.area17.com/a17/a17-helpers/wikis/copyTextToClipboard
   // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript#answer-30810322
 
   var textArea = document.createElement('textarea');

@@ -1,5 +1,5 @@
 var getMetaContentByName = function(name) {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-getMetaContentByName
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/getMetaContentByName
 
   return document.querySelector('meta[name=\''+name+'\']').getAttribute('content');
 };

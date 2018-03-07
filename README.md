@@ -1,33 +1,61 @@
-# A17 JS Helpers -- ES module version
+# A17 JS Helpers
 
-A17 JS Helpers with a ES module pattern.
+A17 JS Helpers with an ES module pattern.
 
-Please refer to See the [original version](https://code.area17.com/mike/a17-js-helpers) for all the necessary information.
+[Wiki](https://code.area17.com/a17/a17-helpers/wikis/home)
 
-## Basic
+## What?
 
-It can be used as a npm package or just copy the `src` folder and the `index.js` into a folder in the project. All the other files in this repo are for testing purpose.
+A collection of documented vanilla JS widgets.
 
-All helpers are imported into index.js and then exported. When using it, it can either be imported as
+In the A17 Boilerplate, we use these as a dependency and install via [NPM](https://www.npmjs.com/package/@area17/a17-helpers). Alternatively you can copy the `src` folder and the `index.js` into a folder of your project and compile.
 
-    import helpers from 'a17-helpers'
+If installed via NPM, you'll want to import into your JavaScript by:
 
-or, cherry picked:
+    import helpers from '@area17/a17-helpers'
 
-    import { getCurrentMediaQuery, resized } from 'a17-helpers'
+or, cherry pick individual helpers:
 
-## Test
+    import { getCurrentMediaQuery, resized } from '@area17/a17-helpers'
 
-You can write test case in `test/test.js` file then run:
+## Developing
 
-    npm run compile
+Feel free to add any vanilla JS helpers that will be common to many projects and save someone some time working them out in the future. The main aims are no dependencies, small elegant code and high potential sharing across sites.
 
-then:
+### .editorconfig
 
-    npm run test
+Download the editor config plugin for your text editor: [http://editorconfig.org/#download](http://editorconfig.org/#download)
 
+### no jQuery
+
+Intentionally vanilla JS to keep this JS library agnostic.
+
+### Tests
+
+Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), currently living in `test/test.js`. To run:
+
+    $ npm run compile
+    $ npm run test
+
+**TODO** convert tests from pre-open-source Helpers to this version
+
+### To add/update a helper
+
+* Make your changes
+* Bump the version number
+* Test it, you may need to update the tests in /test/
+* Update the [wiki](https://code.area17.com/a17/a17-helpers/wikis/home) document for it if required
+* Tell @fe in the developers Hipchat room
+* Have an 🍦
 
 ## Update Log
+
+**0.6.0**
+* Links to [Wiki](https://code.area17.com/a17/a17-helpers/wikis/home) updated
+* Missing semicolons on imports added
+* Files with tabs as spaces converted to spaces for spaces
+* Added .editorconfig
+* Alphabetised `index.js`
 
 **0.5.1**
 * Renamed `message` to `messages`, updated `message--hide` to `s-hide`
@@ -61,14 +89,13 @@ then:
 
 **0.3.1**
 * Added `jsdom` an `jsdom-global` (https://github.com/rstacruz/jsdom-global) to `devDependencies` to test DOM events in Mocha tests.
-* Added `.updateParameter()` method to `queryStringHandler` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-updateParameter)
-* Added new `setFocusOnTarget` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-setFocusOnTarget) (with test)
-* Added new `copyTextToClipboard` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-copyTextToClipboard) (no test, not sure how to test..)
+* Added `.updateParameter()` method to `queryStringHandler` helper [Wiki](https://code.area17.com/a17/a17-helpers/wikis/updateParameter)
+* Added new `setFocusOnTarget` helper [Wiki](https://code.area17.com/a17/a17-helpers/wikis/setFocusOnTarget) (with test)
+* Added new `copyTextToClipboard` helper [Wiki](https://code.area17.com/a17/a17-helpers/wikis/copyTextToClipboard) (no test, not sure how to test..)
 
 **0.3.0**
 * Merge `tuenObjectToQueryString` and `turnQueryStringToObject` into `queryStringHandler` as `.toObject()` and `.fromObject()` methods
-* Add new `debounce` helper [Wiki](https://code.area17.com/mike/a17-js-helpers/wikis/a17-helpers-debounce)
-
+* Add new `debounce` helper [Wiki](https://code.area17.com/a17/a17-helpers/wikis/debounce)
 
 **0.2.1**
 

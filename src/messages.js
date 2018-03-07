@@ -1,5 +1,5 @@
 var messages = function() {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-messages
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/messages
 
   var target = document.querySelectorAll('[data-message-target]');
 

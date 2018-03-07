@@ -3,7 +3,7 @@ import triggerCustomEvent from './triggerCustomEvent';
 import FontFaceOnload from 'fontfaceonload';
 
 var fontLoadObserver = function(fonts) {
-  // Doc: https://code.area17.com/mike/a17-js-helpers/wikis/A17-Helpers-fontLoadObserver
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/fontLoadObserver
 
   if ((typeof fonts).toLowerCase() !== 'object') {
     return false;
