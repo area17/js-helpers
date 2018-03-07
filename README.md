@@ -29,6 +29,9 @@ then:
 
 ## Update Log
 
+**0.5.0**
+* Added `fontLoadObserver`
+
 **0.4.2**
 * Refactored `debounce`
 
