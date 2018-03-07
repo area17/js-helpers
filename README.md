@@ -29,6 +29,9 @@ then:
 
 ## Update Log
 
+**0.4.1**
+* Added default success message to `copyTextToClipboard`
+
 **0.4.0**
 * Added `lazyLoad`, a A17-helperised version of: [https://github.com/area17/lazyload](https://github.com/area17/lazyload)
 

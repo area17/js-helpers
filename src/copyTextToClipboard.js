@@ -25,7 +25,7 @@ var copyTextToClipboard = function(textToCopy,successMsg) {
   try {
     var successful = document.execCommand('copy');
     if (successful) {
-      window.alert(successMsg);
+      window.alert(successMsg || 'Copied to clipboard');
     } else {
       console.log('Oops, unable to copy');
     }
