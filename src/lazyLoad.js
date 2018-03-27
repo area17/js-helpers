@@ -210,6 +210,12 @@ var lazyLoad = function(opts) {
     }
     if(typeof document.querySelectorAll === undefined || !('addEventListener' in window) || !window.requestAnimationFrame || typeof document.body.getBoundingClientRect === undefined) {
       checkType = 'really-old';
+    } else if (!('IntersectionObserver' in window) || true) {
+      checkType = 'old';
+    } else {
+      checkType = 'new';
+    }
+    if (checkType !== 'really-old') {
       _init();
       if (options.pageUpdatedEventName) {
         document.addEventListener(options.pageUpdatedEventName, _init, true);
