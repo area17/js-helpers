@@ -50,6 +50,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.6.4**
+* Updated `package-lock.json`
+
 **0.6.2 and 0.6.3**
 * Updated `lazyLoad` to init correctly
 
