@@ -50,6 +50,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.6.2**
+* Updated `lazyLoad` to init correctly
+
 **0.6.1**
 * Updated `lazyLoad` to v2.1.0 inline with updates to that lib
 

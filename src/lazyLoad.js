@@ -202,12 +202,7 @@ var lazyLoad = function(opts) {
     _setSrcs();
   }
 
-  /**
-   * Inspect element
-   * @public
-   * @param {Node} element in which to look
-   */
-  var lazyLoad = function(opts) {
+  function _lazyLoad() {
     for(var item in opts) {
       if(opts.hasOwnProperty(item)) {
         options[item] = opts[item];
@@ -215,18 +210,14 @@ var lazyLoad = function(opts) {
     }
     if(typeof document.querySelectorAll === undefined || !('addEventListener' in window) || !window.requestAnimationFrame || typeof document.body.getBoundingClientRect === undefined) {
       checkType = 'really-old';
-    } else if (!('IntersectionObserver' in window) || true) {
-      checkType = 'old';
-    } else {
-      checkType = 'new';
-    }
-    if (checkType !== 'really-old') {
       _init();
       if (options.pageUpdatedEventName) {
         document.addEventListener(options.pageUpdatedEventName, _init, true);
       }
     }
-  };
+  }
+
+  _lazyLoad()
 };
 
 export default lazyLoad;
