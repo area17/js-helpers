@@ -46,9 +46,12 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 * Test it, you may need to update the tests in /test/
 * Update the [wiki](https://code.area17.com/a17/a17-helpers/wikis/home) document for it if required
 * Tell @fe in the developers Hipchat room
-* Have an 🍦
+* Have a 🍦
 
 ## Update Log
+
+**0.6.1**
+* Updated `lazyLoad` to v2.1.0 inline with updates to that lib
 
 **0.6.0**
 * Links to [Wiki](https://code.area17.com/a17/a17-helpers/wikis/home) updated

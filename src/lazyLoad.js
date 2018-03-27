@@ -1,11 +1,11 @@
 // A A17-helperised version of: https://github.com/area17/lazyload
+// This version: v2.1.0 - 2018-03-27
 // Doc: https://code.area17.com/a17/a17-helpers/wikis/lazyload
 
 var lazyLoad = function(opts) {
-
   var options = {
     pageUpdatedEventName: 'page:updated', // how your app tells the rest of the app an update happened
-    elements: 'img[data-src], img[data-srcset], source[data-srcset], iframe[data-src], video[data-src]', // maybe you just want images?
+    elements: 'img[data-src], img[data-srcset], source[data-srcset], iframe[data-src], video[data-src], [data-lazyload]', // maybe you just want images?
     rootMargin: '0px', // IntersectionObserver option
     threshold: 0, // IntersectionObserver option
     maxFrameCount: 10, // 60fps / 10 = 6 times a second
@@ -18,20 +18,6 @@ var lazyLoad = function(opts) {
   var elsLength;
   var observer;
   var checkType;
-
-  for(var item in opts) {
-    if(!opts.hasOwnProperty(item)) {
-      options[item] = opts[item];
-    }
-  }
-
-  if(typeof document.querySelectorAll === undefined || !('addEventListener' in window) || !window.requestAnimationFrame || typeof document.body.getBoundingClientRect === undefined) {
-    checkType = 'really-old';
-  } else if (!('IntersectionObserver' in window) || true) {
-    checkType = 'old';
-  } else {
-    checkType = 'new';
-  }
 
   /**
    * Converts HTML collections to an array
@@ -68,6 +54,7 @@ var lazyLoad = function(opts) {
   function _removeDataAttrs(el) {
     el.removeAttribute('data-src');
     el.removeAttribute('data-srcset');
+    el.removeAttribute('data-lazyload');
   }
 
   /**
@@ -88,6 +75,7 @@ var lazyLoad = function(opts) {
   function _updateEl(el) {
     var srcset = el.getAttribute('data-srcset');
     var src = el.getAttribute('data-src');
+    var dlazyload = el.getAttribute('data-lazyload') !== null;
     //
     if (srcset) {
       // if source set, update and try picturefill
@@ -101,6 +89,11 @@ var lazyLoad = function(opts) {
     if (src) {
       // if source set, update
       el.src = src;
+    }
+    if (dlazyload) {
+      el.setAttribute('data-lazyloaded','');
+      el.removeEventListener('load', _loaded);
+      _removeDataAttrs(el);
     }
   }
 
@@ -209,13 +202,31 @@ var lazyLoad = function(opts) {
     _setSrcs();
   }
 
-  // set up
-  if (checkType !== 'really-old') {
-    _init();
-    if (options.pageUpdatedEventName) {
-      document.addEventListener(options.pageUpdatedEventName, _init, true);
+  /**
+   * Inspect element
+   * @public
+   * @param {Node} element in which to look
+   */
+  var lazyLoad = function(opts) {
+    for(var item in opts) {
+      if(opts.hasOwnProperty(item)) {
+        options[item] = opts[item];
+      }
     }
-  }
+    if(typeof document.querySelectorAll === undefined || !('addEventListener' in window) || !window.requestAnimationFrame || typeof document.body.getBoundingClientRect === undefined) {
+      checkType = 'really-old';
+    } else if (!('IntersectionObserver' in window) || true) {
+      checkType = 'old';
+    } else {
+      checkType = 'new';
+    }
+    if (checkType !== 'really-old') {
+      _init();
+      if (options.pageUpdatedEventName) {
+        document.addEventListener(options.pageUpdatedEventName, _init, true);
+      }
+    }
+  };
 };
 
 export default lazyLoad;
