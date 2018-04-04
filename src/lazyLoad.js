@@ -1,5 +1,5 @@
 // A A17-helperised version of: https://github.com/area17/lazyload
-// This version: v2.1.0 - 2018-03-27
+// This version: v2.1.1 - 2018-04-01
 // Doc: https://code.area17.com/a17/a17-helpers/wikis/lazyload
 
 var lazyLoad = function(opts) {
@@ -70,7 +70,6 @@ var lazyLoad = function(opts) {
    * Update an element
    * @private
    * @param {Node} element to update
-   * @param {html5} good browser or bad browser?
    */
   function _updateEl(el) {
     var srcset = el.getAttribute('data-srcset');
@@ -79,7 +78,7 @@ var lazyLoad = function(opts) {
     //
     if (srcset) {
       // if source set, update and try picturefill
-      el.srcset = srcset;
+      el.setAttribute('srcset', srcset);
       if (window.picturefill) {
         window.picturefill({
           elements: [el]
@@ -128,7 +127,16 @@ var lazyLoad = function(opts) {
   function _setSrcs() {
     var i;
     // browser capability check
-    if (checkType === 'old') {
+    if (checkType === 'really-old') {
+      elsLength = els.length;
+      for (i = 0; i < elsLength; i++) {
+        if (els[i]) {
+          _updateEl(els[i]);
+          _removeDataAttrs(els[i]);
+        }
+      }
+      els = [];
+    } else if (checkType === 'old') {
       // debounce checking
       if (frameCount === options.maxFrameCount) {
         // update cache of this for the loop
@@ -165,7 +173,7 @@ var lazyLoad = function(opts) {
         frameCount++;
         frameLoop = window.requestAnimationFrame(_setSrcs);
       }
-    } else {
+    } else if (checkType === 'new') {
       observer = new IntersectionObserver(_intersection, {
         rootMargin: options.rootMargin,
         threshold: options.threshold,
@@ -202,28 +210,31 @@ var lazyLoad = function(opts) {
     _setSrcs();
   }
 
+  /**
+   * GO GO GO
+   * @public
+   * @param {object} options (see readme)
+   */
   function _lazyLoad() {
     for(var item in opts) {
       if(opts.hasOwnProperty(item)) {
         options[item] = opts[item];
       }
     }
-    if(typeof document.querySelectorAll === undefined || !('addEventListener' in window) || !window.requestAnimationFrame || typeof document.body.getBoundingClientRect === undefined) {
+    if(!('addEventListener' in window) || !window.requestAnimationFrame || typeof document.body.getBoundingClientRect === undefined) {
       checkType = 'really-old';
-    } else if (!('IntersectionObserver' in window) || true) {
-      checkType = 'old';
-    } else {
+    } else if ('IntersectionObserver' in window) {
       checkType = 'new';
+    } else {
+      checkType = 'old';
     }
-    if (checkType !== 'really-old') {
-      _init();
-      if (options.pageUpdatedEventName) {
-        document.addEventListener(options.pageUpdatedEventName, _init, true);
-      }
+    _init();
+    if (options.pageUpdatedEventName) {
+      document.addEventListener(options.pageUpdatedEventName, _init, true);
     }
   }
 
-  _lazyLoad()
+  _lazyLoad();
 };
 
 export default lazyLoad;

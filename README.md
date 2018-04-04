@@ -50,6 +50,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.6.5**
+* Updated `lazyLoad` to v2.1.1 inline with updates to that lib
+
 **0.6.4**
 * Updated `package-lock.json`
 
