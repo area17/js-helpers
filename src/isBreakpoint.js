@@ -3,6 +3,12 @@ import getCurrentMediaQuery from './getCurrentMediaQuery';
 var isBreakpoint = function(bp) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/isBreakpoint
 
+  // bail if no breakpoint is passed
+  if (!bp) {
+    console.error('You need to pass a breakpoint name!');
+    return false;
+  }
+
   // we only want to look for a specific modifier and make sure it is at the end of the string
   let pattern = new RegExp('\\+$|\\-$');
 
