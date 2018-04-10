@@ -1,0 +1,46 @@
+import getCurrentMediaQuery from './getCurrentMediaQuery';
+
+var isBreakpoint = function(bp) {
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/isBreakpoint
+
+  // we only want to look for a specific modifier and make sure it is at the end of the string
+  let pattern = new RegExp('\\+$|\\-$');
+
+  // bps must be in order from smallest to largest
+  let bps = ['xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'];
+
+  // store current breakpoint in use
+  let currentBp = getCurrentMediaQuery();
+
+  // store the index of the current breakpoint
+  let currentBpIndex = bps.indexOf(currentBp);
+
+  // check to see if bp has a + or - modifier
+  let hasModifier = pattern.exec(bp);
+
+  // store modifier value
+  let modifier = hasModifier ? hasModifier[0] : false;
+
+  // store the trimmed breakpoint name if a modifier exists, if not, store the full queried breakpoint name
+  let bpName = hasModifier ? bp.slice(0, -1) : bp;
+
+  // store the index of the queried breakpoint
+  let bpIndex = bps.indexOf(bpName);
+
+  // let people know if the breakpoint name is unrecognized
+  if (bpIndex < 0) {
+    console.warn('Unrecognized breakpoint. Supported breakpoints are: xsmall, small, medium, large, xlarge, xxlarge');
+    return false;
+  }
+
+  // compare the modifier with the index of the current breakpoint in the bps array with the index of the queried breakpoint.
+  // if no modifier is set, compare the queried breakpoint name with the current breakpoint name
+  if ((modifier === '+' && currentBpIndex >= bpIndex) || (modifier === '-' && currentBpIndex <= bpIndex) || (!modifier && bp === currentBp)) {
+    return true;
+  }
+
+  // the current breakpoint isn’t the one you’re looking for
+  return false;
+};
+
+export default isBreakpoint;

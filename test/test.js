@@ -6,12 +6,11 @@ let expect = require('chai').expect;
 let jsHelpers = require('../index');
 
 describe('#jsHelpers', function() {
-
   it('bundle', function() {
-      expect(jsHelpers).to.be.a('object');
+    expect(jsHelpers).to.be.a('object');
   });
 
-  it('module import', function()  {
+  it('module import', function() {
     expect(jsHelpers.cookieHandler.read).to.be.a('function');
     expect(jsHelpers.cookieHandler.delete).to.be.a('function');
     expect(jsHelpers.cookieHandler.create).to.be.a('function');
@@ -23,6 +22,7 @@ describe('#jsHelpers', function() {
     expect(jsHelpers.getIndex).to.be.a('function');
     expect(jsHelpers.getMetaContentByName).to.be.a('function');
     expect(jsHelpers.getUrlParameterByName).to.be.a('function');
+    expect(jsHelpers.isBreakpoint).to.be.a('function');
     expect(jsHelpers.jsonpRequest).to.be.a('function');
     expect(jsHelpers.keycodes).to.be.a('object');
     expect(jsHelpers.messages).to.be.a('function');
@@ -37,7 +37,7 @@ describe('#jsHelpers', function() {
     expect(jsHelpers.fontLoadObserver).to.be.a('function');
   });
 
-  it('queryString handler', ()=>{
+  it('queryString handler', () => {
     let url = 'http://a17-js-helpers.com?test=ok&fun=yes';
     let updatedUrl = 'http://a17-js-helpers.com?test=ok&fun=no';
     let query = '?test=ok&fun=yes';
@@ -53,22 +53,26 @@ describe('#jsHelpers', function() {
     expect(jsHelpers.queryStringHandler.fromObject(obj)).to.equal(query);
 
     //test from obj
-    expect(jsHelpers.queryStringHandler.updateParameter(url,'fun','no')).to.equal(updatedUrl);
+    expect(jsHelpers.queryStringHandler.updateParameter(url, 'fun', 'no')).to.equal(updatedUrl);
   });
 
-  it('debounce', ()=>{
+  it('debounce', () => {
     let fooStart = 1;
     let barStart = 1;
 
-    let foo = jsHelpers.debounce((num)=>{
-      fooStart += num;
-    }, 100, true);
+    let foo = jsHelpers.debounce(
+      num => {
+        fooStart += num;
+      },
+      100,
+      true
+    );
 
-    let bar = jsHelpers.debounce((num)=>{
+    let bar = jsHelpers.debounce(num => {
       barStart += num;
-    },100);
+    }, 100);
 
-    for(let i = 0; i < 500; i++) {
+    for (let i = 0; i < 500; i++) {
       foo(i);
       bar(i);
     }
@@ -78,22 +82,21 @@ describe('#jsHelpers', function() {
     setTimeout(function() {
       expect(barStart).to.equal(500);
     }, 100);
-
   });
 
-  it('setFocusOnTarget', ()=>{
+  it('setFocusOnTarget', () => {
     let div = document.createElement('div');
     jsHelpers.setFocusOnTarget(div);
     expect(document.activeElement).to.equal(div);
   });
 
-  it('fontLoadObserver', ()=>{
+  it('fontLoadObserver', () => {
     jsHelpers.fontLoadObserver({
       name: 'TimesNewRoman',
       variants: [
         {
-          name: 'Times New Roman',
-        },
+          name: 'Times New Roman'
+        }
       ]
     });
   });
