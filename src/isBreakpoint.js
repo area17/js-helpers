@@ -15,6 +15,15 @@ var isBreakpoint = function(bp) {
   // bps must be in order from smallest to largest
   let bps = ['xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'];
 
+  // override the breakpoints if the option is set on the global A17 object
+  if( window.A17 && window.A17.breakpoints ){
+    if( Array.isArray(window.A17.breakpoints) ){
+      bps = window.A17.breakpoints;
+    }else{
+      console.warn('A17.breakpoints should be an array. Using defaults.');
+    }
+  }
+
   // store current breakpoint in use
   let currentBp = getCurrentMediaQuery();
 
@@ -35,7 +44,7 @@ var isBreakpoint = function(bp) {
 
   // let people know if the breakpoint name is unrecognized
   if (bpIndex < 0) {
-    console.warn('Unrecognized breakpoint. Supported breakpoints are: xsmall, small, medium, large, xlarge, xxlarge');
+    console.warn('Unrecognized breakpoint. Supported breakpoints are: '+ bps.join(', '));
     return false;
   }
 
@@ -50,3 +59,4 @@ var isBreakpoint = function(bp) {
 };
 
 export default isBreakpoint;
+
