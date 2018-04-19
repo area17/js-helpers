@@ -50,7 +50,7 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
-**0.6.6**
+**0.6.6 and 0.6.7**
 * Updated `copyTextToClipboard` as recent browser updates stopped it working
 
 **0.6.5**
