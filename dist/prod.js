@@ -948,9 +948,6 @@ var manageBehaviors = function manageBehaviors(Behaviors, options) {
             }
           }
         }
-      } else {
-
-        //console.log('behaviors already initialized for:\n', currentElement);
       }
     }
   }
@@ -972,10 +969,7 @@ var manageBehaviors = function manageBehaviors(Behaviors, options) {
           } catch (err) {
             //console.log('failed to destroy behavior: ', thisBehaviorObj.name, '\n', err, thisBehaviorObj);
           }
-        } else {
-
-            //console.log('element still exists:\n', thisBehaviorObj.name, thisBehaviorObj);
-          }
+        }
       }
     }
 

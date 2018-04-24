@@ -27,7 +27,6 @@ import setFocusOnTarget from './utility/setFocusOnTarget';
 import triggerCustomEvent from './utility/triggerCustomEvent.js';
 
 
-
 const a17helpers = {
   ajaxRequest,
   cookieHandler,
