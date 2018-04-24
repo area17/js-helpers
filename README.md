@@ -50,6 +50,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.6.8**
+* Added `isBreakpoint` helper to query if a breakpoint is active
+
 **0.6.6 and 0.6.7**
 * Updated `copyTextToClipboard` as recent browser updates stopped it working
 
