@@ -11,6 +11,7 @@ export { default as getIndex } from './src/getIndex.js';
 export { default as getMetaContentByName } from './src/getMetaContentByName.js';
 export { default as getOffset } from './src/getOffset.js';
 export { default as getUrlParameterByName } from './src/getUrlParameterByName.js';
+export { default as isBreakpoint } from './src/isBreakpoint.js';
 export { default as jsonpRequest } from './src/jsonpRequest.js';
 export { default as keycodes } from './src/keycodes.js';
 export { default as lazyLoad } from './src/lazyLoad';
