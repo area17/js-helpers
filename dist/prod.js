@@ -162,37 +162,53 @@ var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
   // https://code.area17.com/a17/a17-helpers/wikis/copyTextToClipboard
   // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript#answer-30810322
 
-  var textArea = document.createElement('textarea');
+  // and then
+  // https://stackoverflow.com/questions/47879184/document-execcommandcopy-not-working-on-chrome?rq=1&utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+  // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 
-  textArea.style.position = 'fixed';
-  textArea.style.top = 0;
-  textArea.style.left = 0;
-  textArea.style.width = '2em';
-  textArea.style.height = '2em';
-  textArea.style.padding = 0;
-  textArea.style.border = 'none';
-  textArea.style.outline = 'none';
-  textArea.style.boxShadow = 'none';
-  textArea.style.background = 'transparent';
+  if (navigator.clipboard && 'Promise' in window && window.location.protocol == 'https:') {
+    navigator.clipboard.writeText(textToCopy).then(function () {
+      console.log(successMsg);
+    }, function (err) {
+      console.error('Could not copy text: ', err);
+    });
+  } else {
+    var textArea = document.createElement('textarea');
 
-  textArea.value = textToCopy;
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
 
-  document.body.appendChild(textArea);
+    //textArea.value = textToCopy;
+    textArea.textContent = textToCopy;
+    document.body.appendChild(textArea);
 
-  textArea.select();
+    var selection = document.getSelection();
+    var range = document.createRange();
+    range.selectNode(textArea);
+    selection.removeAllRanges();
+    selection.addRange(range);
 
-  try {
-    var successful = document.execCommand('copy');
-    if (successful) {
-      window.alert(successMsg || 'Copied to clipboard');
-    } else {
-      console.log('Oops, unable to copy');
+    try {
+      var successful = document.execCommand('copy');
+      if (successful) {
+        window.alert(successMsg || 'Copied to clipboard');
+      } else {
+        console.log('Could not copy text');
+      }
+    } catch (err) {
+      console.log('Could not copy text');
     }
-  } catch (err) {
-    console.log('Oops, unable to copy');
-  }
 
-  document.body.removeChild(textArea);
+    document.body.removeChild(textArea);
+  }
 };
 
 var debounce = function debounce(func, wait, immediate) {

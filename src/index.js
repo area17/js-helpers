@@ -11,7 +11,7 @@ import getIndex from './utility/getIndex.js';
 import getMetaContentByName from './utility/getMetaContentByName.js';
 import getOffset from './utility/getOffset.js';
 import getUrlParameterByName from './utility/getUrlParameterByName.js';
-import isBreakpoint from './src/isBreakpoint.js';
+import isBreakpoint from './utility/isBreakpoint.js';
 import jsonpRequest from './utility/jsonpRequest.js';
 import keycodes from './utility/keycodes.js';
 import lazyLoad from './utility/lazyLoad';
@@ -42,6 +42,7 @@ const a17helpers = {
   getMetaContentByName,
   getOffset,
   getUrlParameterByName,
+  isBreakpoint,
   jsonpRequest,
   keycodes,
   lazyLoad,
