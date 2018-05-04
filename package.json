@@ -4,8 +4,9 @@
   "description": "A js helper package",
   "main": "index.js",
   "scripts": {
-    "compile": "webpack",
-    "test": "mocha ./test/testBundle.js"
+    "dev": "rollup -c --watch",
+    "prod": "rollup -c",
+    "test": "mocha ./test/test.js"
   },
   "repository": {
     "type": "git",
@@ -15,13 +16,16 @@
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015-rollup": "^3.0.0",
     "chai": "^4.1.2",
-    "jsdom": "11.3.0",
+    "jsdom": "11.9.0",
     "jsdom-global": "3.0.2",
-    "mocha": "^3.5.3",
-    "webpack": "^3.6.0"
+    "mocha": "^5.1.1",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0"
   },
   "dependencies": {
     "fontfaceonload": "^1.0.2"
