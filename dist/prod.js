@@ -282,10 +282,7 @@ function createCommonjsModule(fn, module) {
 
 var fontfaceonload = createCommonjsModule(function (module, exports) {
 (function (root, factory) {
-	if (typeof undefined === 'function' && undefined.amd) {
-		// AMD. Register as an anonymous module.
-		undefined([], factory);
-	} else {
+	{
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like environments that support module.exports,
 		// like Node.
@@ -1256,6 +1253,10 @@ var scrollToY = function scrollToY(options) {
   from = settings.el.scrollTop;
 
   if (from === settings.offset) {
+    if (_typeof(settings.onComplete).toLowerCase() === 'function') {
+      settings.onComplete.call(this);
+    }
+
     // Prevent scrolling to the offset point if already there
     return;
   }
