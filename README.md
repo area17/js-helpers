@@ -50,6 +50,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.7.1**
+* Scroll to Y : call the onComplete callback even if not scrolling
+
 **0.7.0**
 * Add rollup.js for compile the package. Now Everything is compiled. (Don't forget to compile it then push npm if you are updating it)
 
