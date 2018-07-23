@@ -43,6 +43,10 @@ var scrollToY = function(options) {
   from = settings.el.scrollTop;
 
   if (from === settings.offset) {
+    if ((typeof settings.onComplete).toLowerCase() === 'function') {
+      settings.onComplete.call(this);
+    }
+
     // Prevent scrolling to the offset point if already there
     return;
   }
