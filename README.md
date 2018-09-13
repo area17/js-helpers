@@ -22,6 +22,8 @@ or, cherry pick individual helpers:
 
 Feel free to add any vanilla JS helpers that will be common to many projects and save someone some time working them out in the future. The main aims are no dependencies, small elegant code and high potential sharing across sites.
 
+Please make sure you run `npm run prod` after making changes. This will compile all your changes to ES5 ready version and then you can feel free to publish to npm.
+
 ### .editorconfig
 
 Download the editor config plugin for your text editor: [http://editorconfig.org/#download](http://editorconfig.org/#download)
