@@ -61,6 +61,8 @@ var ajaxRequest = function(settings) {
   };
 
   request.send((options.type === 'POST') ? options.queryString.replace('?', '') : '');
+
+  return request;
 };
 
 export default ajaxRequest;

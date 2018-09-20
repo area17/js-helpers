@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.7.2**
+* ajaxRequest returns the request so you can abort it in your project function
+
 **0.7.1**
 * Scroll to Y : call the onComplete callback even if not scrolling
 
