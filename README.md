@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.8.0**
+* Added `focusTrap` and `focusDisplayHandler` to trap keyboard tab focus within an element and to help style keyboard focus states
+
 **0.7.2**
 * ajaxRequest returns the request so you can abort it in your project function
 
