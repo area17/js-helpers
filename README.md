@@ -52,7 +52,7 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
-**0.8.0**
+**0.8.1**
 * Added `focusTrap` and `focusDisplayHandler` to the index.js so this can be imported into your app
 
 **0.8.0**

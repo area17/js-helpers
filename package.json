@@ -1,6 +1,6 @@
 {
   "name": "@area17/a17-helpers",
-  "version": "0.9.0",
+  "version": "0.8.1",
   "description": "A js helper package",
   "main": "index.js",
   "scripts": {
