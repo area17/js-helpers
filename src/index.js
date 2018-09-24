@@ -4,6 +4,8 @@ import copyTextToClipboard from './utility/copyTextToClipboard';
 import debounce from './utility/debounce';
 import escapeString from './utility/escapeString.js';
 import extend from './utility/extend.js';
+import focusDisplayHandler from './utility/focusDisplayHandler';
+import focusTrap from './utility/focusTrap';
 import fontLoadObserver from './utility/fontLoadObserver';
 import forEach from './utility/forEach';
 import getCurrentMediaQuery from './utility/getCurrentMediaQuery.js';
@@ -35,6 +37,8 @@ const a17helpers = {
   debounce,
   escapeString,
   extend,
+  focusDisplayHandler,
+  focusTrap,
   fontLoadObserver,
   forEach,
   getCurrentMediaQuery,

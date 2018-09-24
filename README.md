@@ -53,6 +53,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 ## Update Log
 
 **0.8.0**
+* Added `focusTrap` and `focusDisplayHandler` to the index.js so this can be imported into your app
+
+**0.8.0**
 * Added `focusTrap` and `focusDisplayHandler` to trap keyboard tab focus within an element and to help style keyboard focus states
 
 **0.7.2**
