@@ -266,6 +266,109 @@ var extend = function extend() {
   return obj;
 };
 
+var focusDisplayHandler = function focusDisplayHandler() {
+
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/focusDisplayHandler
+
+  var attr = 'data-focus-method';
+  var touch = 'touch';
+  var mouse = 'mouse';
+  var key = 'key';
+
+  var focusMethod = false;
+  var lastFocusMethod;
+
+  function _onKeyDown() {
+    focusMethod = key;
+  }
+
+  function _onMouseDown() {
+    if (focusMethod === touch) {
+      return;
+    }
+    focusMethod = mouse;
+  }
+
+  function _onTouchStart() {
+    focusMethod = touch;
+  }
+
+  function _onFocus(event) {
+    if (!focusMethod) {
+      focusMethod = lastFocusMethod;
+    }
+    if (event.target && typeof event.target.setAttribute === 'function') {
+      event.target.setAttribute(attr, focusMethod);
+      lastFocusMethod = focusMethod;
+      focusMethod = false;
+    }
+  }
+
+  function _onBlur(event) {
+    if (event.target && typeof event.target.removeAttribute === 'function') {
+      event.target.removeAttribute(attr);
+    }
+  }
+
+  function _onWindowBlur() {
+    focusMethod = false;
+  }
+
+  document.addEventListener('keydown', _onKeyDown, true);
+  document.addEventListener('mousedown', _onMouseDown, true);
+  document.addEventListener('touchstart', _onTouchStart, true);
+  document.addEventListener('focus', _onFocus, true);
+  document.addEventListener('blur', _onBlur, true);
+  window.addEventListener('blur', _onWindowBlur);
+};
+
+var setFocusOnTarget = function setFocusOnTarget(node) {
+  //https://code.area17.com/a17/a17-helpers/wikis/setFocusOnTarget
+  node.focus();
+  if (node !== document.activeElement) {
+    node.setAttribute('tabindex', '-1');
+    node.focus();
+  }
+};
+
+var focusTrap = function focusTrap() {
+
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/focusTrap
+
+  var element;
+
+  function _focus() {
+    if (element) {
+      if (document.activeElement !== element && !element.contains(document.activeElement)) {
+        setFocusOnTarget(element);
+      }
+    } else {
+      document.removeEventListener('focus', _trap);
+    }
+  }
+
+  function _trap(event) {
+    try {
+      document.removeEventListener('focus', _focus);
+    } catch (err) {}
+
+    if (!event && !event.data.element) {
+      return;
+    }
+
+    element = event.data.element;
+    document.addEventListener('focus', _focus, true);
+  }
+
+  function _untrap() {
+    document.removeEventListener('focus', _trap);
+    element = null;
+  }
+
+  document.addEventListener('focus:trap', _trap, false);
+  document.addEventListener('focus:untrap', _untrap, false);
+};
+
 var triggerCustomEvent = function triggerCustomEvent(el, type, data) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/triggerCustomEvent
 
@@ -1394,15 +1497,6 @@ var sendEventToSegmentio = function sendEventToSegmentio() {
   init();
 };
 
-var setFocusOnTarget = function setFocusOnTarget(node) {
-  //https://code.area17.com/a17/a17-helpers/wikis/setFocusOnTarget
-  node.focus();
-  if (node !== document.activeElement) {
-    node.setAttribute('tabindex', '-1');
-    node.focus();
-  }
-};
-
 var a17helpers = {
   ajaxRequest: ajaxRequest,
   cookieHandler: cookieHandler,
@@ -1410,6 +1504,8 @@ var a17helpers = {
   debounce: debounce,
   escapeString: escapeString,
   extend: extend,
+  focusDisplayHandler: focusDisplayHandler,
+  focusTrap: focusTrap,
   fontLoadObserver: fontLoadObserver,
   forEach: forEach,
   getCurrentMediaQuery: getCurrentMediaQuery,
