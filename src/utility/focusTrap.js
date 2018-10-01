@@ -12,13 +12,13 @@ var focusTrap = function() {
         setFocusOnTarget(element);
       }
     } else {
-      document.removeEventListener('focus', _trap);
+      document.removeEventListener('focus', _focus, true);
     }
   }
 
   function _trap(event) {
     try {
-      document.removeEventListener('focus', _focus);
+      document.removeEventListener('focus', _focus, true);
     } catch(err) {}
 
     if (!event && !event.data.element) {
@@ -30,7 +30,7 @@ var focusTrap = function() {
   }
 
   function _untrap() {
-    document.removeEventListener('focus', _trap);
+    document.removeEventListener('focus', _focus, true);
     element = null;
   }
 
