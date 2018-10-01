@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.8.3**
+* Fix `focusTrap` incorrectly removing events
+
 **0.8.2**
 * Update compiled version
 
