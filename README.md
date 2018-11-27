@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**0.8.4**
+* Added `scrolled` - a custom event to track requestAnimationFrame limited scroll events
+
 **0.8.3**
 * Fix `focusTrap` incorrectly removing events
 
