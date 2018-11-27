@@ -24,6 +24,7 @@ import oritentationChangeFix from './utility/oritentationChangeFix.js';
 import purgeProperties from './utility/purgeProperties.js';
 import queryStringHandler from './utility/queryStringHandler';
 import resized from './utility/resized.js';
+import scrolled from './utility/scrolled.js';
 import scrollToY from './utility/scrollToY.js';
 import sendEventToSegmentio from './utility/sendEventToSegmentio.js';
 import setFocusOnTarget from './utility/setFocusOnTarget';
@@ -57,6 +58,7 @@ const a17helpers = {
   purgeProperties,
   queryStringHandler,
   resized,
+  scrolled,
   scrollToY,
   sendEventToSegmentio,
   setFocusOnTarget,
