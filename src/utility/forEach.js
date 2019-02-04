@@ -1,4 +1,5 @@
 var forEach = function (array, callback, scope) {
+  console.warn('Obsolete function notice: forEach\nConsider using Array.prototype.forEach or NodeList.prototype.forEach\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach\nhttps://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach');
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/forEach
   for (let i = 0; i < array.length; i++) {
     callback.call(scope, i, array[i]);
@@ -6,3 +7,4 @@ var forEach = function (array, callback, scope) {
 };
 
 export default forEach;
+
