@@ -2,6 +2,8 @@
 
 var manageBehaviors = function(Behaviors, options) {
 
+  console.warn('Deprecation notice: manageBehaviors\nConsider using `manageBehaviors` from inside of A17 Boilerplate `frontend/js/functions/manageBehaviors.js`');
+
   const activeBehaviors = {};
 
   /*

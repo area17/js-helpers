@@ -18,9 +18,9 @@ or, cherry pick individual helpers:
 
     import { getCurrentMediaQuery, resized } from '@area17/a17-helpers'
 
-**Note**
-From v1.0.0 onwards browser support is IE11+, Safari 10+, Edge 12+, Chrome 24+ and FF 29+.
-If you need IE9 level support, use v0.8.4.
+### Note
+
+From v1.0.0 onwards browser support is IE11+, Safari 10+, Edge 12+, Chrome 24+ and FF 29+. If you need IE9 level support, use v0.8.4.
 
 ## Developing
 
@@ -57,10 +57,10 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 ## Update Log
 
 **1.0.0**
-* Support is IE11+, Safari 10+, Edge, recent Chrome, recent FF to bring into line with A17 FE Boilerplate
-* Switch to `MutationObserver`
+* Support is IE11+, Safari 10+, Edge, recent Chrome, recent FF to bring into line with A17 FE Boilerplate (and no longer IE9+, Safari 6+).
 * Deprecation notices on:
   * forEach
+  * manageBehaviors
   * triggerCustomEvent
 
 **0.8.4**
