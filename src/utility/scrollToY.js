@@ -1,6 +1,14 @@
 var scrollToY = function(options) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/scrollToY
 
+  /*
+
+  CSS `scroll-behavior: smooth;` is under consideration for edge
+
+  And JavaScript scroll with options isn't well supported
+
+  */
+
   var settings = {
     el: document,
     offset: 0,

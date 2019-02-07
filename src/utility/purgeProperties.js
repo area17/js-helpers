@@ -5,6 +5,8 @@ var purgeProperties = function(obj) {
       delete obj[prop];
     }
   }
+
+  // alternatives considered: https://jsperf.com/deleting-properties-from-an-object
 };
 
 export default purgeProperties;

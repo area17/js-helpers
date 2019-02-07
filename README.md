@@ -18,6 +18,10 @@ or, cherry pick individual helpers:
 
     import { getCurrentMediaQuery, resized } from '@area17/a17-helpers'
 
+### Note
+
+From v1.0.0 onwards browser support is IE11+, Safari 10+, Edge 12+, Chrome 24+ and FF 29+. If you need IE9 level support, use v0.8.4.
+
 ## Developing
 
 Feel free to add any vanilla JS helpers that will be common to many projects and save someone some time working them out in the future. The main aims are no dependencies, small elegant code and high potential sharing across sites.
@@ -51,6 +55,13 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 * Have a 🍦
 
 ## Update Log
+
+**1.0.0**
+* Support is IE11+, Safari 10+, Edge, recent Chrome, recent FF to bring into line with A17 FE Boilerplate (and no longer IE9+, Safari 6+).
+* Deprecation notices on:
+  * forEach
+  * manageBehaviors
+  * triggerCustomEvent
 
 **0.8.4**
 * Added `scrolled` - a custom event to track requestAnimationFrame limited scroll events

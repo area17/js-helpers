@@ -4,6 +4,11 @@ var queryStringHandler = {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-updateParameter
 
   toObject(url) {
+    /*
+    URLSearchParams doesn't work in IE11 :-(
+    https://caniuse.com/#search=URLSearchParams
+    */
+
     if (typeof url !== 'string') {
       return {};
     }
