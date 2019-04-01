@@ -56,6 +56,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**1.0.1**
+* Deprecated helpers are no longer used inside other helpers. If you're using `scrolled` you'll need to read `event.detail.last` and `event.detail.prev` (and **not** `event.detail.xxxx`)
+
 **1.0.0**
 * Support is IE11+, Safari 10+, Edge, recent Chrome, recent FF to bring into line with A17 FE Boilerplate (and no longer IE9+, Safari 6+).
 * Deprecation notices on:

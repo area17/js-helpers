@@ -1,5 +1,4 @@
 import cookieHandler from './cookieHandler';
-import triggerCustomEvent from './triggerCustomEvent';
 import FontFaceOnload from 'fontfaceonload';
 
 var fontLoadObserver = function(fonts) {
@@ -25,7 +24,7 @@ var fontLoadObserver = function(fonts) {
     if (counter >= total) {
       document.documentElement.className += ' s-'+fonts.name+'-loaded';
       cookieHandler.create(cookieName, total, 1);
-      triggerCustomEvent(document, 'content:populated');
+      document.dispatchEvent(new CustomEvent('page:updated'));
     }
   }
 

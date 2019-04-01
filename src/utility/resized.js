@@ -1,5 +1,4 @@
 import getCurrentMediaQuery from './getCurrentMediaQuery';
-import triggerCustomEvent from './triggerCustomEvent';
 
 var resized = function() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/resized
@@ -14,7 +13,7 @@ var resized = function() {
       var newMediaQuery = getCurrentMediaQuery();
 
       // tell everything resized happened
-      triggerCustomEvent(document, 'resized');
+      document.dispatchEvent(new CustomEvent('resized'));
 
       // if media query changed, tell everything
       if (newMediaQuery !== mediaQuery) {
@@ -22,7 +21,7 @@ var resized = function() {
         if (window.A17) {
           window.A17.currentMediaQuery = newMediaQuery;
         }
-        triggerCustomEvent(document, 'mediaQueryUpdated');
+        document.dispatchEvent(new CustomEvent('mediaQueryUpdated'));
       }
     }, 250);
   });
