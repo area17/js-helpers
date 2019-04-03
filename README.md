@@ -56,6 +56,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**1.0.2**
+* `resized` sends its event to the `window` and not the `document` for backwards compatibility
+
 **1.0.1**
 * Deprecated helpers are no longer used inside other helpers. If you're using `scrolled` you'll need to read `event.detail.last` and `event.detail.prev` (and **not** `event.detail.xxxx`)
 

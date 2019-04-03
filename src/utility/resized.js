@@ -13,7 +13,7 @@ var resized = function() {
       var newMediaQuery = getCurrentMediaQuery();
 
       // tell everything resized happened
-      document.dispatchEvent(new CustomEvent('resized'));
+      window.dispatchEvent(new CustomEvent('resized'));
 
       // if media query changed, tell everything
       if (newMediaQuery !== mediaQuery) {
@@ -21,7 +21,7 @@ var resized = function() {
         if (window.A17) {
           window.A17.currentMediaQuery = newMediaQuery;
         }
-        document.dispatchEvent(new CustomEvent('mediaQueryUpdated'));
+        window.dispatchEvent(new CustomEvent('mediaQueryUpdated'));
       }
     }, 250);
   });
