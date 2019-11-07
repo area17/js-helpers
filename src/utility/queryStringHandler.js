@@ -33,7 +33,9 @@ var queryStringHandler = {
         if (!obj.hasOwnProperty(key)) {
           continue;
         }
-        queryString += ((count > 0) ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()]/g, '').replace(/\*/g, '%2A').replace(/%2B/ig, '+');
+        queryString += ((count > 0) ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()*]/g, function(c) {
+            return '%' + c.charCodeAt(0).toString(16);
+        }).replace(/%2B/ig, '+');
         count++;
       }
     }

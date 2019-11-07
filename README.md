@@ -51,10 +51,13 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 * Bump the version number
 * Test it, you may need to update the tests in /test/
 * Update the [wiki](https://code.area17.com/a17/a17-helpers/wikis/home) document for it if required
-* Tell @fe in the developers Hipchat room
+* Tell engineering-fe Slack room
 * Have a 🍦
 
 ## Update Log
+
+**1.0.3**
+* query string character replacement updated in `.fromObject()` in `queryStringHandler` to match `fixedEncodeURIComponent` at [MDN:encodeURIComponent](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)
 
 **1.0.2**
 * `resized` sends its event to the `window` and not the `document` for backwards compatibility
@@ -155,7 +158,7 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 * Added new `copyTextToClipboard` helper [Wiki](https://code.area17.com/a17/a17-helpers/wikis/copyTextToClipboard) (no test, not sure how to test..)
 
 **0.3.0**
-* Merge `tuenObjectToQueryString` and `turnQueryStringToObject` into `queryStringHandler` as `.toObject()` and `.fromObject()` methods
+* Merge `turnObjectToQueryString` and `turnQueryStringToObject` into `queryStringHandler` as `.toObject()` and `.fromObject()` methods
 * Add new `debounce` helper [Wiki](https://code.area17.com/a17/a17-helpers/wikis/debounce)
 
 **0.2.1**
