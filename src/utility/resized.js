@@ -25,7 +25,6 @@ var resized = function() {
       }
     }, 250);
   });
-
 };
 
 export default resized;
