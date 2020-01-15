@@ -7,14 +7,6 @@ jest.mock('./../src/utility/getCurrentMediaQuery.js', () =>
     .mockImplementationOnce(() => 'second call')
     .mockImplementationOnce(() => 'third call')
 );
-// set up some html
-const setUpHtml = () => {
-  const div = document.createElement('div');
-  div.innerHTML = `
-    <h1>Hello <a href="#">Area 17</a></h1>
-      `;
-  return div;
-};
 
 describe('resized', () => {
   it('exists', () => {
