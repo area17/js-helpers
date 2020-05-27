@@ -1,4 +1,5 @@
-import { isBreakpoint, purgeProperties } from '@area17/a17-helpers';
+import isBreakpoint from './isBreakpoint';
+import purgeProperties from './purgeProperties';
 
 // see https://code.area17.com/a17/fe-boilerplate/wikis/js-functions-createBehavior
 
