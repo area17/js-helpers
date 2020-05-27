@@ -1,6 +1,7 @@
 import ajaxRequest from './utility/ajaxRequest.js';
 import cookieHandler from './utility/cookieHandler.js';
 import copyTextToClipboard from './utility/copyTextToClipboard';
+import createBehavior from './utility/createBehavior';
 import debounce from './utility/debounce';
 import escapeString from './utility/escapeString.js';
 import extend from './utility/extend.js';
@@ -16,6 +17,7 @@ import isBreakpoint from './utility/isBreakpoint.js';
 import jsonpRequest from './utility/jsonpRequest.js';
 import keycodes from './utility/keycodes.js';
 import lazyLoad from './utility/lazyLoad';
+import manageBehaviors from './utility/manageBehaviors.js';
 import messages from './utility/messages.js';
 import objectifyForm from './utility/objectifyForm.js';
 import oritentationChangeFix from './utility/oritentationChangeFix.js';
@@ -31,6 +33,7 @@ const a17helpers = {
   ajaxRequest,
   cookieHandler,
   copyTextToClipboard,
+  createBehavior,
   debounce,
   escapeString,
   extend,
