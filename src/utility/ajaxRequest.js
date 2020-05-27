@@ -3,12 +3,15 @@ import queryStringHandler from './queryStringHandler';
 var ajaxRequest = function(settings) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/ajaxRequest
 
+  // This is a modified version to accept a new sendJSON boolean
+  // to send the request with the right content type and data
+
   var options = settings;
   var request = new XMLHttpRequest();
   var requestUrl = options.url;
 
   options.queryString = '';
-  if (options.data !== undefined) {
+  if (options.data !== undefined && !options.sendJSON) {
     if (queryStringHandler.fromObject) {
       options.queryString = queryStringHandler.fromObject(options.data);
     } else {
@@ -25,7 +28,7 @@ var ajaxRequest = function(settings) {
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   if (options.type === 'POST') {
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.setRequestHeader('Content-Type', options.sendJSON ? 'application/json' : 'application/x-www-form-urlencoded; charset=UTF-8');
   }
 
   if (options.requestHeaders !== undefined && options.requestHeaders.length > 0) {
@@ -60,7 +63,7 @@ var ajaxRequest = function(settings) {
     }
   };
 
-  request.send((options.type === 'POST') ? options.queryString.replace('?', '') : '');
+  request.send((options.type === 'POST') ? (options.sendJSON ? options.data : options.queryString.replace('?', '')) : '');
 
   return request;
 };
