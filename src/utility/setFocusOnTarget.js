@@ -4,6 +4,7 @@ var setFocusOnTarget = function(node) {
   if (node!== document.activeElement) {
     node.setAttribute('tabindex','-1');
     node.focus();
+    node.removeAttribute('tabindex');
   }
 };
 
