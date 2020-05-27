@@ -8,7 +8,7 @@ function Behavior(node, config = {}) {
     throw new Error('Node argument is required');
   }
 
-  this.node = node;
+  this.$node = node;
   this.options = Object.assign({}, config.options || {});
 
   this.__subBehaviors = [];
@@ -64,8 +64,8 @@ Behavior.prototype = Object.freeze({
   init() {
     // Get options from data attributes on node
     const regex = new RegExp('^data-' + this.name + '-(.*)', 'i');
-    for (let i = 0; i < this.node.attributes.length; i++) {
-      const attr = this.node.attributes[i];
+    for (let i = 0; i < this.$node.attributes.length; i++) {
+      const attr = this.$node.attributes[i];
       const matches = regex.exec(attr.nodeName);
 
       if (matches != null && matches.length >= 2) {
@@ -127,7 +127,7 @@ Behavior.prototype = Object.freeze({
   },
   getChild(childName, context, multi = false) {
     if (context == null) {
-      context = this.node;
+      context = this.$node;
     }
     if (this.__children != null && this.__children[childName] != null) {
       return this.__children[childName];
