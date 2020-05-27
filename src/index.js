@@ -13,6 +13,7 @@ import getIndex from './utility/getIndex.js';
 import getMetaContentByName from './utility/getMetaContentByName.js';
 import getOffset from './utility/getOffset.js';
 import getUrlParameterByName from './utility/getUrlParameterByName.js';
+import ios100vhFix from './utility/ios100vhFix';
 import isBreakpoint from './utility/isBreakpoint.js';
 import jsonpRequest from './utility/jsonpRequest.js';
 import keycodes from './utility/keycodes.js';
@@ -24,6 +25,7 @@ import oritentationChangeFix from './utility/oritentationChangeFix.js';
 import purgeProperties from './utility/purgeProperties.js';
 import queryStringHandler from './utility/queryStringHandler';
 import resized from './utility/resized.js';
+import responsiveImageUpdate from './utility/responsiveImageUpdate';
 import scrolled from './utility/scrolled.js';
 import sendEventToSegmentio from './utility/sendEventToSegmentio.js';
 import setFocusOnTarget from './utility/setFocusOnTarget';
@@ -40,12 +42,12 @@ const a17helpers = {
   focusDisplayHandler,
   focusTrap,
   fontLoadObserver,
-  forEach,
   getCurrentMediaQuery,
   getIndex,
   getMetaContentByName,
   getOffset,
   getUrlParameterByName,
+  ios100vhFix,
   isBreakpoint,
   jsonpRequest,
   keycodes,
@@ -57,11 +59,10 @@ const a17helpers = {
   purgeProperties,
   queryStringHandler,
   resized,
+  responsiveImageUpdate,
   scrolled,
-  scrollToY,
   sendEventToSegmentio,
-  setFocusOnTarget,
-  triggerCustomEvent
+  setFocusOnTarget
 };
 
 export default a17helpers;
