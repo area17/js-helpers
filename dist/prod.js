@@ -1,11 +1,30 @@
 'use strict';
 
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 var queryStringHandler = {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-toObject
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-fromObject
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-updateParameter
-
   toObject: function toObject(url) {
+    /*
+    URLSearchParams doesn't work in IE11 :-(
+    https://caniuse.com/#search=URLSearchParams
+    */
     if (typeof url !== 'string') {
       return {};
     }
@@ -23,11 +42,15 @@ var queryStringHandler = {
 
     if (Object.getOwnPropertyNames(obj).length > 0) {
       queryString = '?';
+
       for (var key in obj) {
         if (!obj.hasOwnProperty(key)) {
           continue;
         }
-        queryString += (count > 0 ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()]/g, '').replace(/\*/g, '%2A').replace(/%2B/ig, '+');
+
+        queryString += (count > 0 ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()*]/g, function (c) {
+          return '%' + c.charCodeAt(0).toString(16);
+        }).replace(/%2B/ig, '+');
         count++;
       }
     }
@@ -36,35 +59,33 @@ var queryStringHandler = {
   },
   updateParameter: function updateParameter(url, key, value) {
     var re = new RegExp('([?&])' + key + '=.*?(&|#|$)', 'i');
+
     if (url.match(re)) {
       return url.replace(re, '$1' + key + '=' + value + '$2');
     } else {
       var hash = '';
+
       if (url.indexOf('#') !== -1) {
         hash = url.replace(/.*#/, '#');
         url = url.replace(/#.*/, '');
       }
+
       var separator = url.indexOf('?') !== -1 ? '&' : '?';
       return url + separator + key + '=' + value + hash;
     }
   }
 };
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
 var ajaxRequest = function ajaxRequest(settings) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/ajaxRequest
-
+  // This is a modified version to accept a new sendJSON boolean
+  // to send the request with the right content type and data
   var options = settings;
   var request = new XMLHttpRequest();
   var requestUrl = options.url;
-
   options.queryString = '';
-  if (options.data !== undefined) {
+
+  if (options.data !== undefined && !options.sendJSON) {
     if (queryStringHandler.fromObject) {
       options.queryString = queryStringHandler.fromObject(options.data);
     } else {
@@ -77,17 +98,17 @@ var ajaxRequest = function ajaxRequest(settings) {
   }
 
   request.open(options.type, requestUrl, true);
-
   request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
   if (options.type === 'POST') {
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.setRequestHeader('Content-Type', options.sendJSON ? 'application/json' : 'application/x-www-form-urlencoded; charset=UTF-8');
   }
 
   if (options.requestHeaders !== undefined && options.requestHeaders.length > 0) {
     for (var i = 0; i < options.requestHeaders.length; i++) {
       var header = options.requestHeaders[i].header;
       var value = options.requestHeaders[i].value;
+
       if (header !== undefined && value !== undefined) {
         request.setRequestHeader(header, value);
       }
@@ -96,7 +117,6 @@ var ajaxRequest = function ajaxRequest(settings) {
 
   request.onload = function () {
     if (request.status >= 200 && request.status < 400) {
-
       // Success!
       if (_typeof(options.onSuccess).toLowerCase() === 'function') {
         options.onSuccess.call(this, request.responseText, request.status);
@@ -105,19 +125,20 @@ var ajaxRequest = function ajaxRequest(settings) {
       if (_typeof(options.onError).toLowerCase() === 'function') {
         options.onError.call(this, request.responseText, request.status);
       }
+
       console.log('We reached our target server, but it returned an error: ' + request.statusText);
     }
   };
 
   request.onerror = function () {
     console.log('There was a connection error of some sort');
+
     if (_typeof(options.onError).toLowerCase() === 'function') {
       options.onError.call(this, request.responseText, request.status);
     }
   };
 
-  request.send(options.type === 'POST' ? options.queryString.replace('?', '') : '');
-
+  request.send(options.type === 'POST' ? options.sendJSON ? options.data : options.queryString.replace('?', '') : '');
   return request;
 };
 
@@ -125,17 +146,18 @@ var cookieHandler = {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/cookieHandler-create
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/cookieHandler-delete
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/cookieHandler-read
-
   create: function create(name, value, days) {
     var expires = '';
+
     if (days) {
       var date = new Date();
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
       expires = '; expires=' + date.toGMTString();
     }
+
     document.cookie = name + '=' + value + expires + '; path=/';
   },
-  delete: function _delete(name) {
+  "delete": function _delete(name) {
     if (name) {
       this.create(name, '', -1);
     }
@@ -144,30 +166,32 @@ var cookieHandler = {
     if (name) {
       var nameEQ = name + '=';
       var ca = document.cookie.split(';');
+
       for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
+
         while (c.charAt(0) === ' ') {
           c = c.substring(1, c.length);
         }
+
         if (c.indexOf(nameEQ) === 0) {
           return c.substring(nameEQ.length, c.length);
         }
       }
+
       return null;
     }
+
     return null;
   }
 };
 
 var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
-
   // https://code.area17.com/a17/a17-helpers/wikis/copyTextToClipboard
   // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript#answer-30810322
-
   // and then
   // https://stackoverflow.com/questions/47879184/document-execcommandcopy-not-working-on-chrome?rq=1&utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
   // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-
   if (navigator.clipboard && 'Promise' in window && window.location.protocol == 'https:') {
     navigator.clipboard.writeText(textToCopy).then(function () {
       console.log(successMsg);
@@ -176,7 +200,6 @@ var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
     });
   } else {
     var textArea = document.createElement('textarea');
-
     textArea.style.position = 'fixed';
     textArea.style.top = 0;
     textArea.style.left = 0;
@@ -186,12 +209,10 @@ var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
     textArea.style.border = 'none';
     textArea.style.outline = 'none';
     textArea.style.boxShadow = 'none';
-    textArea.style.background = 'transparent';
+    textArea.style.background = 'transparent'; //textArea.value = textToCopy;
 
-    //textArea.value = textToCopy;
     textArea.textContent = textToCopy;
     document.body.appendChild(textArea);
-
     var selection = document.getSelection();
     var range = document.createRange();
     range.selectNode(textArea);
@@ -200,6 +221,7 @@ var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
 
     try {
       var successful = document.execCommand('copy');
+
       if (successful) {
         window.alert(successMsg || 'Copied to clipboard');
       } else {
@@ -213,21 +235,324 @@ var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
   }
 };
 
+var getCurrentMediaQuery = function getCurrentMediaQuery() {
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/getCurrentMediaQuery
+  return getComputedStyle(document.documentElement).getPropertyValue('--breakpoint');
+};
+
+var isBreakpoint = function isBreakpoint(bp) {
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/isBreakpoint
+  // bail if no breakpoint is passed
+  if (!bp) {
+    console.error('You need to pass a breakpoint name!');
+    return false;
+  } // we only want to look for a specific modifier and make sure it is at the end of the string
+
+
+  var pattern = new RegExp('\\+$|\\-$'); // bps must be in order from smallest to largest
+
+  var bps = ['xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge']; // override the breakpoints if the option is set on the global A17 object
+
+  if (window.A17 && window.A17.breakpoints) {
+    if (Array.isArray(window.A17.breakpoints)) {
+      bps = window.A17.breakpoints;
+    } else {
+      console.warn('A17.breakpoints should be an array. Using defaults.');
+    }
+  } // store current breakpoint in use
+
+
+  var currentBp = getCurrentMediaQuery(); // store the index of the current breakpoint
+
+  var currentBpIndex = bps.indexOf(currentBp); // check to see if bp has a + or - modifier
+
+  var hasModifier = pattern.exec(bp); // store modifier value
+
+  var modifier = hasModifier ? hasModifier[0] : false; // store the trimmed breakpoint name if a modifier exists, if not, store the full queried breakpoint name
+
+  var bpName = hasModifier ? bp.slice(0, -1) : bp; // store the index of the queried breakpoint
+
+  var bpIndex = bps.indexOf(bpName); // let people know if the breakpoint name is unrecognized
+
+  if (bpIndex < 0) {
+    console.warn('Unrecognized breakpoint. Supported breakpoints are: ' + bps.join(', '));
+    return false;
+  } // compare the modifier with the index of the current breakpoint in the bps array with the index of the queried breakpoint.
+  // if no modifier is set, compare the queried breakpoint name with the current breakpoint name
+
+
+  if (modifier === '+' && currentBpIndex >= bpIndex || modifier === '-' && currentBpIndex <= bpIndex || !modifier && bp === currentBp) {
+    return true;
+  } // the current breakpoint isn’t the one you’re looking for
+
+
+  return false;
+};
+
+var purgeProperties = function purgeProperties(obj) {
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/purgeProperties
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      delete obj[prop];
+    }
+  } // alternatives considered: https://jsperf.com/deleting-properties-from-an-object
+
+};
+
+function Behavior(node) {
+  var _this = this;
+
+  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (!node || !(node instanceof Element)) {
+    throw new Error('Node argument is required');
+  }
+
+  this.node = node;
+  this.options = Object.assign({}, config.options || {});
+  this.__subBehaviors = [];
+  this.__isEnabled = false;
+  this.__children = config.children; // Auto-bind all custom methods to "this"
+
+  this.customMethodNames.forEach(function (methodName) {
+    _this[methodName] = _this[methodName].bind(_this);
+  });
+  this._binds = {};
+  this._data = new Proxy(this._binds, {
+    set: function set(target, key, value) {
+      _this.updateBinds(key, value);
+
+      target[key] = value;
+      return true;
+    }
+  });
+  return this;
+}
+
+Behavior.prototype = Object.freeze({
+  updateBinds: function updateBinds(key, value) {
+    var _this2 = this;
+
+    // TODO: cache these before hand?
+    var targetEls = this.$node.querySelectorAll('[data-' + this.name.toLowerCase() + '-bindel*=' + key + ']');
+    targetEls.forEach(function (target) {
+      target.innerHTML = value;
+    }); // TODO: cache these before hand?
+
+    var targetAttrs = this.$node.querySelectorAll('[data-' + this.name.toLowerCase() + '-bindattr*="' + key + ':"]');
+    targetAttrs.forEach(function (target) {
+      var bindings = target.dataset[_this2.name.toLowerCase() + 'Bindattr'];
+      bindings.split(',').forEach(function (pair) {
+        pair = pair.split(':');
+
+        if (pair[0] === key) {
+          if (pair[1] === 'class') {
+            // TODO: needs to know what the initial class was to remove it - fix?
+            if (_this2._binds[key] !== value) {
+              target.classList.remove(_this2._binds[key]);
+            }
+
+            if (value) {
+              target.classList.add(value);
+            }
+          } else {
+            target.setAttribute(pair[1], value);
+          }
+        }
+      });
+    });
+  },
+  init: function init() {
+    // Get options from data attributes on node
+    var regex = new RegExp('^data-' + this.name + '-(.*)', 'i');
+
+    for (var i = 0; i < this.node.attributes.length; i++) {
+      var attr = this.node.attributes[i];
+      var matches = regex.exec(attr.nodeName);
+
+      if (matches != null && matches.length >= 2) {
+        if (this.options[matches[1]]) {
+          console.warn("Ignoring ".concat(matches[1], " option, as it already exists on the ").concat(name, " behavior. Please choose another name."));
+        }
+
+        this.options[matches[1]] = attr.value;
+      }
+    } // Behavior-specific lifecycle
+
+
+    if (this.lifecycle.init != null) {
+      this.lifecycle.init.call(this);
+    }
+
+    if (this.lifecycle.resized != null) {
+      this.__resizedBind = this.__resized.bind(this);
+      window.addEventListener('resized', this.__resizedBind);
+    }
+
+    if (this.lifecycle.mediaQueryUpdated != null || this.options.media) {
+      this.__mediaQueryUpdatedBind = this.__mediaQueryUpdated.bind(this);
+      window.addEventListener('mediaQueryUpdated', this.__mediaQueryUpdatedBind);
+    }
+
+    if (this.options.media) {
+      this.__toggleEnabled();
+    } else {
+      this.enable();
+    }
+  },
+  destroy: function destroy() {
+    if (this.__isEnabled === true) {
+      this.disable();
+    } // Behavior-specific lifecycle
+
+
+    if (this.lifecycle.destroy != null) {
+      this.lifecycle.destroy.call(this);
+    }
+
+    this.__subBehaviors.forEach(function (sub) {
+      sub.destroy();
+    });
+
+    if (this.lifecycle.resized != null) {
+      window.removeEventListener('resized', this.__resizedBind);
+    }
+
+    if (this.lifecycle.mediaQueryUpdated != null || this.options.media) {
+      window.removeEventListener('mediaQueryUpdated', this.__mediaQueryUpdatedBind);
+    }
+
+    purgeProperties(this);
+  },
+  getChild: function getChild(childName, context) {
+    var multi = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+    if (context == null) {
+      context = this.node;
+    }
+
+    if (this.__children != null && this.__children[childName] != null) {
+      return this.__children[childName];
+    }
+
+    return context[multi ? 'querySelectorAll' : 'querySelector']('[data-' + this.name.toLowerCase() + '-' + childName.toLowerCase() + ']');
+  },
+  getChildren: function getChildren(childName, context) {
+    return this.getChild(childName, context, true);
+  },
+  isEnabled: function isEnabled() {
+    return this.__isEnabled;
+  },
+  enable: function enable() {
+    this.__isEnabled = true;
+
+    if (this.lifecycle.enabled != null) {
+      this.lifecycle.enabled.call(this);
+    }
+  },
+  disable: function disable() {
+    this.__isEnabled = false;
+
+    if (this.lifecycle.disabled != null) {
+      this.lifecycle.disabled.call(this);
+    }
+  },
+  addSubBehavior: function addSubBehavior(Behavior, node) {
+    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    var subBehavior = new Behavior(node, config);
+    subBehavior.behaviorName = this.name;
+    subBehavior.init();
+
+    this.__subBehaviors.push(subBehavior);
+
+    return subBehavior;
+  },
+  __toggleEnabled: function __toggleEnabled() {
+    var isValidMQ = isBreakpoint(this.options.media);
+
+    if (isValidMQ && !this.__isEnabled) {
+      this.enable();
+    } else if (!isValidMQ && this.__isEnabled) {
+      this.disable();
+    }
+  },
+  __mediaQueryUpdated: function __mediaQueryUpdated() {
+    if (this.lifecycle.mediaQueryUpdated != null) {
+      this.lifecycle.mediaQueryUpdated.call(this);
+    }
+
+    if (this.options.media) {
+      this.__toggleEnabled();
+    }
+  },
+  __resized: function __resized() {
+    if (this.lifecycle.resized != null) {
+      this.lifecycle.resized.call(this);
+    }
+  }
+});
+
+var createBehavior = function createBehavior(name, def) {
+  var lifecycle = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var fn = function fn() {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    Behavior.apply(this, args);
+  };
+
+  var customMethodNames = [];
+  var customProperties = {
+    name: {
+      get: function get() {
+        return this.behaviorName;
+      }
+    },
+    behaviorName: {
+      value: name,
+      writable: true
+    },
+    lifecycle: {
+      value: lifecycle
+    },
+    customMethodNames: {
+      value: customMethodNames
+    }
+  }; // Expose the definition properties as 'this[methodName]'
+
+  var defKeys = Object.keys(def);
+  defKeys.forEach(function (key) {
+    customMethodNames.push(key);
+    customProperties[key] = {
+      value: def[key],
+      writable: true
+    };
+  });
+  fn.prototype = Object.create(Behavior.prototype, customProperties);
+  return fn;
+};
+
 var debounce = function debounce(func, wait, immediate) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/debounce
   var timeout;
   return function () {
     var context = this;
     var args = arguments;
+
     var later = function later() {
       timeout = null;
+
       if (!immediate) {
         func.apply(context, args);
       }
     };
+
     var callNow = immediate && !timeout;
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
+
     if (callNow) {
       func.apply(context, args);
     }
@@ -236,7 +561,6 @@ var debounce = function debounce(func, wait, immediate) {
 
 var escapeString = function escapeString(str) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/escapeString
-
   if (typeof str === 'string') {
     var div = document.createElement('div');
     var text = document.createTextNode(str.replace(/<[^>]*>?/g, ''));
@@ -249,7 +573,6 @@ var escapeString = function escapeString(str) {
 
 var extend = function extend() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/extend
-
   var obj = {};
   var i = 0;
   var argumentsLength = arguments.length;
@@ -267,14 +590,11 @@ var extend = function extend() {
 };
 
 var focusDisplayHandler = function focusDisplayHandler() {
-
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/focusDisplayHandler
-
   var attr = 'data-focus-method';
   var touch = 'touch';
   var mouse = 'mouse';
   var key = 'key';
-
   var focusMethod = false;
   var lastFocusMethod;
 
@@ -286,6 +606,7 @@ var focusDisplayHandler = function focusDisplayHandler() {
     if (focusMethod === touch) {
       return;
     }
+
     focusMethod = mouse;
   }
 
@@ -297,6 +618,7 @@ var focusDisplayHandler = function focusDisplayHandler() {
     if (!focusMethod) {
       focusMethod = lastFocusMethod;
     }
+
     if (event.target && typeof event.target.setAttribute === 'function') {
       event.target.setAttribute(attr, focusMethod);
       lastFocusMethod = focusMethod;
@@ -322,64 +644,51 @@ var focusDisplayHandler = function focusDisplayHandler() {
   window.addEventListener('blur', _onWindowBlur);
 };
 
-var setFocusOnTarget = function setFocusOnTarget(node) {
-  //https://code.area17.com/a17/a17-helpers/wikis/setFocusOnTarget
-  node.focus();
-  if (node !== document.activeElement) {
-    node.setAttribute('tabindex', '-1');
-    node.focus();
-  }
-};
-
-var focusTrap = function focusTrap() {
-
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/focusTrap
-
+function focusTrap() {
   var element;
 
   function _focus() {
     if (element) {
       if (document.activeElement !== element && !element.contains(document.activeElement)) {
-        setFocusOnTarget(element);
+        setTimeout(function () {
+          element.focus();
+
+          if (element !== document.activeElement) {
+            var focusable = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            focusable[0].focus();
+          }
+        }, 0);
       }
     } else {
-      document.removeEventListener('focus', _focus, true);
+      try {
+        document.removeEventListener('focus', _focus);
+      } catch (err) {}
     }
   }
 
   function _trap(event) {
     try {
-      document.removeEventListener('focus', _focus, true);
+      document.removeEventListener('focus', _focus);
     } catch (err) {}
 
-    if (!event && !event.data.element) {
+    if (!event && !event.detail.element) {
       return;
     }
 
-    element = event.data.element;
+    element = event.detail.element;
     document.addEventListener('focus', _focus, true);
   }
 
   function _untrap() {
-    document.removeEventListener('focus', _focus, true);
+    document.removeEventListener('focus', _focus);
     element = null;
   }
 
   document.addEventListener('focus:trap', _trap, false);
   document.addEventListener('focus:untrap', _untrap, false);
-};
+}
 
-var triggerCustomEvent = function triggerCustomEvent(el, type, data) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/triggerCustomEvent
-
-  var event = document.createEvent('HTMLEvents');
-  event.initEvent(type, true, true);
-  event.data = data || {};
-  event.eventName = type;
-  el.dispatchEvent(event);
-};
-
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -594,32 +903,28 @@ var fontfaceonload = createCommonjsModule(function (module, exports) {
 
 var fontLoadObserver = function fontLoadObserver(fonts) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/fontLoadObserver
-
-  if ((typeof fonts === 'undefined' ? 'undefined' : _typeof(fonts)).toLowerCase() !== 'object') {
+  if (_typeof(fonts).toLowerCase() !== 'object') {
     return false;
   }
 
   var counter = 0;
-  var total = fonts.variants.length;
+  var total = fonts.variants.length; // cookie name
 
-  // cookie name
-  var cookieName = 'A17_fonts_cookie_' + fonts.name;
+  var cookieName = 'A17_fonts_cookie_' + fonts.name; // check we have cookie of fonts already loaded or not
 
-  // check we have cookie of fonts already loaded or not
-  var cookie = cookieHandler.read(cookieName) || '';
+  var cookie = cookieHandler.read(cookieName) || ''; // when a fonts is determined to be loaded
 
-  // when a fonts is determined to be loaded
   function loaded() {
-    counter++;
-    // if we reached the total
+    counter++; // if we reached the total
+
     if (counter >= total) {
       document.documentElement.className += ' s-' + fonts.name + '-loaded';
       cookieHandler.create(cookieName, total, 1);
-      triggerCustomEvent(document, 'content:populated');
+      document.dispatchEvent(new CustomEvent('page:updated'));
     }
-  }
+  } // if cookie, show fonts (not first page load)
 
-  // if cookie, show fonts (not first page load)
+
   if (cookie && cookie === total.toString()) {
     counter = cookie;
     loaded();
@@ -635,32 +940,8 @@ var fontLoadObserver = function fontLoadObserver(fonts) {
   }
 };
 
-var forEach = function forEach(array, callback, scope) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/forEach
-  for (var i = 0; i < array.length; i++) {
-    callback.call(scope, i, array[i]);
-  }
-};
-
-var getCurrentMediaQuery = function getCurrentMediaQuery() {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/getCurrentMediaQuery
-
-  function parse(str) {
-    return str.replace(/'/gi, '').replace(/"/gi, '');
-  }
-
-  if (window.opera) {
-    return parse(window.getComputedStyle(document.body, ':after').getPropertyValue('content')) || 'large';
-  } else if (window.getComputedStyle) {
-    return parse(window.getComputedStyle(document.head, null).getPropertyValue('font-family')) || 'large';
-  } else {
-    return 'large';
-  }
-};
-
 var getIndex = function getIndex(node, nodeList) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/getIndex
-
   var nodes = nodeList || node.parentNode.childNodes;
   var nodesLength = nodes.length;
   var n = 0;
@@ -669,6 +950,7 @@ var getIndex = function getIndex(node, nodeList) {
     if (nodes[i] === node) {
       return n;
     }
+
     if (nodes[i].nodeType === 1) {
       n++;
     }
@@ -679,13 +961,11 @@ var getIndex = function getIndex(node, nodeList) {
 
 var getMetaContentByName = function getMetaContentByName(name) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/getMetaContentByName
-
   return document.querySelector('meta[name=\'' + name + '\']').getAttribute('content');
 };
 
 var getOffset = function getOffset(node) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/getOffset
-
   if (node) {
     var rect = node.getBoundingClientRect();
     return {
@@ -703,116 +983,62 @@ var getOffset = function getOffset(node) {
 
 var getUrlParameterByName = function getUrlParameterByName(name, url) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/getUrlParameterByName
-
   var qsObj = queryStringHandler.toObject(url || undefined);
   return qsObj[name] !== undefined ? qsObj[name] : undefined;
 };
 
-var isBreakpoint = function isBreakpoint(bp) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/isBreakpoint
-
-  // bail if no breakpoint is passed
-  if (!bp) {
-    console.error('You need to pass a breakpoint name!');
-    return false;
+function ios100vhFix() {
+  function setVh() {
+    var vh = document.documentElement.clientHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', "".concat(vh, "px"));
   }
 
-  // we only want to look for a specific modifier and make sure it is at the end of the string
-  var pattern = new RegExp('\\+$|\\-$');
-
-  // bps must be in order from smallest to largest
-  var bps = ['xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'];
-
-  // override the breakpoints if the option is set on the global A17 object
-  if (window.A17 && window.A17.breakpoints) {
-    if (Array.isArray(window.A17.breakpoints)) {
-      bps = window.A17.breakpoints;
-    } else {
-      console.warn('A17.breakpoints should be an array. Using defaults.');
-    }
-  }
-
-  // store current breakpoint in use
-  var currentBp = getCurrentMediaQuery();
-
-  // store the index of the current breakpoint
-  var currentBpIndex = bps.indexOf(currentBp);
-
-  // check to see if bp has a + or - modifier
-  var hasModifier = pattern.exec(bp);
-
-  // store modifier value
-  var modifier = hasModifier ? hasModifier[0] : false;
-
-  // store the trimmed breakpoint name if a modifier exists, if not, store the full queried breakpoint name
-  var bpName = hasModifier ? bp.slice(0, -1) : bp;
-
-  // store the index of the queried breakpoint
-  var bpIndex = bps.indexOf(bpName);
-
-  // let people know if the breakpoint name is unrecognized
-  if (bpIndex < 0) {
-    console.warn('Unrecognized breakpoint. Supported breakpoints are: ' + bps.join(', '));
-    return false;
-  }
-
-  // compare the modifier with the index of the current breakpoint in the bps array with the index of the queried breakpoint.
-  // if no modifier is set, compare the queried breakpoint name with the current breakpoint name
-  if (modifier === '+' && currentBpIndex >= bpIndex || modifier === '-' && currentBpIndex <= bpIndex || !modifier && bp === currentBp) {
-    return true;
-  }
-
-  // the current breakpoint isn’t the one you’re looking for
-  return false;
-};
+  window.addEventListener('resize', setVh);
+  setVh();
+}
 
 var jsonpRequest = function jsonpRequest(settings) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/jsonpRequest
-
   var options = settings;
-  var script = document.createElement('script');
+  var script = document.createElement('script'); // sort out the data object
 
-  // sort out the data object
   options.data = options.data || {};
-  options.data.callback = options.callback || 'callback';
+  options.data.callback = options.callback || 'callback'; // make a query string from the data objects
 
-  // make a query string from the data objects
   options.queryString = '';
+
   if (options.data !== undefined) {
     if (queryStringHandler.fromObject) {
       options.queryString = queryStringHandler.fromObject(options.data);
     } else {
       console.log('Missing: queryStringHandler.fromObject');
     }
-  }
+  } // give the script some attributes
 
-  // give the script some attributes
+
   script.type = 'text/javascript';
-  script.src = options.url + options.queryString;
+  script.src = options.url + options.queryString; // look for timeouts
 
-  // look for timeouts
   var timeout = setTimeout(function () {
     // wipe callback function
-    window[options.data.callback] = function () {};
+    window[options.data.callback] = function () {}; // run error function if specified
 
-    // run error function if specified
+
     if (_typeof(options.onError).toLowerCase() === 'function') {
       options.onError.call(this);
     }
-  }, (options.timeout || 5) * 1000);
+  }, (options.timeout || 5) * 1000); // set up the callback
 
-  // set up the callback
   window[options.data.callback] = function (data) {
     // no need to clear timeout
-    clearTimeout(timeout);
+    clearTimeout(timeout); // run success function if specified
 
-    // run success function if specified
     if (_typeof(options.onSuccess).toLowerCase() === 'function') {
       options.onSuccess.call(this, data);
     }
-  };
+  }; // append the script (or go go go!)
 
-  // append the script (or go go go!)
+
   document.getElementsByTagName('head')[0].appendChild(script);
 };
 
@@ -830,174 +1056,198 @@ var keyCodes = {
 // A A17-helperised version of: https://github.com/area17/lazyload
 // This version: v2.1.1 - 2018-04-01
 // Doc: https://code.area17.com/a17/a17-helpers/wikis/lazyload
-
 var lazyLoad = function lazyLoad(opts) {
   var options = {
-    pageUpdatedEventName: 'page:updated', // how your app tells the rest of the app an update happened
-    elements: 'img[data-src], img[data-srcset], source[data-srcset], iframe[data-src], video[data-src], [data-lazyload]', // maybe you just want images?
-    rootMargin: '0px', // IntersectionObserver option
-    threshold: 0, // IntersectionObserver option
+    pageUpdatedEventName: 'page:updated',
+    // how your app tells the rest of the app an update happened
+    elements: 'img[data-src], img[data-srcset], source[data-srcset], iframe[data-src], video[data-src], [data-lazyload]',
+    // maybe you just want images?
+    rootMargin: '0px',
+    // IntersectionObserver option
+    threshold: 0,
+    // IntersectionObserver option
     maxFrameCount: 10 // 60fps / 10 = 6 times a second
-  };
 
-  // set up
+  }; // set up
+
   var frameLoop;
   var frameCount;
   var els = [];
   var elsLength;
   var observer;
   var checkType;
-
   /**
    * Converts HTML collections to an array
    * @private
    * @param {Array} array to convert
    * a loop will work in more browsers than the slice method
    */
+
   function _htmlCollectionToArray(collection) {
     var a = [];
     var i = 0;
+
     for (a = [], i = collection.length; i;) {
       a[--i] = collection[i];
     }
+
     return a;
   }
-
   /**
    * Checks if an element is in the viewport
    * @private
    * @param {Node} element to check.
    * @returns {Boolean} true/false.
    */
+
+
   function _elInViewport(el) {
     el = el.tagName === 'SOURCE' ? el.parentNode : el;
     var rect = el.getBoundingClientRect();
     return rect.bottom > 0 && rect.right > 0 && rect.left < (window.innerWidth || document.documentElement.clientWidth) && rect.top < (window.innerHeight || document.documentElement.clientHeight);
   }
-
   /**
    * Removes data- attributes
    * @private
    * @param {Node} element to update
    */
+
+
   function _removeDataAttrs(el) {
     el.removeAttribute('data-src');
     el.removeAttribute('data-srcset');
     el.removeAttribute('data-lazyload');
   }
-
   /**
    * On loaded, removes event listener, removes data- attributes
    * @private
    */
+
+
   function _loaded() {
     this.removeEventListener('load', _loaded);
+
     _removeDataAttrs(this);
   }
-
   /**
    * Update an element
    * @private
    * @param {Node} element to update
    */
+
+
   function _updateEl(el) {
     var srcset = el.getAttribute('data-srcset');
     var src = el.getAttribute('data-src');
-    var dlazyload = el.getAttribute('data-lazyload') !== null;
-    //
+    var dlazyload = el.getAttribute('data-lazyload') !== null; //
+
     if (srcset) {
       // if source set, update and try picturefill
       el.setAttribute('srcset', srcset);
+
       if (window.picturefill) {
         window.picturefill({
           elements: [el]
         });
       }
     }
+
     if (src) {
       // if source set, update
       el.src = src;
     }
+
     if (dlazyload) {
       el.setAttribute('data-lazyloaded', '');
       el.removeEventListener('load', _loaded);
+
       _removeDataAttrs(el);
     }
   }
-
   /**
    * The callback from the IntersectionObserver
    * @private
    * @entries {Nodes} elements being observed by the IntersectionObserver
    */
+
+
   function _intersection(entries) {
     // Disconnect if we've already loaded all of the images
     if (elsLength === 0) {
       observer.disconnect();
-    }
-    // Loop through the entries
+    } // Loop through the entries
+
+
     for (var i = 0; i < entries.length; i++) {
-      var entry = entries[i];
-      // Are we in viewport?
+      var entry = entries[i]; // Are we in viewport?
+
       if (entry.intersectionRatio > 0) {
-        elsLength--;
-        // Stop watching this and load the image
+        elsLength--; // Stop watching this and load the image
+
         observer.unobserve(entry.target);
         entry.target.addEventListener('load', _loaded, false);
+
         _updateEl(entry.target);
       }
     }
   }
-
   /**
    * Loops images, checks if in viewport, updates src/src-set
    * @private
    */
+
+
   function _setSrcs() {
-    var i;
-    // browser capability check
+    var i; // browser capability check
+
     if (checkType === 'really-old') {
       elsLength = els.length;
+
       for (i = 0; i < elsLength; i++) {
         if (els[i]) {
           _updateEl(els[i]);
+
           _removeDataAttrs(els[i]);
         }
       }
+
       els = [];
     } else if (checkType === 'old') {
       // debounce checking
       if (frameCount === options.maxFrameCount) {
         // update cache of this for the loop
         elsLength = els.length;
+
         for (i = 0; i < elsLength; i++) {
           // check if this array item exists, hasn't been loaded already and is in the viewport
           if (els[i] && els[i].lazyloaded === undefined && _elInViewport(els[i])) {
             // cache this array item
-            var thisEl = els[i];
-            // set this array item to be undefined to be cleaned up later
-            els[i] = undefined;
-            // give this element a property to stop us running twice on one thing
-            thisEl.lazyloaded = true;
-            // add an event listener to remove data- attributes on load
-            thisEl.addEventListener('load', _loaded, false);
-            // update
+            var thisEl = els[i]; // set this array item to be undefined to be cleaned up later
+
+            els[i] = undefined; // give this element a property to stop us running twice on one thing
+
+            thisEl.lazyloaded = true; // add an event listener to remove data- attributes on load
+
+            thisEl.addEventListener('load', _loaded, false); // update
+
             _updateEl(thisEl);
           }
-        }
-        // clean up array
+        } // clean up array
+
+
         for (i = 0; i < elsLength; i++) {
           if (els[i] === undefined) {
             els.splice(i, 1);
           }
-        }
-        // reset var to decide if to continue running
-        elsLength = els.length;
-        // will shortly be set to 0 to start counting
-        frameCount = -1;
-      }
+        } // reset var to decide if to continue running
 
-      // run again? kill if not
+
+        elsLength = els.length; // will shortly be set to 0 to start counting
+
+        frameCount = -1;
+      } // run again? kill if not
+
+
       if (elsLength > 0) {
         frameCount++;
         frameLoop = window.requestAnimationFrame(_setSrcs);
@@ -1008,6 +1258,7 @@ var lazyLoad = function lazyLoad(opts) {
         threshold: options.threshold
       });
       elsLength = els.length;
+
       for (i = 0; i < elsLength; i++) {
         if (els[i] && els[i].lazyloaded === undefined) {
           observer.observe(els[i]);
@@ -1015,11 +1266,12 @@ var lazyLoad = function lazyLoad(opts) {
       }
     }
   }
-
   /**
    * Gets the show on the road
    * @private
    */
+
+
   function _init() {
     // kill any old loops if there are any
     if (checkType === 'old') {
@@ -1030,26 +1282,29 @@ var lazyLoad = function lazyLoad(opts) {
       try {
         observer.disconnect();
       } catch (err) {}
-    }
-    // grab elements to lazy load
+    } // grab elements to lazy load
+
+
     els = _htmlCollectionToArray(document.querySelectorAll(options.elements));
     elsLength = els.length;
-    frameCount = options.maxFrameCount;
-    // go go go
+    frameCount = options.maxFrameCount; // go go go
+
     _setSrcs();
   }
-
   /**
    * GO GO GO
    * @public
    * @param {object} options (see readme)
    */
+
+
   function _lazyLoad() {
     for (var item in opts) {
       if (opts.hasOwnProperty(item)) {
         options[item] = opts[item];
       }
     }
+
     if (!('addEventListener' in window) || !window.requestAnimationFrame || _typeof(document.body.getBoundingClientRect) === undefined) {
       checkType = 'really-old';
     } else if ('IntersectionObserver' in window) {
@@ -1057,7 +1312,9 @@ var lazyLoad = function lazyLoad(opts) {
     } else {
       checkType = 'old';
     }
+
     _init();
+
     if (options.pageUpdatedEventName) {
       document.addEventListener(options.pageUpdatedEventName, _init, true);
     }
@@ -1066,103 +1323,101 @@ var lazyLoad = function lazyLoad(opts) {
   _lazyLoad();
 };
 
-// import * as Behaviors from '../behaviors';
+function manageBehaviors(loadedBehaviorsModule) {
+  var dataAttr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'behavior';
+  var loadedBehaviorNames = Object.keys(loadedBehaviorsModule);
+  var loadedBehaviors = {};
+  var activeBehaviors = new Map();
 
-var manageBehaviors = function manageBehaviors(Behaviors, options) {
-
-  var activeBehaviors = {};
-
-  /*
-    default init listens for event 'page:updated':
-    manageBehaviors();
-     init for pjax:
-    manageBehaviors({pageUpdatedEventName:'pjax:end'});
-     init for spf:
-    manageBehaviors({pageUpdatedEventName:'spfdone'});
-  */
-
-  var idCounter = 0;
-  var pageUpdatedEventName = options && options.pageUpdatedEventName ? options.pageUpdatedEventName : 'page:updated';
-
-  function searchDomAndInitBehaviors(context) {
-    if (context === undefined) {
-      context = document;
+  function loopBehaviors(node, cb) {
+    if (!('querySelectorAll' in node)) {
+      // Ignore text or comment nodes
+      return;
     }
-    var all = context.querySelectorAll('[data-behavior]');
-    var i = -1;
-    while (all[++i]) {
-      var currentElement = all[i];
 
-      // check to see if this element has had its behaviors already initialized by looking for _A17BehaviorsActive
-      if (!currentElement._A17BehaviorsActive) {
-        //console.log('initializing behaviors for:\n', currentElement);
-        var behaviors = currentElement.getAttribute('data-behavior');
-        var splittedBehaviors = behaviors.split(' ');
-        for (var j = 0, k = splittedBehaviors.length; j < k; j++) {
-          var ThisBehavior = Behaviors[splittedBehaviors[j]];
-          if (typeof ThisBehavior !== 'undefined') {
-            try {
-              // mark the element as having its behaviors initialized
-              currentElement._A17BehaviorsActive = true;
+    var behaviorNodes = [node].concat([].slice.call(node.querySelectorAll("[data-".concat(dataAttr, "]"))));
 
-              // add this instance to the activeBehaviors object so it can be interrogated if the page is updated later
-              activeBehaviors[idCounter] = {
-                el: currentElement,
-                behavior: new ThisBehavior(currentElement),
-                name: splittedBehaviors[j]
-              };
+    var _loop = function _loop(i) {
+      var behaviorNode = behaviorNodes[i];
+      var behaviorNames = behaviorNode.dataset && behaviorNode.dataset[dataAttr] && behaviorNode.dataset[dataAttr].split(' ');
 
-              try {
-                activeBehaviors[idCounter].behavior.init();
-              } catch (err) {
-                console.warn('failed to init behavior: ', activeBehaviors[idCounter].name, '\n', err, activeBehaviors[idCounter]);
-              }
-
-              idCounter++;
-            } catch (err) {
-              console.error(err, currentElement, ThisBehavior);
-            }
-          }
-        }
+      if (behaviorNames) {
+        behaviorNames.forEach(function (name) {
+          cb(name, behaviorNode);
+        });
       }
+    };
+
+    for (var i = 0; i < behaviorNodes.length; i++) {
+      _loop(i);
     }
   }
 
-  function pageUpdated() {
-    // first check if anything was removed and clean up
-    for (var activeBehaviorObj in activeBehaviors) {
-      if (activeBehaviors.hasOwnProperty(activeBehaviorObj)) {
-        var thisBehaviorObj = activeBehaviors[activeBehaviorObj];
+  function destroyBehaviors(node) {
+    loopBehaviors(node, function (bName, bNode) {
+      var nodeBehaviors = activeBehaviors.get(bNode);
 
-        // check if the element is still there
-        if (!document.body.contains(thisBehaviorObj.el)) {
-          //console.log('element no longer exists:\n', thisBehaviorObj.name, thisBehaviorObj);
-
-          // trigger its destroy if its gone
-          try {
-            thisBehaviorObj.behavior.destroy();
-            delete activeBehaviors[activeBehaviorObj];
-          } catch (err) {
-            //console.log('failed to destroy behavior: ', thisBehaviorObj.name, '\n', err, thisBehaviorObj);
-          }
-        }
+      if (!nodeBehaviors || !nodeBehaviors[bName]) {
+        console.warn("No behavior ".concat(bName, " instance on:"), bNode);
+        return;
       }
-    }
 
-    // now look for new behaviors!
-    searchDomAndInitBehaviors();
+      nodeBehaviors[bName].destroy();
+      delete nodeBehaviors[bName];
+    });
   }
 
-  searchDomAndInitBehaviors();
-  document.addEventListener(pageUpdatedEventName, pageUpdated);
-  document.addEventListener('content:updated', function () {
-    searchDomAndInitBehaviors(event.data.el ? event.data.el : '');
+  function createBehaviors(node) {
+    loopBehaviors(node, function (bName, bNode) {
+      if (!loadedBehaviors[bName]) {
+        console.warn("No loaded behavior called ".concat(bName));
+        return;
+      }
+
+      var instance = new loadedBehaviors[bName](bNode);
+      instance.init();
+      var nodeBehaviors = activeBehaviors.get(bNode) || {};
+      nodeBehaviors[bName] = instance;
+      activeBehaviors.set(bNode, nodeBehaviors);
+    });
+  }
+
+  function observeBehaviors() {
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.removedNodes) {
+          for (var i = 0; i < mutation.removedNodes.length; i++) {
+            var node = mutation.removedNodes[i];
+            destroyBehaviors(node);
+          }
+        }
+      });
+      mutations.forEach(function (mutation) {
+        if (mutation.addedNodes) {
+          for (var i = 0; i < mutation.addedNodes.length; i++) {
+            var node = mutation.addedNodes[i];
+            createBehaviors(node);
+          }
+        }
+      });
+    });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: false,
+      characterData: false
+    });
+  }
+
+  loadedBehaviorNames.forEach(function (name) {
+    loadedBehaviors[name] = loadedBehaviorsModule[name];
   });
-};
+  createBehaviors(document);
+  observeBehaviors();
+}
 
 var messages = function messages() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/messages
-
   var target = document.querySelectorAll('[data-message-target]');
 
   if (target.length > 0) {
@@ -1206,6 +1461,7 @@ var messages = function messages() {
 
   function newMessage(data) {
     messages.push(createMessage(data.data.message, data.data.type || ''));
+
     if (!messageVisible) {
       showMessage(messages[messages.length - 1], data.data.time || false);
     } else {
@@ -1231,14 +1487,15 @@ var messages = function messages() {
 
 var objectifyForm = function objectifyForm(form) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/objectifyForm
-
   var field;
   var obj = {};
 
-  if ((typeof form === 'undefined' ? 'undefined' : _typeof(form)) === 'object' && form.nodeName === 'FORM') {
+  if (_typeof(form) === 'object' && form.nodeName === 'FORM') {
     var len = form.elements.length;
+
     for (var i = 0; i < len; i++) {
       field = form.elements[i];
+
       if (field.name && !field.disabled && field.type !== 'file' && field.type !== 'reset' && field.type !== 'submit' && field.type !== 'button') {
         if (field.type === 'select-multiple') {
           for (var j = form.elements[i].options.length - 1; j >= 0; j--) {
@@ -1252,14 +1509,15 @@ var objectifyForm = function objectifyForm(form) {
       }
     }
   }
+
   return obj;
 };
 
 var oritentationChangeFix = function oritentationChangeFix() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/oritentationChangeFix
-
   if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
     var viewportmeta = document.querySelector('meta[name="viewport"]');
+
     if (viewportmeta) {
       viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0';
       document.body.addEventListener('gesturestart', function () {
@@ -1269,161 +1527,92 @@ var oritentationChangeFix = function oritentationChangeFix() {
   }
 };
 
-var purgeProperties = function purgeProperties(obj) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/purgeProperties
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      delete obj[prop];
-    }
-  }
-};
-
 var resized = function resized() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/resized
-
   var resizeTimer;
   var mediaQuery = getCurrentMediaQuery();
+
+  if (window.A17) {
+    window.A17.currentMediaQuery = mediaQuery;
+  }
 
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
       // check media query
-      var newMediaQuery = getCurrentMediaQuery();
+      var newMediaQuery = getCurrentMediaQuery(); // tell everything resized happened
 
-      // tell everything resized happened
-      triggerCustomEvent(document, 'resized');
+      window.dispatchEvent(new CustomEvent('resized', {
+        detail: {
+          breakpoint: newMediaQuery
+        }
+      })); // if media query changed, tell everything
 
-      // if media query changed, tell everything
       if (newMediaQuery !== mediaQuery) {
-        mediaQuery = newMediaQuery;
         if (window.A17) {
           window.A17.currentMediaQuery = newMediaQuery;
         }
-        triggerCustomEvent(document, 'mediaQueryUpdated');
+
+        window.dispatchEvent(new CustomEvent('mediaQueryUpdated', {
+          detail: {
+            breakpoint: newMediaQuery,
+            prevBreakpoint: mediaQuery
+          }
+        }));
+        mediaQuery = newMediaQuery;
       }
     }, 250);
   });
 };
 
-var scrollToY = function scrollToY(options) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/scrollToY
+function responsiveImageUpdate() {
+  // Safari doesn't reassess srcset with resize
+  // see: https://bugs.webkit.org/show_bug.cgi?id=149899
+  // So on resize or ajax, it might pick a lower resolution image
+  // and never change unless you refresh the browser
+  // The fix:
+  // on resized (debounced resize) and page:updated
+  // adding an empty string to the sizes attribute
+  // which will force the engine to reassess
+  // see: https://github.com/ausi/respimagelint/issues/31#issuecomment-420441005
+  function update() {
+    var sources = document.querySelectorAll('img[srcset][sizes], source[srcset][sizes]');
 
-  var settings = {
-    el: document,
-    offset: 0,
-    duration: 250,
-    easing: 'linear'
-  };
-  var start = Date.now();
-  var from = 0;
-  var isDocument = false;
-  var easingEquations = {
-
-    // Easing functions taken from: https://gist.github.com/gre/1650294
-    // -
-    // no easing, no acceleration
-    linear: function linear(t) {
-      return t;
-    },
-
-    // accelerating from zero velocity
-    easeIn: function easeIn(t) {
-      return t * t * t;
-    },
-
-    // decelerating to zero velocity
-    easeOut: function easeOut(t) {
-      return --t * t * t + 1;
-    },
-
-    // acceleration until halfway, then deceleration
-    easeInOut: function easeInOut(t) {
-      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-    }
-  };
-  var useRequestAnimationFrame = window.requestAnimationFrame;
-  var scrollInterval;
-
-  for (var def in options) {
-    if (typeof options[def] !== 'undefined') {
-      settings[def] = options[def];
+    for (var i = 0; i < sources.length; i++) {
+      sources[i].sizes += '';
     }
   }
 
-  if (settings.el === document) {
-    isDocument = true;
-    settings.el = document.documentElement.scrollTop ? document.documentElement : document.body;
-  }
+  window.addEventListener('resized', update);
+  document.addEventListener('page:updated', update);
+}
 
-  from = settings.el.scrollTop;
-
-  if (from === settings.offset) {
-    if (_typeof(settings.onComplete).toLowerCase() === 'function') {
-      settings.onComplete.call(this);
+var scrolled = function scrolled() {
+  // Doc: https://code.area17.com/a17/a17-helpers/wikis/scrolled
+  var lastScrollPos = 0;
+  var prevScrollPos = -1;
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        lastScrollPos = window.pageYOffset;
+        document.dispatchEvent(new CustomEvent('scrolled', {
+          detail: {
+            last: lastScrollPos,
+            prev: prevScrollPos
+          }
+        }));
+        prevScrollPos = lastScrollPos;
+        ticking = false;
+      });
     }
 
-    // Prevent scrolling to the offset point if already there
-    return;
-  }
-
-  function min(a, b) {
-    return a < b ? a : b;
-  }
-
-  function cancelInterval() {
-    if (useRequestAnimationFrame) {
-      try {
-        cancelAnimationFrame(scrollInterval);
-      } catch (err) {
-        // continue execution in case cancelAnimationFrame fails
-      }
-    } else {
-      clearTimeout(scrollInterval);
-    }
-  }
-
-  function scroll() {
-    if (isDocument && from === 0) {
-      // eugh Firefox! (https://miketaylr.com/posts/2014/11/document-body-scrollTop.html)
-      document.documentElement.scrollTop = 1;
-      document.body.scrollTop = 1;
-      from = 1;
-      settings.el = document.documentElement.scrollTop ? document.documentElement : document.body;
-      requestAnimationFrame(scroll);
-    } else {
-      var currentTime = Date.now();
-      var time = min(1, (currentTime - start) / settings.duration);
-      var easedT = easingEquations[settings.easing](time);
-
-      settings.el.scrollTop = easedT * (settings.offset - from) + from;
-
-      if (time < 1) {
-        doScroll();
-      } else {
-        cancelInterval();
-        if (_typeof(settings.onComplete).toLowerCase() === 'function') {
-          settings.onComplete.call(this);
-        }
-      }
-    }
-  }
-
-  function doScroll() {
-    if (useRequestAnimationFrame) {
-      scrollInterval = requestAnimationFrame(scroll);
-    } else {
-      scrollInterval = setTimeout(function () {
-        scroll();
-      }, 1000 / 60);
-    }
-  }
-
-  doScroll();
+    ticking = true;
+  });
 };
 
 var sendEventToSegmentio = function sendEventToSegmentio() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/sentEventToSegmentio
-
   var analyticsReady = false;
   var tempStore = [];
 
@@ -1433,9 +1622,11 @@ var sendEventToSegmentio = function sendEventToSegmentio() {
         case 'track':
           analytics.track(data.name, data.properties || {});
           break;
+
         case 'page':
           analytics.page(data.category || '', data.name || '', data.properties || {});
           break;
+
         case 'identify':
           analytics.identify(data.userID || '', data.properties || {});
           break;
@@ -1460,6 +1651,7 @@ var sendEventToSegmentio = function sendEventToSegmentio() {
 
   function identify() {
     var userInfo = document.querySelector('meta[name=\'' + name + '\']').getAttribute('content');
+
     if (userInfo) {
       userInfo = userInfo.split(',');
       var identifyProps = {};
@@ -1476,7 +1668,7 @@ var sendEventToSegmentio = function sendEventToSegmentio() {
   }
 
   function init() {
-    if ((typeof analytics === 'undefined' ? 'undefined' : _typeof(analytics)) !== undefined) {
+    if ((typeof analytics === "undefined" ? "undefined" : _typeof(analytics)) !== undefined) {
       analytics.ready(function () {
         analytics.debug(false);
         analyticsReady = true;
@@ -1489,30 +1681,40 @@ var sendEventToSegmentio = function sendEventToSegmentio() {
   }
 
   document.addEventListener('analytics', function (event) {
-    pushOrStore(event.data);
+    pushOrStore(event.detail);
   });
-
   document.addEventListener('analytics_identify', identify);
-
   init();
+};
+
+var setFocusOnTarget = function setFocusOnTarget(node) {
+  //https://code.area17.com/a17/a17-helpers/wikis/setFocusOnTarget
+  node.focus();
+
+  if (node !== document.activeElement) {
+    node.setAttribute('tabindex', '-1');
+    node.focus();
+    node.removeAttribute('tabindex');
+  }
 };
 
 var a17helpers = {
   ajaxRequest: ajaxRequest,
   cookieHandler: cookieHandler,
   copyTextToClipboard: copyTextToClipboard,
+  createBehavior: createBehavior,
   debounce: debounce,
   escapeString: escapeString,
   extend: extend,
   focusDisplayHandler: focusDisplayHandler,
   focusTrap: focusTrap,
   fontLoadObserver: fontLoadObserver,
-  forEach: forEach,
   getCurrentMediaQuery: getCurrentMediaQuery,
   getIndex: getIndex,
   getMetaContentByName: getMetaContentByName,
   getOffset: getOffset,
   getUrlParameterByName: getUrlParameterByName,
+  ios100vhFix: ios100vhFix,
   isBreakpoint: isBreakpoint,
   jsonpRequest: jsonpRequest,
   keycodes: keyCodes,
@@ -1524,10 +1726,10 @@ var a17helpers = {
   purgeProperties: purgeProperties,
   queryStringHandler: queryStringHandler,
   resized: resized,
-  scrollToY: scrollToY,
+  responsiveImageUpdate: responsiveImageUpdate,
+  scrolled: scrolled,
   sendEventToSegmentio: sendEventToSegmentio,
-  setFocusOnTarget: setFocusOnTarget,
-  triggerCustomEvent: triggerCustomEvent
+  setFocusOnTarget: setFocusOnTarget
 };
 
 module.exports = a17helpers;
