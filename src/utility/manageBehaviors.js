@@ -34,7 +34,13 @@ export function manageBehaviors(loadedBehaviorsModule, dataAttr = 'behavior') {
       }
       nodeBehaviors[bName].destroy();
       delete nodeBehaviors[bName];
+      if (Object.keys(nodeBehaviors).length === 0) {
+        activeBehaviors.delete(bNode);
+      }
     });
+    if (window.A17) {
+      window.A17.activeBehaviors = activeBehaviors;
+    }
   }
 
   function createBehaviors(node) {
@@ -49,7 +55,11 @@ export function manageBehaviors(loadedBehaviorsModule, dataAttr = 'behavior') {
       const nodeBehaviors = activeBehaviors.get(bNode) || {};
       nodeBehaviors[bName] = instance;
       activeBehaviors.set(bNode, nodeBehaviors);
+
     });
+    if (window.A17) {
+      window.A17.activeBehaviors = activeBehaviors;
+    }
   }
 
   function observeBehaviors() {
