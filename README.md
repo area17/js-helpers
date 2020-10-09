@@ -54,10 +54,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 **2.0.0**
 * removes deprecated and useless utilities:
-  * manageBehaviors gone
-  * forEach gone (just use native forEach)
-  * scrollToY (just use native with options)
-  * triggerCustomEvent (use native)
+  * forEach gone (just use native [forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach))
+  * scrollToY (just use [native with options](https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo))
+  * triggerCustomEvent (use native: `node.dispatchEvent(new CustomEvent('event:name', { detail: { foo: 'bar' } }));`)
 * adds:
   * `ios100vhFix` - adds a `--1vh` CSS var to the `:root` for CSS usage to counter iOS frustrating 100vh change when the browser chrome disappears
   * `responsiveImageUpdate` - updates image `sizes` attribute on resized to make Safari recalc which source to use from the `srcset`
