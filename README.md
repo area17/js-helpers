@@ -20,7 +20,7 @@ or, cherry pick individual helpers:
 
 ### Note
 
-From v1.0.0 onwards browser support is IE11+, Safari 10+, Edge 12+, Chrome 24+ and FF 29+. If you need IE9 level support, use v0.8.4.
+From v2.0.0 onwards drops IE11 support but maintains Safari 10+, Edge 12+, Chrome 24+ and FireFox 29+ support. If you need IE11 support use v1.0.3 and if you need IE9 level support, use v0.8.4.
 
 ## Developing
 
@@ -31,10 +31,6 @@ Please make sure you run `npm run prod` after making changes. This will compile 
 ### .editorconfig
 
 Download the editor config plugin for your text editor: [http://editorconfig.org/#download](http://editorconfig.org/#download)
-
-### no jQuery
-
-Intentionally vanilla JS to keep this JS library agnostic.
 
 ### Tests
 
@@ -55,6 +51,22 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 * Have a 🍦
 
 ## Update Log
+
+**2.0.0**
+* removes deprecated and useless utilities:
+  * forEach gone (just use native [forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach))
+  * scrollToY (just use [native with options](https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollTo))
+  * triggerCustomEvent (use native: `node.dispatchEvent(new CustomEvent('event:name', { detail: { foo: 'bar' } }));`)
+* adds:
+  * `ios100vhFix` - adds a `--1vh` CSS var to the `:root` for CSS usage to counter iOS frustrating 100vh change when the browser chrome disappears
+  * `responsiveImageUpdate` - updates image `sizes` attribute on resized to make Safari recalc which source to use from the `srcset`
+  * `manageBehaviors` and `createBehavior` from the boilerplate to create and manage behaviors, this version has the initial data bindings development
+* updates to:
+  * `setFocusOnTarget`
+  * `resized` to sends breakpoint info on resized and sets current media query on load
+  * `getCurrentMediaQuery` reads breakpoint info from a CSS variable `--breakpoint`
+  * `focusTrap` gets cleaned up
+  * `ajaxRequest` can now send JSON forms
 
 **1.0.3**
 * query string character replacement updated in `.fromObject()` in `queryStringHandler` to match `fixedEncodeURIComponent` at [MDN:encodeURIComponent](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent)

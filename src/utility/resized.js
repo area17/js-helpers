@@ -5,6 +5,9 @@ var resized = function() {
 
   var resizeTimer;
   var mediaQuery = getCurrentMediaQuery();
+  if (window.A17) {
+    window.A17.currentMediaQuery = mediaQuery;
+  }
 
   window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
@@ -13,15 +16,24 @@ var resized = function() {
       var newMediaQuery = getCurrentMediaQuery();
 
       // tell everything resized happened
-      window.dispatchEvent(new CustomEvent('resized'));
+      window.dispatchEvent(new CustomEvent('resized', {
+        detail: {
+          breakpoint: newMediaQuery
+        }
+      }));
 
       // if media query changed, tell everything
       if (newMediaQuery !== mediaQuery) {
-        mediaQuery = newMediaQuery;
         if (window.A17) {
           window.A17.currentMediaQuery = newMediaQuery;
         }
-        window.dispatchEvent(new CustomEvent('mediaQueryUpdated'));
+        window.dispatchEvent(new CustomEvent('mediaQueryUpdated', {
+          detail: {
+            breakpoint: newMediaQuery,
+            prevBreakpoint: mediaQuery
+          }
+        }));
+        mediaQuery = newMediaQuery;
       }
     }, 250);
   });

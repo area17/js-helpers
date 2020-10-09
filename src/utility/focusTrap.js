@@ -1,36 +1,40 @@
-import setFocusOnTarget from './setFocusOnTarget';
+export function focusTrap() {
 
-var focusTrap = function() {
-
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/focusTrap
-
-  var element;
+  let element;
 
   function _focus() {
     if (element) {
       if (document.activeElement !== element && !element.contains(document.activeElement)) {
-        setFocusOnTarget(element);
+        setTimeout(function(){
+          element.focus();
+          if (element !== document.activeElement) {
+            let focusable = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            focusable[0].focus();
+          }
+        }, 0)
       }
     } else {
-      document.removeEventListener('focus', _focus, true);
+      try {
+        document.removeEventListener('focus', _focus);
+      } catch(err) {}
     }
   }
 
   function _trap(event) {
     try {
-      document.removeEventListener('focus', _focus, true);
+      document.removeEventListener('focus', _focus);
     } catch(err) {}
 
-    if (!event && !event.data.element) {
+    if (!event && !event.detail.element) {
       return;
     }
 
-    element = event.data.element;
+    element = event.detail.element;
     document.addEventListener('focus', _focus, true);
   }
 
   function _untrap() {
-    document.removeEventListener('focus', _focus, true);
+    document.removeEventListener('focus', _focus);
     element = null;
   }
 

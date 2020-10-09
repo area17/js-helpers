@@ -66,7 +66,7 @@ var sendEventToSegmentio = function() {
   }
 
   document.addEventListener('analytics', function(event) {
-    pushOrStore(event.data);
+    pushOrStore(event.detail);
   });
 
   document.addEventListener('analytics_identify', identify);
