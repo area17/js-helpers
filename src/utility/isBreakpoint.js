@@ -13,7 +13,7 @@ var isBreakpoint = function(bp) {
   let pattern = new RegExp('\\+$|\\-$');
 
   // bps must be in order from smallest to largest
-  let bps = ['xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge'];
+  let bps = ['xs', 'md', 'lg', 'xl', 'xxl'];
 
   // override the breakpoints if the option is set on the global A17 object
   if( window.A17 && window.A17.breakpoints ){

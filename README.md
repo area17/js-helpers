@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**2.0.1**
+* updates `isBreakpoint` breakpoints to use shorthand breakpoint names: `'xs', 'md', 'lg', 'xl', 'xxl'` (in line with A17 boilerplate 7.1.0 and A17 Tailwind plugins)
+
 **2.0.0**
 * removes deprecated and useless utilities:
   * forEach gone (just use native [forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach))
