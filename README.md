@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**2.0.2**
+* `resized` helper updated to capture current media query being `""`
+
 **2.0.1**
 * updates `isBreakpoint` breakpoints to use shorthand breakpoint names: `'xs', 'md', 'lg', 'xl', 'xxl'` (in line with A17 boilerplate 7.1.0 and A17 Tailwind plugins)
 
