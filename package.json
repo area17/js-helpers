@@ -1,6 +1,6 @@
 {
   "name": "@area17/a17-helpers",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "A js helper package",
   "main": "index.js",
   "scripts": {
@@ -20,21 +20,21 @@
     "jsdom": "11.11.0",
     "jsdom-global": "3.0.2",
     "mocha": "^5.1.1",
-    "rollup": "^2.10.9",
+    "rollup": "^2.49.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
-    "@babel/core": "^7.10.0",
-    "@babel/plugin-external-helpers": "^7.8.3",
-    "@babel/plugin-transform-classes": "^7.9.5",
-    "@babel/plugin-transform-runtime": "^7.10.0",
-    "@babel/preset-env": "^7.10.0",
-    "@babel/runtime": "^7.10.0",
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-external-helpers": "^7.12.13",
+    "@babel/plugin-transform-classes": "^7.14.2",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/runtime": "^7.14.0",
     "babel-cli": "^6.26.0",
-    "babel-jest": "^26.0.1",
+    "babel-jest": "^26.6.3",
     "fontfaceonload": "^1.0.2",
-    "jest": "^24.9.0"
+    "jest": "^26.6.3"
   }
 }
