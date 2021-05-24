@@ -29,6 +29,7 @@ import responsiveImageUpdate from './utility/responsiveImageUpdate';
 import scrolled from './utility/scrolled.js';
 import sendEventToSegmentio from './utility/sendEventToSegmentio.js';
 import setFocusOnTarget from './utility/setFocusOnTarget';
+import Store from './utility/store';
 
 
 const a17helpers = {
@@ -62,7 +63,8 @@ const a17helpers = {
   responsiveImageUpdate,
   scrolled,
   sendEventToSegmentio,
-  setFocusOnTarget
+  setFocusOnTarget,
+  Store
 };
 
 export default a17helpers;

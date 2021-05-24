@@ -16,6 +16,28 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
 var queryStringHandler = {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-toObject
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-fromObject
@@ -237,7 +259,7 @@ var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
 
 var getCurrentMediaQuery = function getCurrentMediaQuery() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/getCurrentMediaQuery
-  return getComputedStyle(document.documentElement).getPropertyValue('--breakpoint');
+  return getComputedStyle(document.documentElement).getPropertyValue('--breakpoint').trim();
 };
 
 var isBreakpoint = function isBreakpoint(bp) {
@@ -251,7 +273,7 @@ var isBreakpoint = function isBreakpoint(bp) {
 
   var pattern = new RegExp('\\+$|\\-$'); // bps must be in order from smallest to largest
 
-  var bps = ['xsmall', 'small', 'medium', 'large', 'xlarge', 'xxlarge']; // override the breakpoints if the option is set on the global A17 object
+  var bps = ['xs', 'md', 'lg', 'xl', 'xxl']; // override the breakpoints if the option is set on the global A17 object
 
   if (window.A17 && window.A17.breakpoints) {
     if (Array.isArray(window.A17.breakpoints)) {
@@ -308,7 +330,7 @@ function Behavior(node) {
     throw new Error('Node argument is required');
   }
 
-  this.node = node;
+  this.$node = node;
   this.options = Object.assign({}, config.options || {});
   this.__subBehaviors = [];
   this.__isEnabled = false;
@@ -366,8 +388,8 @@ Behavior.prototype = Object.freeze({
     // Get options from data attributes on node
     var regex = new RegExp('^data-' + this.name + '-(.*)', 'i');
 
-    for (var i = 0; i < this.node.attributes.length; i++) {
-      var attr = this.node.attributes[i];
+    for (var i = 0; i < this.$node.attributes.length; i++) {
+      var attr = this.$node.attributes[i];
       var matches = regex.exec(attr.nodeName);
 
       if (matches != null && matches.length >= 2) {
@@ -428,7 +450,7 @@ Behavior.prototype = Object.freeze({
     var multi = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
     if (context == null) {
-      context = this.node;
+      context = this.$node;
     }
 
     if (this.__children != null && this.__children[childName] != null) {
@@ -1364,7 +1386,15 @@ function manageBehaviors(loadedBehaviorsModule) {
 
       nodeBehaviors[bName].destroy();
       delete nodeBehaviors[bName];
+
+      if (Object.keys(nodeBehaviors).length === 0) {
+        activeBehaviors["delete"](bNode);
+      }
     });
+
+    if (window.A17) {
+      window.A17.activeBehaviors = activeBehaviors;
+    }
   }
 
   function createBehaviors(node) {
@@ -1380,6 +1410,10 @@ function manageBehaviors(loadedBehaviorsModule) {
       nodeBehaviors[bName] = instance;
       activeBehaviors.set(bNode, nodeBehaviors);
     });
+
+    if (window.A17) {
+      window.A17.activeBehaviors = activeBehaviors;
+    }
   }
 
   function observeBehaviors() {
@@ -1532,37 +1566,41 @@ var resized = function resized() {
   var resizeTimer;
   var mediaQuery = getCurrentMediaQuery();
 
-  if (window.A17) {
-    window.A17.currentMediaQuery = mediaQuery;
+  function informApp() {
+    // check media query
+    var newMediaQuery = getCurrentMediaQuery(); // tell everything resized happened
+
+    window.dispatchEvent(new CustomEvent('resized', {
+      detail: {
+        breakpoint: newMediaQuery
+      }
+    })); // if media query changed, tell everything
+
+    if (newMediaQuery !== mediaQuery) {
+      if (window.A17) {
+        window.A17.currentMediaQuery = newMediaQuery;
+      }
+
+      window.dispatchEvent(new CustomEvent('mediaQueryUpdated', {
+        detail: {
+          breakpoint: newMediaQuery,
+          prevBreakpoint: mediaQuery
+        }
+      }));
+      mediaQuery = newMediaQuery;
+    }
   }
 
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
-      // check media query
-      var newMediaQuery = getCurrentMediaQuery(); // tell everything resized happened
-
-      window.dispatchEvent(new CustomEvent('resized', {
-        detail: {
-          breakpoint: newMediaQuery
-        }
-      })); // if media query changed, tell everything
-
-      if (newMediaQuery !== mediaQuery) {
-        if (window.A17) {
-          window.A17.currentMediaQuery = newMediaQuery;
-        }
-
-        window.dispatchEvent(new CustomEvent('mediaQueryUpdated', {
-          detail: {
-            breakpoint: newMediaQuery,
-            prevBreakpoint: mediaQuery
-          }
-        }));
-        mediaQuery = newMediaQuery;
-      }
-    }, 250);
+    resizeTimer = setTimeout(informApp, 250);
   });
+
+  if (mediaQuery === '') {
+    window.requestAnimationFrame(informApp);
+  } else if (window.A17) {
+    window.A17.currentMediaQuery = mediaQuery;
+  }
 };
 
 function responsiveImageUpdate() {
@@ -1698,6 +1736,163 @@ var setFocusOnTarget = function setFocusOnTarget(node) {
   }
 };
 
+/*
+  Based on of Beedle.js (with an unsubscribe mechanism inspired bv vuex)
+  https://github.com/andy-piccalilli/beedle
+
+  A demo is available here : http://bp7store.dev.area17.com/
+*/
+var Store = /*#__PURE__*/function () {
+  function Store(params) {
+    _classCallCheck(this, Store);
+
+    var self = this; // Add some default objects to hold our actions, mutations and state
+
+    self.actions = {};
+    self.mutations = {};
+    self.state = {}; // A status enum to set during actions and mutations
+
+    self.status = 'resting'; // We store callbacks for when the state changes in here
+
+    self.callbacks = []; // Look in the passed params object for actions and mutations
+    // that might have been passed in
+
+    if (params.hasOwnProperty('actions')) {
+      self.actions = params.actions;
+    }
+
+    if (params.hasOwnProperty('mutations')) {
+      self.mutations = params.mutations;
+    } // Set our state to be a Proxy. We are setting the default state by
+    // checking the params and defaulting to an empty object if no default
+    // state is passed in
+
+
+    self.state = new Proxy(params.initialState || {}, {
+      set: function set(state, key, value) {
+        // Set the value as we would normally
+        state[key] = value; // Fire off our callback processor because if there's listeners,
+        // they're going to want to know that something has changed
+
+        self.processCallbacks(self.state); // Reset the status ready for the next operation
+
+        self.status = 'resting';
+        return true;
+      }
+    });
+  }
+  /**
+   * A dispatcher for actions that looks in the actions
+   * collection and runs the action if it can find it
+   *
+   * @param {string} actionKey
+   * @param {mixed} payload
+   * @returns {boolean}
+   * @memberof Store
+   */
+
+
+  _createClass(Store, [{
+    key: "dispatch",
+    value: function dispatch(actionKey, payload) {
+      var self = this; // Run a quick check to see if the action actually exists
+      // before we try to run it
+
+      if (typeof self.actions[actionKey] !== 'function') {
+        console.error("Action \"".concat(actionKey, "\" doesn't exist."));
+        return false;
+      } // Let anything that's watching the status know that we're dispatching an action
+
+
+      self.status = 'action'; // Actually call the action and pass it the Store context and whatever payload was passed
+
+      return self.actions[actionKey](self, payload);
+    }
+    /**
+     * Look for a mutation and modify the state object
+     * if that mutation exists by calling it
+     *
+     * @param {string} mutationKey
+     * @param {mixed} payload
+     * @returns {boolean}
+     * @memberof Store
+     */
+
+  }, {
+    key: "commit",
+    value: function commit(mutationKey, payload) {
+      var self = this; // Run a quick check to see if this mutation actually exists
+      // before trying to run it
+
+      if (typeof self.mutations[mutationKey] !== 'function') {
+        console.error("Mutation \"".concat(mutationKey, "\" doesn't exist"));
+        return false;
+      } // Let anything that's watching the status know that we're mutating state
+
+
+      self.status = 'mutation'; // Get a new version of the state by running the mutation and storing the result of it
+
+      var newState = self.mutations[mutationKey](self.state, payload); // Update the old state with the new state returned from our mutation
+
+      self.state = newState;
+      return true;
+    }
+    /**
+     * Fire off each callback that's run whenever the state changes
+     * We pass in some data as the one and only parameter.
+     * Returns a boolean depending if callbacks were found or not
+     *
+     * @param {object} data
+     * @returns {boolean}
+     */
+
+  }, {
+    key: "processCallbacks",
+    value: function processCallbacks(data) {
+      var self = this;
+
+      if (!self.callbacks.length) {
+        return false;
+      } // We've got callbacks, so loop each one and fire it off
+
+
+      self.callbacks.forEach(function (callback) {
+        return callback(data);
+      });
+      return true;
+    }
+    /**
+     * Allow an outside entity to subscribe to state changes with a valid callback.
+     * Returns boolean based on wether or not the callback was added to the collection
+     *
+     * @param {function} callback
+     * @returns {boolean}
+     */
+
+  }, {
+    key: "subscribe",
+    value: function subscribe(callback) {
+      var self = this;
+
+      if (typeof callback !== 'function') {
+        console.error('You can only subscribe to Store changes with a valid function');
+        return false;
+      } // A valid function, so it belongs in our collection
+
+
+      self.callbacks.push(callback);
+      var callbacksForUnsubscribe = self.callbacks; // Return a function to unsubscribe the callback
+
+      return function unsubscribe() {
+        var index = callbacksForUnsubscribe.indexOf(callback);
+        callbacksForUnsubscribe.splice(index, 1);
+      };
+    }
+  }]);
+
+  return Store;
+}();
+
 var a17helpers = {
   ajaxRequest: ajaxRequest,
   cookieHandler: cookieHandler,
@@ -1729,7 +1924,8 @@ var a17helpers = {
   responsiveImageUpdate: responsiveImageUpdate,
   scrolled: scrolled,
   sendEventToSegmentio: sendEventToSegmentio,
-  setFocusOnTarget: setFocusOnTarget
+  setFocusOnTarget: setFocusOnTarget,
+  Store: Store
 };
 
 module.exports = a17helpers;
