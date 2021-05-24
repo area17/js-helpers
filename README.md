@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**2.1.1**
+* `store.js` add better comment on this utility
+
 **2.1.0**
 * `store.js` add new tiny library to help you manage state across your application. Inspired by great libraries like Vuex and Redux and based on Beedle. For more informations, see demo : http://bp7store.dev.area17.com/
 

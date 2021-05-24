@@ -1863,10 +1863,16 @@ var Store = /*#__PURE__*/function () {
     }
     /**
      * Allow an outside entity to subscribe to state changes with a valid callback.
-     * Returns boolean based on wether or not the callback was added to the collection
+     * Returns a function to later unsubscribe
+     *
+     * Subscribe :
+     * const unsubscribe = store.subscribe(render)
+     *
+     * Unsubscribe :
+     * unsubscribe();
      *
      * @param {function} callback
-     * @returns {boolean}
+     * @returns {function}
      */
 
   }, {
