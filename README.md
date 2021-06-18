@@ -52,6 +52,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**2.1.2**
+* `queryStringHandler` : dont replace plus signs from query strings
+
 **2.1.1**
 * `store.js` add better comment on this utility
 
