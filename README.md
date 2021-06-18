@@ -18,6 +18,10 @@ or, cherry pick individual helpers:
 
     import { getCurrentMediaQuery, resized } from '@area17/a17-helpers'
 
+If your project as Babel or any Javascript compiler, for smaller builds you should import helpers individually:
+
+    import ios100vhFix from '@area17/a17-helpers/src/utility/ios100vhFix'
+
 ### Note
 
 From v2.0.0 onwards drops IE11 support but maintains Safari 10+, Edge 12+, Chrome 24+ and FireFox 29+ support. If you need IE11 support use v1.0.3 and if you need IE9 level support, use v0.8.4.
@@ -51,6 +55,9 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 * Have a 🍦
 
 ## Update Log
+
+**2.1.3**
+* Update Production bundle
 
 **2.1.2**
 * `queryStringHandler` : dont replace plus signs from query strings

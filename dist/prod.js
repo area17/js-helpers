@@ -72,7 +72,7 @@ var queryStringHandler = {
 
         queryString += (count > 0 ? '&' : '') + key + '=' + encodeURIComponent(obj[key]).replace(/[!'()*]/g, function (c) {
           return '%' + c.charCodeAt(0).toString(16);
-        }).replace(/%2B/ig, '+');
+        });
         count++;
       }
     }
