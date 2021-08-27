@@ -56,6 +56,10 @@ Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), c
 
 ## Update Log
 
+**2.1.4**
+* `getCurrentMediaQuery` now replaces out " in returned current breakpoint CSS variable
+* `isBreakpoint` can now accept a list of breakpoints to check against (doesn't need a global)
+
 **2.1.3**
 * Update Production bundle
 

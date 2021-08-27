@@ -259,27 +259,36 @@ var copyTextToClipboard = function copyTextToClipboard(textToCopy, successMsg) {
 
 var getCurrentMediaQuery = function getCurrentMediaQuery() {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/getCurrentMediaQuery
-  return getComputedStyle(document.documentElement).getPropertyValue('--breakpoint').trim();
+  return getComputedStyle(document.documentElement).getPropertyValue('--breakpoint').trim().replace(/"/g, '');
 };
 
-var isBreakpoint = function isBreakpoint(bp) {
+var isBreakpoint = function isBreakpoint(breakpoint, breakpoints) {
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/isBreakpoint
   // bail if no breakpoint is passed
-  if (!bp) {
+  if (!breakpoint) {
     console.error('You need to pass a breakpoint name!');
     return false;
   } // we only want to look for a specific modifier and make sure it is at the end of the string
 
 
-  var pattern = new RegExp('\\+$|\\-$'); // bps must be in order from smallest to largest
+  var regExp = new RegExp('\\+$|\\-$'); // bps must be in order from smallest to largest
 
-  var bps = ['xs', 'md', 'lg', 'xl', 'xxl']; // override the breakpoints if the option is set on the global A17 object
+  var bps = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl']; // override the breakpoints if the option is set on the global A17 object
 
   if (window.A17 && window.A17.breakpoints) {
     if (Array.isArray(window.A17.breakpoints)) {
       bps = window.A17.breakpoints;
     } else {
       console.warn('A17.breakpoints should be an array. Using defaults.');
+    }
+  } // override the breakpoints if a set of breakpoints is passed through as a parameter (added for A17-behaviors to allow usage with no globals)
+
+
+  if (breakpoints) {
+    if (Array.isArray(breakpoints)) {
+      bps = breakpoints;
+    } else {
+      console.warn('isBreakpoint breakpoints should be an array. Using defaults.');
     }
   } // store current breakpoint in use
 
@@ -288,11 +297,11 @@ var isBreakpoint = function isBreakpoint(bp) {
 
   var currentBpIndex = bps.indexOf(currentBp); // check to see if bp has a + or - modifier
 
-  var hasModifier = pattern.exec(bp); // store modifier value
+  var hasModifier = regExp.exec(breakpoint); // store modifier value
 
   var modifier = hasModifier ? hasModifier[0] : false; // store the trimmed breakpoint name if a modifier exists, if not, store the full queried breakpoint name
 
-  var bpName = hasModifier ? bp.slice(0, -1) : bp; // store the index of the queried breakpoint
+  var bpName = hasModifier ? breakpoint.slice(0, -1) : breakpoint; // store the index of the queried breakpoint
 
   var bpIndex = bps.indexOf(bpName); // let people know if the breakpoint name is unrecognized
 
@@ -303,7 +312,7 @@ var isBreakpoint = function isBreakpoint(bp) {
   // if no modifier is set, compare the queried breakpoint name with the current breakpoint name
 
 
-  if (modifier === '+' && currentBpIndex >= bpIndex || modifier === '-' && currentBpIndex <= bpIndex || !modifier && bp === currentBp) {
+  if (modifier === '+' && currentBpIndex >= bpIndex || modifier === '-' && currentBpIndex <= bpIndex || !modifier && breakpoint === currentBp) {
     return true;
   } // the current breakpoint isn’t the one you’re looking for
 
