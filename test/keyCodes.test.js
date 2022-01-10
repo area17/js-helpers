@@ -1,4 +1,4 @@
-import keycodes from './../src/utility/keycodes';
+import keycodes from './../src/keycodes';
 
 describe('keycodes utility', () => {
   it('exists', () => {

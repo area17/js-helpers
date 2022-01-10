@@ -1,4 +1,4 @@
-import lazyLoad from './../src/utility/lazyLoad';
+import lazyLoad from './../src/lazyLoad';
 
 describe('lazyLoad utility', () => {
   it('exists', () => {

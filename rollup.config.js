@@ -1,18 +1,21 @@
-import babel from 'rollup-plugin-babel';
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import nodeResolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 
-export default {
-  input: 'src/index.js',
-  output: {
-    file: 'dist/prod.js',
-    format: 'cjs'
-  },
-  plugins: [
-    resolve(),
-    commonjs(),
-    babel({
-      exclude: 'node_modules/**' // only transpile our source code
-    })
-  ]
-};
+export default [
+  {
+    input: 'src/index.js',
+    plugins: [nodeResolve(), commonjs()],
+    output: [
+      {
+        dir: 'dist/esm',
+        format: 'esm',
+        exports: 'named'
+      },
+      {
+        dir: 'dist/cjs',
+        format: 'cjs',
+        exports: 'named'
+      }
+    ]
+  }
+]

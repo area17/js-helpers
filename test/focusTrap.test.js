@@ -1,4 +1,4 @@
-import focusTrap from './../src/utility/focusTrap';
+import focusTrap from './../src/focusTrap';
 
 // set up some html
 const setUpHtml = () => {

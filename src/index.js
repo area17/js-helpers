@@ -1,42 +1,39 @@
-import ajaxRequest from './utility/ajaxRequest.js';
-import cookieHandler from './utility/cookieHandler.js';
-import copyTextToClipboard from './utility/copyTextToClipboard';
-import createBehavior from './utility/createBehavior';
-import debounce from './utility/debounce';
-import escapeString from './utility/escapeString.js';
-import extend from './utility/extend.js';
-import focusDisplayHandler from './utility/focusDisplayHandler';
-import focusTrap from './utility/focusTrap';
-import fontLoadObserver from './utility/fontLoadObserver';
-import getCurrentMediaQuery from './utility/getCurrentMediaQuery.js';
-import getIndex from './utility/getIndex.js';
-import getMetaContentByName from './utility/getMetaContentByName.js';
-import getOffset from './utility/getOffset.js';
-import getUrlParameterByName from './utility/getUrlParameterByName.js';
-import ios100vhFix from './utility/ios100vhFix';
-import isBreakpoint from './utility/isBreakpoint.js';
-import jsonpRequest from './utility/jsonpRequest.js';
-import keycodes from './utility/keycodes.js';
-import lazyLoad from './utility/lazyLoad';
-import manageBehaviors from './utility/manageBehaviors.js';
-import messages from './utility/messages.js';
-import objectifyForm from './utility/objectifyForm.js';
-import oritentationChangeFix from './utility/oritentationChangeFix.js';
-import purgeProperties from './utility/purgeProperties.js';
-import queryStringHandler from './utility/queryStringHandler';
-import resized from './utility/resized.js';
-import responsiveImageUpdate from './utility/responsiveImageUpdate';
-import scrolled from './utility/scrolled.js';
-import sendEventToSegmentio from './utility/sendEventToSegmentio.js';
-import setFocusOnTarget from './utility/setFocusOnTarget';
-import Store from './utility/store';
+import ajaxRequest from './ajaxRequest.js';
+import cookieHandler from './cookieHandler.js';
+import copyTextToClipboard from './copyTextToClipboard';
+import debounce from './debounce';
+import escapeString from './escapeString.js';
+import extend from './extend.js';
+import focusDisplayHandler from './focusDisplayHandler';
+import focusTrap from './focusTrap';
+import fontLoadObserver from './fontLoadObserver';
+import getCurrentMediaQuery from './getCurrentMediaQuery.js';
+import getIndex from './getIndex.js';
+import getMetaContentByName from './getMetaContentByName.js';
+import getOffset from './getOffset.js';
+import getUrlParameterByName from './getUrlParameterByName.js';
+import ios100vhFix from './ios100vhFix';
+import isBreakpoint from './isBreakpoint.js';
+import jsonpRequest from './jsonpRequest.js';
+import keycodes from './keycodes.js';
+import lazyLoad from './lazyLoad';
+import messages from './messages.js';
+import objectifyForm from './objectifyForm.js';
+import oritentationChangeFix from './oritentationChangeFix.js';
+import purgeProperties from './purgeProperties.js';
+import queryStringHandler from './queryStringHandler';
+import resized from './resized.js';
+import responsiveImageUpdate from './responsiveImageUpdate';
+import scrolled from './scrolled.js';
+import sendEventToSegmentio from './sendEventToSegmentio.js';
+import setFocusOnTarget from './setFocusOnTarget';
+import Store from './store';
 
 
 const a17helpers = {
   ajaxRequest,
   cookieHandler,
   copyTextToClipboard,
-  createBehavior,
   debounce,
   escapeString,
   extend,
@@ -53,7 +50,6 @@ const a17helpers = {
   jsonpRequest,
   keycodes,
   lazyLoad,
-  manageBehaviors,
   messages,
   objectifyForm,
   oritentationChangeFix,

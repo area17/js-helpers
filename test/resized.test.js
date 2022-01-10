@@ -1,6 +1,6 @@
-import resized from './../src/utility/resized';
+import resized from './../src/resized';
 
-jest.mock('./../src/utility/getCurrentMediaQuery.js', () =>
+jest.mock('./../src/getCurrentMediaQuery.js', () =>
   jest
     .fn(() => 'default')
     .mockImplementationOnce(() => 'first call')

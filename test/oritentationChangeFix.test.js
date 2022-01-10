@@ -1,4 +1,4 @@
-import oritentationChangeFix from './../src/utility/oritentationChangeFix';
+import oritentationChangeFix from './../src/oritentationChangeFix';
 
 describe('oritentationChangeFix utility', () => {
   it('exists', () => {

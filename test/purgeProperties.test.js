@@ -1,4 +1,4 @@
-import purgeProperties from './../src/utility/purgeProperties';
+import purgeProperties from './../src/purgeProperties';
 
 describe('purge props', () => {
   it('exists', () => {

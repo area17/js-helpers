@@ -1,4 +1,4 @@
-import getUrlParameterByName from './../src/utility/getUrlParameterByName';
+import getUrlParameterByName from './../src/getUrlParameterByName';
 
 describe('queryStringHandler utility', () => {
   it('exists', () => {

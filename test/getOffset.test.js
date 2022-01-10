@@ -1,4 +1,4 @@
-import getOffset from './../src/utility/getOffset';
+import getOffset from './../src/getOffset';
 
 // set up some html
 const setUpHtml = () => {
