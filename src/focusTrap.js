@@ -1,4 +1,4 @@
-export function focusTrap() {
+var focusTrap = function () {
 
   let element;
 
@@ -42,4 +42,4 @@ export function focusTrap() {
   document.addEventListener('focus:untrap', _untrap, false);
 };
 
-export focusTrap;
+export default focusTrap;
