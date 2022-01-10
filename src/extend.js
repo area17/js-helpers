@@ -18,4 +18,4 @@ var extend = function () {
 
 };
 
-export default extend;
+export extend;

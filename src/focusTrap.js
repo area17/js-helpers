@@ -42,4 +42,4 @@ export function focusTrap() {
   document.addEventListener('focus:untrap', _untrap, false);
 };
 
-export default focusTrap;
+export focusTrap;

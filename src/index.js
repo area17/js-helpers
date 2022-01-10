@@ -1,3 +1,4 @@
+/*
 import ajaxRequest from './ajaxRequest.js';
 import cookieHandler from './cookieHandler.js';
 import copyTextToClipboard from './copyTextToClipboard';
@@ -64,3 +65,10 @@ const a17helpers = {
 };
 
 export default a17helpers;
+
+*/
+
+import extend from './extend.js';
+import focusTrap from './focusTrap';
+
+export { extend, focusTrap };
