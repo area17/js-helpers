@@ -3,15 +3,13 @@
   "version": "3.0.0",
   "description": "A js helper package",
   "scripts": {
-    "test": "jest --watchAll",
-    "jest": "jest --watchAll"
+    "test": "jest --watchAll"
   },
   "repository": {
     "type": "git",
     "url": "https://code.area17.com/a17/a17-helpers"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "main": "src/index.js",
   "author": "A17 <dev@area17.com> (https://area17.com/)",
   "license": "MIT",
   "devDependencies": {
