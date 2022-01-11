@@ -15,17 +15,41 @@ Originally written as we transitioned away from using jQuery and now just a usef
 $ npm install @area17/a17-helpers
 ```
 
-Import into your JavaScript by:
+Import all helpers into your JavaScript by:
 
 ```JavaScript
 import helpers from '@area17/a17-helpers';
 ```
 
-or, cherry pick individual helpers:
+or, cherry pick individual helpers by either:
 
 ```JavaScript
-import ios100vhFix from '@area17/a17-helpers/src/utility/ios100vhFix'
+import { extend } from '@area17/a17-helpers';
 ```
+
+or:
+
+```JavaScript
+import extend from '@area17/a17-helpers/src/extend';
+```
+
+And then use the helper:
+
+```JavaScript
+const obj1 = { foo: "bar", qux: "foobar" };
+const obj2 = { foo: "baz" };
+const merged_obj = extend(obj1, obj2);
+```
+
+### Whats the difference?
+
+Importing from `@area17/a17-helpers` with either `import helpers from '@area17/a17-helpers'` or `import { extend } from '@area17/a17-helpers'` will bring in _all_ the JS helpers into your bundle and then you will need to use tree shaking in either Webpack or Rollup to remove helpers you don't use.
+
+Cherry picking from the source file will bring in _just_ the chosen helper and so you won't need to tree shake your production builds.
+
+If you are using Webpack to compile your code and you are using it in production mode, it is likely doing this treeshaking and removing unused code for you automatically.
+
+## Major reversion notes:
 
 ### v2.0.0+
 
