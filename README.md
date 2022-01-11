@@ -53,7 +53,8 @@ AREA 17 is dedicated to building a welcoming, diverse, safe community. We expect
 
 Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), currently living in `test/test.js`. To run:
 
-    $ npm run prod
-    $ npm run test
+```Shell
+$ npm run test
+```
 
 **TODO** convert tests from pre-open-source Helpers to this version

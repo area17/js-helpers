@@ -5,8 +5,9 @@ describe('setFocusOnTarget', () => {
   });
 
   it('sets focus correctly', () => {
-    let div = document.createElement('div');
-    setFocusOnTarget(div);
-    expect(document.activeElement).toEqual(div);
+    let button = document.createElement('button');
+    document.body.appendChild(button);
+    setFocusOnTarget(button);
+    expect(document.activeElement).toEqual(button);
   });
 });

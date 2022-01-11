@@ -1,4 +1,3 @@
-/*
 import ajaxRequest from './ajaxRequest.js';
 import cookieHandler from './cookieHandler.js';
 import copyTextToClipboard from './copyTextToClipboard';
@@ -30,8 +29,7 @@ import sendEventToSegmentio from './sendEventToSegmentio.js';
 import setFocusOnTarget from './setFocusOnTarget';
 import Store from './store';
 
-
-const a17helpers = {
+export {
   ajaxRequest,
   cookieHandler,
   copyTextToClipboard,
@@ -63,12 +61,3 @@ const a17helpers = {
   setFocusOnTarget,
   Store
 };
-
-export default a17helpers;
-
-*/
-
-import extend from './extend.js';
-import focusTrap from './focusTrap';
-
-export { extend, focusTrap };
