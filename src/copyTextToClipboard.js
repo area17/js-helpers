@@ -8,8 +8,8 @@ var copyTextToClipboard = function(textToCopy,successMsg) {
   // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 
   if (navigator.clipboard && ('Promise' in window) && window.location.protocol == 'https:') {
-    navigator.clipboard.writeText(textToCopy).then(function() {
-      console.log(successMsg);
+    navigator.clipboard.writeText(textToCopy).then(function(successMsg) {
+      //console.log(successMsg);
     }, function(err) {
       console.error('Could not copy text: ', err);
     });
@@ -42,10 +42,10 @@ var copyTextToClipboard = function(textToCopy,successMsg) {
       if (successful) {
         window.alert(successMsg || 'Copied to clipboard');
       } else {
-        console.log('Could not copy text');
+        console.log('Could not copy text', 'document.execCommand(\'copy\') failed');
       }
     } catch (err) {
-      console.log('Could not copy text');
+      console.log('Could not copy text', err);
     }
 
     document.body.removeChild(textArea);
