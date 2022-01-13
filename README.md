@@ -53,11 +53,12 @@ If you are using Webpack to compile your code and you are using it in production
 
 ### v2.0.0+
 
-From v2.0.0 onwards drops IE11 support but maintains Safari 10+, Edge 12+, Chrome 24+ and FireFox 29+ support. If you need IE11 support use v1.0.3 and if you need IE9 level support, use v0.8.4.
+From v2.0.0 onwards drops IE11 support but maintains Safari 10+, Edge 12+, Chrome 24+ and FireFox 29+ support. 
+If you need IE11 support use v1.0.3 and if you need IE9 level support, use v0.8.4.
 
 ### v3.0.0+
 
-`manageBehaviors` and `createBehaviors` have been removed - behaviors and behavior management has been split out into its own library [A17-Behaviors](https://github.com/area17/a17-behaviors)
+`manageBehaviors` and `createBehaviors` have been removed - behaviors and behavior management has been split out into its own library [A17-Behaviors](https://github.com/area17/a17-behaviors).
 
 ## Documentation and demos
 
