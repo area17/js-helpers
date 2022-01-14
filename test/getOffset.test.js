@@ -1,29 +1,53 @@
 import getOffset from './../src/getOffset';
 
-// set up some html
-const setUpHtml = () => {
-  const div = document.createElement('div');
-  div.innerHTML = `
-    <div class="getMe" style="height: 200px; width: 300px;"></div>
-      `;
-  return div;
-};
-
 describe('getOffset utility', () => {
   it('exists', () => {
     expect(typeof getOffset).toBe('function');
   });
 
   it('default return', () => {
-    const container = setUpHtml();
-    const offset = getOffset(container.querySelector('.getMe'));
-    expect(offset).toEqual({
-      top: 0,
-      left: 0,
+
+    const dims = {
+      width: 13,
+      height: 12,
+      left: 100,
+      top: 200,
+      scrollTop: 1312
+    };
+
+    const getBoundingClientRect = Element.prototype.getBoundingClientRect;
+    const scrollTop = document.documentElement.scrollTop;
+
+    var div = document.createElement('div');
+    div.style.width = `${ dims.width }px`;
+    div.style.height = `${ dims.height }px`;
+    div.style.position = 'absolute';
+    div.style.left = `${ dims.left }px`;
+    div.style.top = `${ dims.top }px`;
+    document.body.appendChild(div);
+
+    document.documentElement.scrollTop = dims.scrollTop;
+    Element.prototype.getBoundingClientRect = jest.fn(() => ({
+      top: dims.top,
+      left: dims.left,
       bottom: 0,
       right: 0,
-      width: 0,
-      height: 0,
+      width: dims.width,
+      height: dims.height,
+    }));
+
+    const offset = getOffset(div);
+
+    expect(offset).toEqual({
+      top: dims.top + dims.scrollTop,
+      left: dims.left,
+      bottom: dims.scrollTop,
+      right: 0,
+      width: dims.width,
+      height: dims.height,
     });
+
+    Element.prototype.getBoundingClientRect = getBoundingClientRect;
+    document.documentElement.scrollTop = scrollTop;
   });
 });

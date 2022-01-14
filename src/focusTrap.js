@@ -9,7 +9,13 @@ var focusTrap = function () {
           element.focus();
           if (element !== document.activeElement) {
             let focusable = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            focusable[0].focus();
+            if (focusable[0]) {
+              focusable[0].focus();
+            } else {
+              element.setAttribute('tabindex','-1');
+              element.focus();
+              element.removeAttribute('tabindex');
+            }
           }
         }, 0)
       }

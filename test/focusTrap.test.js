@@ -1,15 +1,6 @@
 import focusTrap from './../src/focusTrap';
 
-// set up some html
-const setUpHtml = () => {
-  const div = document.createElement('div');
-  div.innerHTML = `
-    <div class="getMe" style="height: 200px; width: 300px;"></div>
-      `;
-  return div;
-};
-
-afterEach(() => {});
+jest.useFakeTimers();
 
 describe('focusTrap utility', () => {
   it('exists', () => {
@@ -24,5 +15,67 @@ describe('focusTrap utility', () => {
     expect(document.addEventListener.mock.calls[0][0]).toBe('focus:trap');
     expect(document.addEventListener.mock.calls[1][0]).toBe('focus:untrap');
     document.addEventListener = real;
+  });
+
+  it('on focus outside, sets focus inside', () => {
+    const innerButton = document.createElement('button');
+    innerButton.dataset.name = 'inner';
+    const outerButton = document.createElement('button');
+    outerButton.dataset.name = 'outer';
+    const div = document.createElement('div');
+    div.dataset.name = 'container';
+
+    div.appendChild(innerButton);
+    document.body.appendChild(div);
+    document.body.appendChild(outerButton);
+
+    focusTrap();
+
+    document.dispatchEvent(new CustomEvent('focus:trap', {
+        detail: {
+            element: div
+        },
+    }));
+
+    outerButton.focus();
+    // the helper has a setTimeout of 0 to move the focus from outside to inside
+    jest.advanceTimersByTime(1);
+
+    expect(document.activeElement).toEqual(innerButton);
+  });
+
+  it('untrapping allows focus outside', () => {
+    const innerButton = document.createElement('button');
+    innerButton.dataset.name = 'inner';
+    const outerButton = document.createElement('button');
+    outerButton.dataset.name = 'outer';
+    const div = document.createElement('div');
+    div.dataset.name = 'container';
+
+    div.appendChild(innerButton);
+    document.body.appendChild(div);
+    document.body.appendChild(outerButton);
+
+    focusTrap();
+
+    document.dispatchEvent(new CustomEvent('focus:trap', {
+        detail: {
+            element: div
+        },
+    }));
+
+    outerButton.focus();
+    // the helper has a setTimeout of 0 to move the focus from outside to inside
+    jest.advanceTimersByTime(1);
+
+    expect(document.activeElement).toEqual(innerButton);
+
+    document.dispatchEvent(new CustomEvent('focus:untrap'));
+
+    outerButton.focus();
+    // the helper has a setTimeout of 0 to move the focus from outside to inside
+    jest.advanceTimersByTime(1);
+
+    expect(document.activeElement).toEqual(outerButton);
   });
 });
