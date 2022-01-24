@@ -1,10 +1,10 @@
-import oritentationChangeFix from './../src/oritentationChangeFix';
+import orientationChangeFix from './../src/oritentationChangeFix';
 
 jest.useFakeTimers();
 
 describe('oritentationChangeFix utility', () => {
   it('exists', () => {
-    expect(typeof oritentationChangeFix).toBe('function');
+    expect(typeof orientationChangeFix).toBe('function');
   });
 
   it('sets viewport meta', () => {
@@ -18,7 +18,7 @@ describe('oritentationChangeFix utility', () => {
     meta.content = 'width=device-width, initial-scale=1';
     document.head.appendChild(meta);
 
-    oritentationChangeFix();
+    orientationChangeFix();
 
     const viewportmeta = document.querySelector('meta[name="viewport"]');
 

@@ -17,7 +17,7 @@ export { default as jsonpRequest } from './jsonpRequest.js';
 export { default as keycodes } from './keycodes.js';
 export { default as messages } from './messages.js';
 export { default as objectifyForm } from './objectifyForm.js';
-export { default as oritentationChangeFix } from './oritentationChangeFix.js';
+export { default as orientationChangeFix } from './orientationChangeFix.js';
 export { default as purgeProperties } from './purgeProperties.js';
 export { default as queryStringHandler } from './queryStringHandler';
 export { default as resized } from './resized.js';

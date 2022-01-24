@@ -58,10 +58,10 @@ If you need IE11 support use v1.0.3 and if you need IE9 level support, use v0.8.
 
 ### v3.0.0+
 
+`oritentationChangeFix` renamed to `orientationChangeFix`.
+
 `manageBehaviors` and `createBehaviors` have been removed - behaviors and behavior management has been split out into its own library [A17-Behaviors](https://github.com/area17/a17-behaviors).
-
 `fontLoadObserver` removed, use https://github.com/zachleat/fontfaceonload
-
 `lazyLoad` removed, use use https://www.npmjs.com/package/@area17/a17-lazyload
 
 ## Documentation and demos

@@ -1,4 +1,4 @@
-var oritentationChangeFix = function() {
+var orientationChangeFix = function() {
   // https://stackoverflow.com/questions/2557801/how-do-i-reset-the-scale-zoom-of-a-web-app-on-an-orientation-change-on-the-iphon
   // Doc: https://code.area17.com/a17/a17-helpers/wikis/oritentationChangeFix
 
@@ -13,4 +13,5 @@ var oritentationChangeFix = function() {
   }
 };
 
-export default oritentationChangeFix;
+export default orientationChangeFix;
+
