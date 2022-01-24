@@ -76,10 +76,9 @@ AREA 17 is dedicated to building a welcoming, diverse, safe community. We expect
 
 ### Tests
 
-Written using [Mochajs](http://mochajs.org) and [Chai.js](http://chaijs.com/), currently living in `test/test.js`. To run:
+Written using [Jest](https://jestjs.io/) with tests in `/test/`. 
+To run:
 
 ```Shell
 $ npm run test
 ```
-
-**TODO** convert tests from pre-open-source Helpers to this version
