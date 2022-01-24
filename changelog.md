@@ -4,6 +4,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.0.0
+* added [Code of Conduct](https://github.com/area17/js-helpers/blob/main/CODE_OF_CONDUCT.md)
+* removed Rollup
+* `oritentationChangeFix` renamed to `orientationChangeFix`.
+* removed 
+    * `manageBehaviors` and `createBehaviors` - behaviors and behavior management has been split out into its own library [A17-Behaviors](https://github.com/area17/a17-behaviors).
+    * `fontLoadObserver` - use https://github.com/zachleat/fontfaceonload
+    * `lazyLoad` - use https://www.npmjs.com/package/@area17/a17-lazyload
+* updated
+    * `focusTrap` and `setFocusOnTarget` will clean up its `tabindex` attribute if they had to set it to focus
+    * `getMetaContentByName` returns null of no meta tag found
+* tests added or updated for:
+    * `cookieHandler`
+    * `copyTextToClipboard`
+    * `debounce`
+    * `focusDisplayHandler`
+    * `focusTrap`
+    * `getMetaContentByName`
+    * `getOffset`
+    * `ios100vhFix`
+    * `isBreakpoint`
+    * `orientationChangeFix`
+    * `resized`
+    * `setFocusOnTarget`
+* incomplete tests have "todo" set
+    * `ajaxRequest`
+    * `jsonpRequest`
+    * `messages`
+    * `responsiveImageUpdate`
+    * `sendEventToSegmentio`
+    * `store`
+* wiki links updated
+
 ## 2.1.4
 * `getCurrentMediaQuery` now replaces out " in returned current breakpoint CSS variable
 * `isBreakpoint` can now accept a list of breakpoints to check against (doesn't need a global)
