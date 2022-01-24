@@ -66,13 +66,11 @@ If you need IE11 support use v1.0.3 and if you need IE9 level support, use v0.8.
 
 ## Documentation and demos
 
-* [Wiki](https://code.area17.com/a17/a17-helpers/wikis/home)
+* [Wiki](https://github.com/area17/js-helpers/wiki)
 
 ## Contribution
 
 Feel free to add any vanilla JS helpers that will be common to many projects and save someone some time working them out in the future. The main aims are no dependencies, small elegant code and high potential sharing across sites.
-
-Please make sure you run `npm run prod` after making changes. This will compile all your changes to ES5 ready version and then you can feel free to publish to npm.
 
 ### Code of Conduct
 
