@@ -1,4 +1,4 @@
-import getIndex from './../src/utility/getIndex';
+import getIndex from './../src/getIndex';
 
 const setUpHtml = () => {
   const div = document.createElement('div');

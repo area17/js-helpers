@@ -1,6 +1,8 @@
-import resized from './../src/utility/resized';
+import resized from './../src/resized';
 
-jest.mock('./../src/utility/getCurrentMediaQuery.js', () =>
+jest.useFakeTimers();
+
+jest.mock('./../src/getCurrentMediaQuery.js', () =>
   jest
     .fn(() => 'default')
     .mockImplementationOnce(() => 'first call')
@@ -13,23 +15,39 @@ describe('resized', () => {
     expect(typeof resized).toBe('function');
   });
 
-  it('resize triggers', (done) => {
+  it('resize triggers', () => {
     resized();
+
+    let triggered = false;
 
     window.addEventListener('resized', () => {
-      expect('triggered').toBeTruthy();
-      done();
+      triggered = true;
     });
 
     window.dispatchEvent(new Event('resize'));
+
+    // Move on the timer
+    jest.advanceTimersByTime(251);
+
+    // test
+    expect(triggered).toBe(true);
   });
 
-  it('media query triggers on media string update', (done) => {
+  it('media query triggers on media string update', () => {
     resized();
+
+    let triggered = false;
+
     window.addEventListener('mediaQueryUpdated', () => {
-      expect('triggered').toBeTruthy();
-      done();
+      triggered = true;
     });
+
     window.dispatchEvent(new Event('resize'));
+
+    // Move on the timer
+    jest.advanceTimersByTime(251);
+
+    // test
+    expect(triggered).toBe(true);
   });
 });

@@ -1,70 +1,28 @@
-import ajaxRequest from './utility/ajaxRequest.js';
-import cookieHandler from './utility/cookieHandler.js';
-import copyTextToClipboard from './utility/copyTextToClipboard';
-import createBehavior from './utility/createBehavior';
-import debounce from './utility/debounce';
-import escapeString from './utility/escapeString.js';
-import extend from './utility/extend.js';
-import focusDisplayHandler from './utility/focusDisplayHandler';
-import focusTrap from './utility/focusTrap';
-import fontLoadObserver from './utility/fontLoadObserver';
-import getCurrentMediaQuery from './utility/getCurrentMediaQuery.js';
-import getIndex from './utility/getIndex.js';
-import getMetaContentByName from './utility/getMetaContentByName.js';
-import getOffset from './utility/getOffset.js';
-import getUrlParameterByName from './utility/getUrlParameterByName.js';
-import ios100vhFix from './utility/ios100vhFix';
-import isBreakpoint from './utility/isBreakpoint.js';
-import jsonpRequest from './utility/jsonpRequest.js';
-import keycodes from './utility/keycodes.js';
-import lazyLoad from './utility/lazyLoad';
-import manageBehaviors from './utility/manageBehaviors.js';
-import messages from './utility/messages.js';
-import objectifyForm from './utility/objectifyForm.js';
-import oritentationChangeFix from './utility/oritentationChangeFix.js';
-import purgeProperties from './utility/purgeProperties.js';
-import queryStringHandler from './utility/queryStringHandler';
-import resized from './utility/resized.js';
-import responsiveImageUpdate from './utility/responsiveImageUpdate';
-import scrolled from './utility/scrolled.js';
-import sendEventToSegmentio from './utility/sendEventToSegmentio.js';
-import setFocusOnTarget from './utility/setFocusOnTarget';
-import Store from './utility/store';
-
-
-const a17helpers = {
-  ajaxRequest,
-  cookieHandler,
-  copyTextToClipboard,
-  createBehavior,
-  debounce,
-  escapeString,
-  extend,
-  focusDisplayHandler,
-  focusTrap,
-  fontLoadObserver,
-  getCurrentMediaQuery,
-  getIndex,
-  getMetaContentByName,
-  getOffset,
-  getUrlParameterByName,
-  ios100vhFix,
-  isBreakpoint,
-  jsonpRequest,
-  keycodes,
-  lazyLoad,
-  manageBehaviors,
-  messages,
-  objectifyForm,
-  oritentationChangeFix,
-  purgeProperties,
-  queryStringHandler,
-  resized,
-  responsiveImageUpdate,
-  scrolled,
-  sendEventToSegmentio,
-  setFocusOnTarget,
-  Store
-};
-
-export default a17helpers;
+export { default as ajaxRequest } from './ajaxRequest.js';
+export { default as cookieHandler } from './cookieHandler.js';
+export { default as copyTextToClipboard } from './copyTextToClipboard';
+export { default as debounce } from './debounce';
+export { default as escapeString } from './escapeString.js';
+export { default as extend } from './extend.js';
+export { default as focusDisplayHandler } from './focusDisplayHandler';
+export { default as focusTrap } from './focusTrap';
+export { default as getCurrentMediaQuery } from './getCurrentMediaQuery.js';
+export { default as getIndex } from './getIndex.js';
+export { default as getMetaContentByName } from './getMetaContentByName.js';
+export { default as getOffset } from './getOffset.js';
+export { default as getUrlParameterByName } from './getUrlParameterByName.js';
+export { default as ios100vhFix } from './ios100vhFix';
+export { default as isBreakpoint } from './isBreakpoint.js';
+export { default as jsonpRequest } from './jsonpRequest.js';
+export { default as keycodes } from './keycodes.js';
+export { default as messages } from './messages.js';
+export { default as objectifyForm } from './objectifyForm.js';
+export { default as orientationChangeFix } from './orientationChangeFix.js';
+export { default as purgeProperties } from './purgeProperties.js';
+export { default as queryStringHandler } from './queryStringHandler';
+export { default as resized } from './resized.js';
+export { default as responsiveImageUpdate } from './responsiveImageUpdate';
+export { default as scrolled } from './scrolled.js';
+export { default as sendEventToSegmentio } from './sendEventToSegmentio.js';
+export { default as setFocusOnTarget } from './setFocusOnTarget';
+export { default as Store } from './store';

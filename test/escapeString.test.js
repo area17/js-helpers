@@ -1,4 +1,4 @@
-import escapeString from './../src/utility/escapeString';
+import escapeString from './../src/escapeString';
 
 // set up some html
 const setUpHtml = () => {

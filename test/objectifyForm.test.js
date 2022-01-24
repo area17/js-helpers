@@ -1,4 +1,4 @@
-import objectifyForm from './../src/utility/objectifyForm';
+import objectifyForm from './../src/objectifyForm';
 
 const setUpHtml = () => {
   const div = document.createElement('div');
