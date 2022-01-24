@@ -1,5 +1,5 @@
 var extend = function () {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/extend
+  // Doc: https://github.com/area17/a17-behaviors/wiki/extend
 
   var obj = {};
   var i = 0;

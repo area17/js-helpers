@@ -1,7 +1,7 @@
 import getCurrentMediaQuery from './getCurrentMediaQuery';
 
 var resized = function() {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/resized
+  // Doc: https://github.com/area17/a17-behaviors/wiki/resized
 
   var resizeTimer;
   var mediaQuery = getCurrentMediaQuery();

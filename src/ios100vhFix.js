@@ -1,4 +1,5 @@
 export function ios100vhFix() {
+  // Doc: https://github.com/area17/a17-behaviors/wiki/ios100vhFix
 
   function setVh() {
     const vh = document.documentElement.clientHeight * 0.01;

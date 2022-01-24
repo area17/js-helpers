@@ -1,6 +1,6 @@
 var focusDisplayHandler = function() {
 
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/focusDisplayHandler
+  // Doc: https://github.com/area17/a17-behaviors/wiki/focusDisplayHandler
 
   var attr = 'data-focus-method';
   var touch = 'touch';

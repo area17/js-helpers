@@ -3,6 +3,8 @@
   https://github.com/andy-piccalilli/beedle
 
   A demo is available here : http://bp7store.dev.area17.com/
+
+  Doc: https://github.com/area17/a17-behaviors/wiki/Store
 */
 
 export default class Store {

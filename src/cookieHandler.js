@@ -1,7 +1,7 @@
 var cookieHandler = {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/cookieHandler-create
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/cookieHandler-delete
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/cookieHandler-read
+  // Doc: https://github.com/area17/a17-behaviors/wiki/cookieHandler-create
+  // Doc: https://github.com/area17/a17-behaviors/wiki/cookieHandler-delete
+  // Doc: https://github.com/area17/a17-behaviors/wiki/cookieHandler-read
 
   create(name, value, days) {
     var expires = '';

@@ -1,7 +1,7 @@
 import queryStringHandler from './queryStringHandler';
 
 var ajaxRequest = function(settings) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/ajaxRequest
+  // Doc: https://github.com/area17/a17-behaviors/wiki/ajaxRequest
 
   // This is a modified version to accept a new sendJSON boolean
   // to send the request with the right content type and data

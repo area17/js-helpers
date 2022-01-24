@@ -1,7 +1,7 @@
 import getCurrentMediaQuery from './getCurrentMediaQuery';
 
 const isBreakpoint = function (breakpoint, breakpoints) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/isBreakpoint
+  // Doc: https://github.com/area17/a17-behaviors/wiki/isBreakpoint
 
   // bail if no breakpoint is passed
   if (!breakpoint) {

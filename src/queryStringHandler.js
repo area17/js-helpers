@@ -1,7 +1,7 @@
 var queryStringHandler = {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-toObject
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-fromObject
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/queryStringHandler-updateParameter
+  // Doc: https://github.com/area17/a17-behaviors/wiki/queryStringHandler-toObject
+  // Doc: https://github.com/area17/a17-behaviors/wiki/queryStringHandler-fromObject
+  // Doc: https://github.com/area17/a17-behaviors/wiki/queryStringHandler-updateParameter
 
   toObject(url) {
     /*

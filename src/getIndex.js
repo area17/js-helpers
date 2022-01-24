@@ -1,5 +1,5 @@
 var getIndex = function (node, nodeList) {
-  // Doc: https://code.area17.com/a17/a17-helpers/wikis/getIndex
+  // Doc: https://github.com/area17/a17-behaviors/wiki/getIndex
 
   var nodes = nodeList || node.parentNode.childNodes;
   var nodesLength = nodes.length;

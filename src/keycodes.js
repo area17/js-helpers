@@ -1,3 +1,5 @@
+// Doc: https://github.com/area17/a17-behaviors/wiki/keyCodes
+
 var keyCodes = {
   tab:   9,
   enter: 13,
