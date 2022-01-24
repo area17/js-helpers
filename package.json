@@ -17,10 +17,7 @@
     "@babel/preset-env": "^7.16.8",
     "jest": "^27.4.7",
     "jsdom": "^19.0.0",
-    "jsdom-global": "^3.0.2"
-  },
-  "dependencies": {
-    "fontfaceonload": "^1.0.2",
+    "jsdom-global": "^3.0.2",
     "regenerator-runtime": "^0.13.9"
   },
   "jest": {
