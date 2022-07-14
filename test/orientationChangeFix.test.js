@@ -1,8 +1,8 @@
-import orientationChangeFix from './../src/oritentationChangeFix';
+import orientationChangeFix from './../src/orientationChangeFix';
 
 jest.useFakeTimers();
 
-describe('oritentationChangeFix utility', () => {
+describe('orientationChangeFix utility', () => {
   it('exists', () => {
     expect(typeof orientationChangeFix).toBe('function');
   });
