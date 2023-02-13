@@ -1,0 +1,245 @@
+---
+title: Store
+---
+{% include_relative includes/_header.html %}
+
+<div class="copy">
+  <p>Demo repo: <a href="https://code.area17.com/antoine/behaviors-state-management/-/tree/main">https://code.area17.com/antoine/behaviors-state-management/</a></p>
+  <h2>Key Concepts</h2>
+  <p>Create your store with actions, mutations and an initial state:</p>
+
+  <figure class="code-example">
+    <figcaption class="code-example-filename">store/index.js</figcaption>
+    <pre class="code-example-code"><code class="language-javascript">import Store from '@area17/a17-helpers/src/utility/store'
+
+const actions = {
+  addItem(context, payload) {
+      context.commit('addItem', payload)
+  },
+  clearItem(context, payload) {
+      context.commit('clearItem', payload)
+  },
+  empty(context, payload) {
+    context.commit('empty', payload)
+  }
+}
+
+const mutations = {
+  addItem(state, payload) {
+    const newCart = state.cart
+    newCart.push(payload)
+    state.cart = newCart
+    return state
+  },
+  clearItem(state, payload) {
+    const newCart = state.cart
+    newCart.splice(payload.index, 1)
+    state.cart = newCart
+    return state
+  },
+  empty(state, payload) {
+    state.cart = []
+    return state
+  }
+}
+
+const initialState = {
+  cart: []
+}
+
+export default new Store({ actions, mutations, initialState })</code></pre>
+  </figure>
+
+  <p>Dispatch changes:</p>
+  <figure class="code-example">
+    <pre class="code-example-code"><code class="language-javascript">store.dispatch('addItem', { id: '1', title: 'Product 1', price: 50 })</code></pre>
+  </figure>
+
+  <p>Subscribe to changes:</p>
+  <figure class="code-example">
+    <pre class="code-example-code"><code class="language-javascript">this.storeObserver = store.subscribe(this.render)</code></pre>
+  </figure>
+
+  <p>Unsubscribe to changes</p>
+  <figure class="code-example">
+    <pre class="code-example-code"><code class="language-javascript">this.storeObserver()</code></pre>
+  </figure>
+
+  <h2>Demo Cart</h2>
+</div>
+
+<figure class="my-40 border p-20">
+  <p class="f-h3">Products</p>
+  <div class="grid-layout mt-20 py-12">
+    <h4 class="f-h4 grid-col-span-9">Product 1 - 50€</h4>
+    <button type="button" data-behavior="addToCart" class="grid-col-span-3 bg-code" data-addtocart-id="1" data-addtocart-title="Product 1" data-addtocart-price="50">Add To Cart</button>
+  </div>
+  <hr>
+  <div class="grid-layout py-12">
+    <h4 class="f-h4 grid-col-span-9">Product 2 - 200€</h4>
+    <button type="button" data-behavior="addToCart" class="grid-col-span-3 bg-code" data-addtocart-id="2" data-addtocart-title="Product 2" data-addtocart-price="200">Add To Cart</button>
+  </div>
+  <hr>
+  <div class="grid-layout py-12">
+    <h4 class="f-h4 grid-col-span-9">Product 3 - 100€</h4>
+    <button type="button" data-behavior="addToCart" class="grid-col-span-3 bg-code" data-addtocart-id="3" data-addtocart-title="Product 3" data-addtocart-price="100">Add To Cart</button>
+  </div>
+  <p class="f-h3 mt-20">Cart</p>
+  <div class="mt-20" data-behavior="cart" data-cart-empty="Nothing in Cart">
+    <div class="py-12">
+      <p>Nothing in Cart</p>
+    </div>
+    <script data-cart-template type="text/template">
+      <article class="grid-layout py-12" id="product-%id%">
+        <div class="grid-col-span-9">
+          <h4 class="f-h4">%title% - %price%€</h4>
+        </div>
+        <button type="button" class="grid-col-span-3 bg-code rounded">Remove from Cart</button>
+      </article>
+    </script>
+    <hr>
+    <div class="grid-layout py-12">
+      <p class="f-h3 grid-col-span-9">
+        Total : <strong data-behavior="totCart">0</strong>€
+      </p>
+      <button type="button" data-behavior="emptyCart" class="grid-col-span-3 bg-code">Empty Cart</button>
+    </div>
+  </div>
+</figure>
+
+<div class="copy">
+  <p>This demo cart uses the following behaviors:</p>
+  <figure class="code-example">
+    <figcaption class="code-example-filename">addToCart.js</figcaption>
+    <pre class="code-example-code"><code class="language-javascript">import createBehavior from '@area17/a17-helpers/src/utility/createBehavior';
+import store from '../store/index.js';
+
+const addToCart = createBehavior(
+  'addToCart',
+  {
+    handleClick() {
+      store.dispatch('addItem', Object.assign({}, this.options))
+    },
+  },
+  {
+    init() {
+      this.$node.addEventListener('click', this.handleClick, false)
+    },
+    destroy() {
+      this.$node.removeEventListener('click', this.handleClick, false)
+    },
+  }
+);
+
+export default addToCart;</code></pre>
+  </figure>
+
+  <figure class="code-example">
+    <figcaption class="code-example-filename">cart.js</figcaption>
+    <pre class="code-example-code"><code class="language-javascript">import createBehavior from '@area17/a17-helpers/src/utility/createBehavior';
+import store from '../store/index.js';
+
+const cart = createBehavior(
+  'cart',
+  {
+    renderItem(item) {
+      // Simple templating
+      return this.$template.innerHTML
+      .replace(/%title%/gm, item.title ? item.title : '')
+      .replace(/%price%/gm, item.price ? item.price : '')
+      .replace(/%id%/gm, item.id ? item.id : '')
+      .replace(/%img%/gm, item.img ? item.img : '')
+    },
+    render() {
+      // Empty Cart
+      if(store.state.cart.length === 0) {
+        this.$node.classList.remove(this.klass)
+        this.$list.innerHTML = `<p>${this.options.empty}</p>`
+        return
+      }
+
+      // Generate cart markup
+      this.$list.innerHTML = store.state.cart.map(item => {
+        return this.renderItem(item)
+      }).join('')
+
+      this.$list.querySelectorAll('button').forEach((button, index) => {
+          button.addEventListener('click', () => {
+              store.dispatch('clearItem', { index })
+          })
+      })
+
+      // show extra markup
+      this.$node.classList.add(this.klass)
+    }
+  },
+  {
+    init() {
+      this.klass = 'cart--ready'
+      this.$template = this.getChild('template')
+      this.$list = this.$node.firstElementChild
+      this.storeObserver = store.subscribe(this.render)
+    },
+    destroy() {
+      this.storeObserver() // unsubscribe
+    },
+  }
+);
+
+export default cart;</code></pre>
+  </figure>
+
+  <figure class="code-example">
+    <figcaption class="code-example-filename">emptyCart.js</figcaption>
+    <pre class="code-example-code"><code class="language-javascript">import createBehavior from '@area17/a17-helpers/src/utility/createBehavior';
+import store from '../store/index.js';
+
+const emptyCart = createBehavior(
+  'emptyCart',
+  {
+    handleClick() {
+      store.dispatch('empty', {})
+    },
+  },
+  {
+    init() {
+      this.$node.addEventListener('click', this.handleClick, false)
+    },
+    destroy() {
+      this.$node.removeEventListener('click', this.handleClick, false)
+    },
+  }
+);
+
+export default emptyCart;</code></pre>
+  </figure>
+
+  <figure class="code-example">
+    <figcaption class="code-example-filename">totCart.js</figcaption>
+    <pre class="code-example-code"><code class="language-javascript">import createBehavior from '@area17/a17-helpers/src/utility/createBehavior';
+import store from '../store/index.js';
+
+const totCart = createBehavior(
+  'totCart',
+  {
+    render() {
+      this.$node.innerHTML = store.state.cart.reduce( function(a, b){
+          return a + Number(b.price)
+      }, 0);
+    }
+  },
+  {
+    init() {
+      this.storeObserver = store.subscribe(this.render)
+    },
+    destroy() {
+      this.storeObserver() // unsubscribe
+    },
+  }
+);
+
+export default totCart;</code></pre>
+  </figure>
+</div>
+
+{% include_relative includes/_footer.html %}
