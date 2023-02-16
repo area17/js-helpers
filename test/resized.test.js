@@ -4,10 +4,10 @@ jest.useFakeTimers();
 
 jest.mock('./../src/getCurrentMediaQuery.js', () =>
   jest
-    .fn(() => 'default')
-    .mockImplementationOnce(() => 'first call')
-    .mockImplementationOnce(() => 'second call')
-    .mockImplementationOnce(() => 'third call')
+    .fn(() => 'lg')
+    .mockImplementationOnce(() => 'md')
+    .mockImplementationOnce(() => 'sm')
+    .mockImplementationOnce(() => 'xs')
 );
 
 describe('resized', () => {
@@ -50,4 +50,33 @@ describe('resized', () => {
     // test
     expect(triggered).toBe(true);
   });
+
+  it.todo('documentElement ResizeObserver fires');
+  /*
+  it('documentElement ResizeObserver fires', () => {
+    window.A17 = window.A17 || {};
+    window.A17.currentMediaQuery = 'lg';
+
+    jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(global.innerHeight);
+
+    let triggered = false;
+
+    window.addEventListener('resize', (e) => {
+      triggered = true;
+    });
+
+    resized();
+
+    global.innerHeight = global.innerHeight + 500;
+    jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(global.innerHeight);
+    window.A17.currentMediaQuery = 'md';
+    global.ResizeObserver.observe();
+
+    // Move on the timer
+    jest.advanceTimersByTime(600);
+
+    // test
+    expect(triggered).toBe(true);
+  });
+  */
 });

@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.0.3
+
+* Update `resized`: attempt to fire a `resize` (and so `resized` and `mediaQueryUpdated`) events on Firefox text scaling - which doesn't fire a native `resize` event. This was an issue because as you text scale, you will also likely be changing your visible breakpoint, as you go up in text size, you'll likely go down in breakpoint.
+
 ## 3.0.2
 
-* Update ios100vhFix : get the greater of document.documentElement.clientHeight versus window.innerHeight to fix incorrect height when the browser UI is hiding on iOS15 and above.
+* Update `ios100vhFix`: get the greater of document.documentElement.clientHeight versus window.innerHeight to fix incorrect height when the browser UI is hiding on iOS15 and above.
 
 ## 3.0.1
 
