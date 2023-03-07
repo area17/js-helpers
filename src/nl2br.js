@@ -7,7 +7,7 @@
  * @return {string} Filtered text
  */
 
-const nl2br = function(str: string, replaceMode: boolean = false) {
+const nl2br = function(str, replaceMode = false) {
   const breakTag = '<br>';
   const replaceStr = replaceMode ? '$1' + breakTag : '$1' + breakTag + '$2';
   return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr);
