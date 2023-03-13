@@ -5,7 +5,6 @@ const focusTrap = function() {
   // Doc: https://github.com/area17/a17-behaviors/wiki/focusTrap
 
   let $target;
-  let $trigger;
   let $focusable = [];
   let mo;
 
@@ -49,11 +48,10 @@ const focusTrap = function() {
     } catch(err) {
       // continue regardless of error
     }
-    $target = event.detail.el || event.detail.target || event.detail.$target;
+    $target = event.detail.el || event.detail.element || event.detail.target || event.detail.$target;
     if (!$target) {
       return;
     }
-    $trigger = event.detail.trigger || event.detail.$trigger || $target;
     $focusable = getFocusableElements($target);
     if ($focusable.length === 0) {
       $focusable = [$target];
@@ -81,10 +79,8 @@ const focusTrap = function() {
     document.removeEventListener('focusin', focusin, true);
     document.removeEventListener('keydown', handleKeyDown, true);
     mo.disconnect();
-    setFocusOnTarget($trigger);
     $target.removeAttribute('data-focustrapped');
     $target = null;
-    $trigger = null;
     $focusable = [];
     mo = null;
   };
