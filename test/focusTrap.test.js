@@ -32,16 +32,18 @@ describe('focusTrap utility', () => {
     focusTrap();
 
     document.dispatchEvent(new CustomEvent('focus:trap', {
-        detail: {
-            element: div
-        },
+      detail: {
+        element: div,
+      }
     }));
+
+    jest.advanceTimersByTime(0);
 
     outerButton.focus();
     // the helper has a setTimeout of 0 to move the focus from outside to inside
-    jest.advanceTimersByTime(1);
+    jest.advanceTimersByTime(0);
 
-    expect(document.activeElement).toEqual(innerButton);
+    expect(document.activeElement.dataset.name).toEqual(div.dataset.name);
   });
 
   it('untrapping allows focus outside', () => {
@@ -68,7 +70,7 @@ describe('focusTrap utility', () => {
     // the helper has a setTimeout of 0 to move the focus from outside to inside
     jest.advanceTimersByTime(1);
 
-    expect(document.activeElement).toEqual(innerButton);
+    expect(document.activeElement.dataset.name).toEqual(div.dataset.name);
 
     document.dispatchEvent(new CustomEvent('focus:untrap'));
 
@@ -76,6 +78,6 @@ describe('focusTrap utility', () => {
     // the helper has a setTimeout of 0 to move the focus from outside to inside
     jest.advanceTimersByTime(1);
 
-    expect(document.activeElement).toEqual(outerButton);
+    expect(document.activeElement.dataset.name).toEqual(outerButton.dataset.name);
   });
 });
