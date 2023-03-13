@@ -3,7 +3,7 @@ var isVisible = function($el) {
 
   // March 2023 - surprisingly little documentation on `Element.checkVisibility()`
   // https://caniuse.com/mdn-api_element_checkvisibility
-  if (typeof $el.checkVisibility) {
+  if (typeof $el.checkVisibility === 'function') {
     return $el.checkVisibility({
       checkOpacity: true,
       checkVisibilityCSS: true
@@ -21,6 +21,12 @@ var isVisible = function($el) {
     }
     return true;
   }
+
+  if ($el.getClientRects().length === 0) {
+    return false;
+  }
+
+  return true;
 }
 
 export default isVisible;
