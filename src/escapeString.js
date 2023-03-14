@@ -7,6 +7,7 @@ var escapeString = function(str) {
     div.appendChild(text);
     return encodeURIComponent(div.textContent);
   } else {
+    console.log('Warning - escapeString - no string passed');
     return '';
   }
 };

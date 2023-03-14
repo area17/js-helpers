@@ -1,53 +1,92 @@
-var focusTrap = function () {
+import getFocusableElements from './getFocusableElements';
+import setFocusOnTarget from './setFocusOnTarget';
 
+const focusTrap = function() {
   // Doc: https://github.com/area17/a17-behaviors/wiki/focusTrap
 
-  let element;
+  let $target;
+  let $focusable = [];
+  let mo;
 
-  function _focus() {
-    if (element) {
-      if (document.activeElement !== element && !element.contains(document.activeElement)) {
-        setTimeout(function(){
-          element.focus();
-          if (element !== document.activeElement) {
-            let focusable = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-            if (focusable[0]) {
-              focusable[0].focus();
-            } else {
-              element.setAttribute('tabindex','-1');
-              element.focus();
-              element.removeAttribute('tabindex');
-            }
-          }
-        }, 0)
-      }
-    } else {
-      try {
-        document.removeEventListener('focus', _focus);
-      } catch(err) {}
-    }
-  }
-
-  function _trap(event) {
-    try {
-      document.removeEventListener('focus', _focus);
-    } catch(err) {}
-
-    if (!event && !event.detail.element) {
+  const handleKeyDown = (event) => {
+    if (!$target) {
       return;
     }
-
-    element = event.detail.element;
-    document.addEventListener('focus', _focus, true);
+    if (event.keyCode && event.keyCode === 9) {
+      if (event.shiftKey) {
+        // backwards
+        if (document.activeElement.isEqualNode($focusable[0])) {
+          setFocusOnTarget($focusable[$focusable.length - 1]);
+          event.preventDefault();
+        }
+      } else {
+        // forwards
+        if (document.activeElement.isEqualNode($focusable[$focusable.length - 1])) {
+          setFocusOnTarget($focusable[0]);
+          event.preventDefault();
+        }
+      }
+    }
   }
 
-  function _untrap() {
-    document.removeEventListener('focus', _focus);
-    element = null;
+  const focusin = (event) => {
+    if (!$target) {
+      return;
+    }
+    if (document.activeElement !== $target && !$target.contains(document.activeElement)) {
+      // catch focus some how escaped
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      setFocusOnTarget($focusable[0]);
+    }
   }
 
-  document.addEventListener('focus:trap', _trap, false);
-  document.addEventListener('focus:untrap', _untrap, false);
+  const trap = (event) => {
+    try {
+      document.removeEventListener('focusin', focusin, true);
+      document.removeEventListener('keydown', handleKeyDown, true);
+    } catch(err) {
+      // continue regardless of error
+    }
+    $target = event.detail.el || event.detail.element || event.detail.target || event.detail.$target;
+    if (!$target) {
+      return;
+    }
+    $focusable = getFocusableElements($target);
+    if ($focusable.length === 0) {
+      $focusable = [$target];
+    }
+    mo = new MutationObserver(mutations => {
+      $focusable = getFocusableElements($target);
+    });
+    mo.observe($target, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['inert', 'disabled', 'tabindex', 'hidden', 'style'],
+      characterData: false,
+    });
+    document.addEventListener('focusin', focusin, true);
+    document.addEventListener('keydown', handleKeyDown, true);
+    setFocusOnTarget($focusable[0]);
+    $target.dataset.focustrapped = 'true';
+  };
+
+  const untrap = () => {
+    if (!$target) {
+      return;
+    }
+    document.removeEventListener('focusin', focusin, true);
+    document.removeEventListener('keydown', handleKeyDown, true);
+    mo.disconnect();
+    $target.removeAttribute('data-focustrapped');
+    $target = null;
+    $focusable = [];
+    mo = null;
+  };
+
+  document.addEventListener('focus:trap', trap, false);
+  document.addEventListener('focus:untrap', untrap, false);
 };
 
 export default focusTrap;
