@@ -68,17 +68,17 @@ If you need IE11 support use v1.0.3 and if you need IE9 level support, use v0.8.
 ### v3.1.0+
 
 Added:
-* [`isVisible`](https://github.com/area17/a17-behaviors/wiki/isVisible)
-* [`getFocusableElements`](https://github.com/area17/a17-behaviors/wiki/getFocusableElements)
+* [`isVisible`](https://github.com/area17/js-helpers/wiki/isVisible)
+* [`getFocusableElements`](https://github.com/area17/js-helpers/wiki/getFocusableElements)
 * `listeners`
-    * [`listeners.add()`](https://github.com/area17/a17-behaviors/wiki/addListener)
-    * [`listeners.remove()`](https://github.com/area17/a17-behaviors/wiki/removeListener)
-* [`nl2br`](https://github.com/area17/a17-behaviors/wiki/nl2br)
-* [`removeEmoji`](https://github.com/area17/a17-behaviors/wiki/removeEmoji)
-* [`removeHTMLentities`](https://github.com/area17/a17-behaviors/wiki/removeHTMLentities)
-* [`removeNoneASCIICharacters`](https://github.com/area17/a17-behaviors/wiki/removeNoneASCIICharacters)
-* [`removeNonePrintableCharacters`](https://github.com/area17/a17-behaviors/wiki/removeNonePrintableCharacters)
-* [`replaceAccentedCharacters`](https://github.com/area17/a17-behaviors/wiki/replaceAccentedCharacters)
+    * [`listeners.add()`](https://github.com/area17/js-helpers/wiki/addListener)
+    * [`listeners.remove()`](https://github.com/area17/js-helpers/wiki/removeListener)
+* [`nl2br`](https://github.com/area17/js-helpers/wiki/nl2br)
+* [`removeEmoji`](https://github.com/area17/js-helpers/wiki/removeEmoji)
+* [`removeHTMLentities`](https://github.com/area17/js-helpers/wiki/removeHTMLentities)
+* [`removeNoneASCIICharacters`](https://github.com/area17/js-helpers/wiki/removeNoneASCIICharacters)
+* [`removeNonePrintableCharacters`](https://github.com/area17/js-helpers/wiki/removeNonePrintableCharacters)
+* [`replaceAccentedCharacters`](https://github.com/area17/js-helpers/wiki/replaceAccentedCharacters)
 
 ## Documentation and demos
 
