@@ -1,13 +1,13 @@
 {
   "name": "@area17/a17-helpers",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "A js helper package",
   "scripts": {
     "test": "jest --watchAll"
   },
   "repository": {
     "type": "git",
-    "url": "https://code.area17.com/a17/a17-helpers"
+    "url": "https://github.com/area17/js-helpers"
   },
   "main": "src/index.js",
   "author": "A17 <dev@area17.com> (https://area17.com/)",

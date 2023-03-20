@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 3.1.2
+
+* `package.json` repository url update
+
+# 3.1.1
+
+* read me updates
+
 # 3.1.0
 
 ## Updated
