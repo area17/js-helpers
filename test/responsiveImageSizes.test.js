@@ -52,7 +52,7 @@ describe('responsiveImageSizes utility', () => {
     expect(typeof responsiveImageSizes).toBe('function');
   });
 
-  test('generates a sizes string', () => {
+  test('generates a sizes string with rem units', () => {
     let sizes = responsiveImageSizes({
       "sm": "100vw",
       "md": 4,
@@ -60,23 +60,43 @@ describe('responsiveImageSizes utility', () => {
       "xl": "80%",
       "xxl": "300px"
     }, feConfig);
-    let expected = '(min-width: 1500px) 300px, (min-width: 1200px) 80%, (min-width: 900px) 58.33vw, (min-width: 600px) 50vw, 100vw';
+    let expected = '(min-width: 93.75rem) 18.75rem, (min-width: 75rem) 80%, (min-width: 56.25rem) 58.33vw, (min-width: 37.5rem) 50vw, 100vw';
 
     expect(sizes).toEqual(expected);
 
     sizes = responsiveImageSizes({
       "sm": 2,
     }, feConfig);
+    expected = '(min-width: 121.5rem) 15.625rem, (min-width: 56.25rem) 16.67vw, (min-width: 37.5rem) 25vw, 50vw';
+
+    expect(sizes).toEqual(expected);
+  });
+
+  test('generates a sizes string with pixel units', () => {
+    let sizes = responsiveImageSizes({
+      "sm": "100vw",
+      "md": 4,
+      "lg": 7,
+      "xl": "80%",
+      "xxl": "300px"
+    }, feConfig, false);
+    let expected = '(min-width: 1500px) 300px, (min-width: 1200px) 80%, (min-width: 900px) 58.33vw, (min-width: 600px) 50vw, 100vw';
+
+    expect(sizes).toEqual(expected);
+
+    sizes = responsiveImageSizes({
+      "sm": 2,
+    }, feConfig, false);
     expected = '(min-width: 1944px) 250px, (min-width: 900px) 16.67vw, (min-width: 600px) 25vw, 50vw';
 
     expect(sizes).toEqual(expected);
   });
 
-  test('if no bp passed, default to 100vw', () => {
+  test('if no bp passed, defaults to 100vw', () => {
     let sizes = responsiveImageSizes({
       "lg": 2,
     }, feConfig);
-    let expected = '(min-width: 1944px) 250px, (min-width: 900px) 16.67vw, (min-width: 600px) 25vw, 100vw';
+    let expected = '(min-width: 121.5rem) 15.625rem, (min-width: 56.25rem) 16.67vw, 100vw';
 
     expect(sizes).toEqual(expected);
 
@@ -89,6 +109,19 @@ describe('responsiveImageSizes utility', () => {
   test('returns a passed string', () => {
     let sizes = responsiveImageSizes('100vw', feConfig);
     let expected = '100vw';
+
+    expect(sizes).toEqual(expected);
+  });
+
+  test('converts a passed array', () => {
+    let sizes = responsiveImageSizes([
+      { sm: '100vw' },
+      { md: '50vw' },
+      { lg: '58.33vw' },
+      { xl: '80%' },
+      { xxl: '300px' }
+    ], feConfig);
+    let expected = '(min-width: 93.75rem) 18.75rem, (min-width: 75rem) 80%, (min-width: 56.25rem) 58.33vw, (min-width: 37.5rem) 50vw, 100vw';
 
     expect(sizes).toEqual(expected);
   });
