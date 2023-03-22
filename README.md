@@ -80,6 +80,12 @@ Added:
 * [`removeNonePrintableCharacters`](https://github.com/area17/js-helpers/wiki/removeNonePrintableCharacters)
 * [`replaceAccentedCharacters`](https://github.com/area17/js-helpers/wiki/replaceAccentedCharacters)
 
+### v3.2.0+
+
+Added:
+* [`responsiveImageSizes`](https://github.com/area17/js-helpers/wiki/responsiveImageSizes)
+* [`responsiveImageSrcset`](https://github.com/area17/js-helpers/wiki/responsiveImageSrcset)
+
 ## Documentation and demos
 
 * [Wiki](https://github.com/area17/js-helpers/wiki)
