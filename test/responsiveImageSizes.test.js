@@ -65,6 +65,17 @@ describe('responsiveImageSizes utility', () => {
     expect(sizes).toEqual(expected);
 
     sizes = responsiveImageSizes({
+      "sm": "100vw",
+      "md": 4,
+      "lg": "calc(100vw - 20px)",
+      "xl": "80%",
+      "xxl": "300px"
+    }, feConfig);
+    expected = '(min-width: 93.75rem) 18.75rem, (min-width: 75rem) 80%, (min-width: 56.25rem) calc(100vw - 20px), (min-width: 37.5rem) 50vw, 100vw';
+
+    expect(sizes).toEqual(expected);
+
+    sizes = responsiveImageSizes({
       "sm": 2,
     }, feConfig);
     expected = '(min-width: 121.5rem) 15.625rem, (min-width: 56.25rem) 16.67vw, (min-width: 37.5rem) 25vw, 50vw';
@@ -109,6 +120,11 @@ describe('responsiveImageSizes utility', () => {
   test('returns a passed string', () => {
     let sizes = responsiveImageSizes('100vw', feConfig);
     let expected = '100vw';
+
+    expect(sizes).toEqual(expected);
+
+    sizes = responsiveImageSizes('calc(100vw - 20px)', feConfig);
+    expected = 'calc(100vw - 20px)';
 
     expect(sizes).toEqual(expected);
   });

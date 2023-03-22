@@ -1,4 +1,13 @@
+/*
+  * outputs HTML sizes string
+  * @param {object, array, string} sizes - size information to convert
+  * @param {object} feConfig - front end breakpoint, columns
+  * @param {boolean} relativeUnits - convert PX to REM, defaults to true
+  * @returns {string} - for image `sizes` attribute
+  *
+*/
 const responsiveImageSizes = (sizes, feConfig = {}, relativeUnits = true) => {
+  // Doc: https://github.com/area17/a17-behaviors/wiki/responsiveImageSizes
     if (!feConfig.structure || !feConfig.structure.columns || !feConfig.structure.container || !feConfig.structure.gutters || !feConfig.structure.gutters.inner) {
       return '100vw';
     }
@@ -13,9 +22,13 @@ const responsiveImageSizes = (sizes, feConfig = {}, relativeUnits = true) => {
         result.value = val;
       }
       if (typeof val === 'string') {
-        result.value = parseFloat(val);
-        result.unit = val.substr(('' + result.value).length).trim();
-        result.unit = result.unit ? result.unit : null;
+        if (val.indexOf('calc') > -1) {
+          result.calc = val;
+        } else {
+          result.value = parseFloat(val);
+          result.unit = val.substr(('' + result.value).length).trim();
+          result.unit = result.unit ? result.unit : null;
+        }
       }
       return result;
     };
@@ -71,7 +84,10 @@ const responsiveImageSizes = (sizes, feConfig = {}, relativeUnits = true) => {
               const cssColumnsAtBreakpoint = cssColumns[bp];
               const colWidth = cssContainerWidths[bp] === 'auto' ? 'auto' : parseFloat(cssContainerWidths[bp]);
 
-              if (typeof sizeAtBreakpoint.value !== 'number') {
+              if (sizeAtBreakpoint.calc) {
+                // if a calc has been passed
+                bpSizeStr = sizeAtBreakpoint.calc;
+              } else if (typeof sizeAtBreakpoint.value !== 'number') {
                 // no number found, perhaps a `calc()` or something else was passed
                 bpSizeStr = sizeAtBreakpoint.value || '100vw';
               } else if (sizeAtBreakpoint.unit) {
