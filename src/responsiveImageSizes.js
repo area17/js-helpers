@@ -7,7 +7,7 @@
   *
 */
 const responsiveImageSizes = (sizes, feConfig = {}, relativeUnits = true) => {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/responsiveImageSizes
+    // Doc: https://github.com/area17/a17-behaviors/wiki/responsiveImageSizes
     if (!feConfig.structure || !feConfig.structure.columns || !feConfig.structure.container || !feConfig.structure.gutters || !feConfig.structure.gutters.inner) {
       return '100vw';
     }
