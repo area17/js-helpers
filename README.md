@@ -49,7 +49,7 @@ Cherry picking from the source file will bring in _just_ the chosen helper and s
 
 If you are using Webpack to compile your code and you are using it in production mode, it is likely doing this treeshaking and removing unused code for you automatically.
 
-## Major reversion notes:
+## Major revision notes:
 
 ### v2.0.0+
 
@@ -79,6 +79,12 @@ Added:
 * [`removeNoneASCIICharacters`](https://github.com/area17/js-helpers/wiki/removeNoneASCIICharacters)
 * [`removeNonePrintableCharacters`](https://github.com/area17/js-helpers/wiki/removeNonePrintableCharacters)
 * [`replaceAccentedCharacters`](https://github.com/area17/js-helpers/wiki/replaceAccentedCharacters)
+
+### v3.2.0+
+
+Added:
+* [`responsiveImageSizes`](https://github.com/area17/js-helpers/wiki/responsiveImageSizes)
+* [`responsiveImageSrcset`](https://github.com/area17/js-helpers/wiki/responsiveImageSrcset)
 
 ## Documentation and demos
 
