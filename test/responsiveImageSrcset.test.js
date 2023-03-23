@@ -1,6 +1,5 @@
 import responsiveImageSrcset from './../src/responsiveImageSrcset';
 
-
 const baseImgUrl = 'https://area17.imgix.net/0000/image.jpg';
 const complexImgUrl = 'https://area17.imgix.net/0000/image.jpg?px=10&q=90&w=1480';
 
@@ -19,6 +18,15 @@ describe('responsiveImageSrcset utility', () => {
   test('srcset from url with search params, using defaults', () => {
     let srcset = responsiveImageSrcset(complexImgUrl);
     let expected = 'https://area17.imgix.net/0000/image.jpg?px=10&q=75&w=200&fm=auto&auto=compress%2Cformat&fit=min&width=200 200w, https://area17.imgix.net/0000/image.jpg?px=10&q=75&w=400&fm=auto&auto=compress%2Cformat&fit=min&width=400 400w, https://area17.imgix.net/0000/image.jpg?px=10&q=75&w=600&fm=auto&auto=compress%2Cformat&fit=min&width=600 600w, https://area17.imgix.net/0000/image.jpg?px=10&q=75&w=1000&fm=auto&auto=compress%2Cformat&fit=min&width=1000 1000w, https://area17.imgix.net/0000/image.jpg?px=10&q=75&w=1600&fm=auto&auto=compress%2Cformat&fit=min&width=1600 1600w, https://area17.imgix.net/0000/image.jpg?px=10&q=75&w=2200&fm=auto&auto=compress%2Cformat&fit=min&width=2200 2200w, https://area17.imgix.net/0000/image.jpg?px=10&q=75&w=2800&fm=auto&auto=compress%2Cformat&fit=min&width=2800 2800w';
+
+    expect(srcset).toEqual(expected);
+  });
+
+  test('generates custom sizes', () => {
+    let srcset = responsiveImageSrcset(baseImgUrl, {
+      sizes: [50, 100]
+    });
+    let expected = 'https://area17.imgix.net/0000/image.jpg?q=75&fm=auto&auto=compress%2Cformat&fit=min&w=50&width=50 50w, https://area17.imgix.net/0000/image.jpg?q=75&fm=auto&auto=compress%2Cformat&fit=min&w=100&width=100 100w';
 
     expect(srcset).toEqual(expected);
   });
