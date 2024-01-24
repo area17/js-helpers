@@ -8,22 +8,22 @@
 // splitText.lines()
 
 function getElement(selectorOrElement) {
-    if (selectorOrElement instanceof Element) {
-      return selectorOrElement;
-    } else if (typeof selectorOrElement === 'string') {
-      // If it's a string, assume it's a query selector and retrieve the element
-      return document.querySelector(selectorOrElement);
-    } else {
-      // If it's neither an element nor a string, return null or handle as needed
-      return null;
-    }
+  if (selectorOrElement instanceof Element) {
+    return selectorOrElement;
+  } else if (typeof selectorOrElement === 'string') {
+    // If it's a string, assume it's a query selector and retrieve the element
+    return document.querySelector(selectorOrElement);
+  } else {
+    // If it's neither an element nor a string, return null or handle as needed
+    return null;
+  }
 }
 
 const createElement = (tagname, content = "", ...cssClass) => {
-    const el = document.createElement(tagname);
-    el.classList.add(...cssClass);
-    el.innerHTML = content;
-    return el;
+  const el = document.createElement(tagname);
+  el.classList.add(...cssClass);
+  el.innerHTML = content;
+  return el;
 }
 
 // options
@@ -35,152 +35,152 @@ const DEFAULT_OPTIONS = {
 };
 
 export class SplitText {
-    // DOM
-    target = null;
-    textContent = null;
+  // DOM
+  target = null;
+  textContent = null;
 
-    // Save text
-    rawChars = [];
-    rawWords = [];
-    wrappedChars = [];
-    wrappedWords = [];
+  // Save text
+  rawChars = [];
+  rawWords = [];
+  wrappedChars = [];
+  wrappedWords = [];
 
-    constructor(elementOrSelector, opts = {}) {
-        this.options = { ...DEFAULT_OPTIONS, ...opts };
-        this.init(elementOrSelector);
+  constructor(elementOrSelector, opts = {}) {
+    this.options = { ...DEFAULT_OPTIONS, ...opts };
+    this.init(elementOrSelector);
+  }
+
+  getChars() {
+    const textChars = `${this.textContent}`.split("");
+
+    textChars.forEach((char) => {
+      this.rawChars.push(char === " " ? " " : char);
+    });
+    this.rawChars.push(" ");
+
+    this.rawChars.forEach((char) => {
+      const charElement = createElement(
+        "span",
+        `${char}`,
+        `${this.options.globalClass}`,
+        `${this.options.charClass}`
+      );
+
+      this.wrappedChars.push(charElement);
+    });
+  }
+
+  getWords() {
+    let startIndex = 0;
+    this.rawChars.forEach((rawChar, index) => {
+      if (rawChar === " ") {
+        const wordArray = this.rawChars
+          .slice(startIndex, index)
+          .filter((word) => word !== " ");
+
+        this.rawWords.push(wordArray.join(''));
+        startIndex = index;
+      }
+    });
+
+    this.rawWords.forEach((word) => {
+      const wordDiv = createElement(
+        "span",
+        `${word}`,
+        `${this.options.globalClass}`,
+        `${this.options.wordClass}`
+      );
+
+      this.wrappedWords.push(wordDiv);
+    });
+  }
+
+  clearContent() {
+    this.target.innerHTML = "";
+  }
+
+  // Split text by chars
+  chars() {
+    this.clearContent();
+    this.wrappedChars.forEach((char) => {
+      this.target.append(char);
+      this.target.append(" ");
+    });
+  }
+
+  // Split text by words
+  words() {
+    this.clearContent();
+    this.wrappedWords.forEach((word) => {
+      this.target.append(word);
+      this.target.append(" ");
+    });
+  }
+
+  // Split text by lines
+  lines() {
+    this.words();
+
+    let startIndex = 0;
+    let lineArrays = [];
+
+    const appendToLineArray = () => {
+
+      lineArrays.forEach((lineArray) => {
+        const lineDiv = createElement(
+          "div",
+          "",
+          `${this.options.globalClass}`,
+          `${this.options.lineClass}`
+        );
+
+        lineArray.forEach(lineWord => {
+          lineDiv.append(lineWord);
+          lineDiv.append(" ");
+        })
+        this.target.append(lineDiv);
+      });
+    };
+
+    // detect new line based on word offsetTop
+    this.wrappedWords.reduce((oldOffsetTop, word, index) => {
+      const currentOffsetTop = word.offsetTop;
+
+      if (
+        (oldOffsetTop !== currentOffsetTop && oldOffsetTop !== null) ||
+        index === this.wrappedWords.length - 1
+      ) {
+        const computedIndex =
+          index === this.wrappedWords.length - 1 ? index + 1 : index;
+        const lineArray = this.wrappedWords.slice(startIndex, computedIndex);
+        lineArrays.push(lineArray);
+        startIndex = index;
+      }
+
+      return currentOffsetTop;
+    }, null);
+
+    appendToLineArray();
+  }
+
+  init(elementOrSelector) {
+    this.target = getElement(elementOrSelector);
+
+    if (!elementOrSelector instanceof Element) {
+      if (elementOrSelector === "") {
+        console.error(`Selector is empty! Please give a valid selector!`);
+      } else if (!this.target) {
+        console.error(`Can't found ${elementOrSelector} in DOM tree!`);
+      }
     }
 
-    getChars() {
-        const textChars = `${this.textContent}`.split("");
+    if (this.target === null) return;
 
-        textChars.forEach((char) => {
-            this.rawChars.push(char === " " ? " " : char);
-        });
-        this.rawChars.push(" ");
+    this.textContent = this.target.textContent;
+    this.clearContent();
 
-        this.rawChars.forEach((char) => {
-            const charElement = createElement(
-                "span",
-                `${char}`,
-                `${this.options.globalClass}`,
-                `${this.options.charClass}`
-            );
-
-            this.wrappedChars.push(charElement);
-        });
-    }
-
-    getWords() {
-        let startIndex = 0;
-        this.rawChars.forEach((rawChar, index) => {
-            if (rawChar === " ") {
-                const wordArray = this.rawChars
-                .slice(startIndex, index)
-                .filter((word) => word !== " ");
-
-                this.rawWords.push(wordArray.join(''));
-                startIndex = index;
-            }
-        });
-
-        this.rawWords.forEach((word) => {
-            const wordDiv = createElement(
-            "span",
-            `${word}`,
-            `${this.options.globalClass}`,
-            `${this.options.wordClass}`
-            );
-
-            this.wrappedWords.push(wordDiv);
-        });
-    }
-
-    clearContent() {
-        this.target.innerHTML = "";
-    }
-
-    // Split text by chars
-    chars() {
-        this.clearContent();
-        this.wrappedChars.forEach((char) => {
-            this.target.append(char);
-            this.target.append(" ");
-        });
-    }
-
-    // Split text by words
-    words() {
-        this.clearContent();
-        this.wrappedWords.forEach((word) => {
-            this.target.append(word);
-            this.target.append(" ");
-        });
-    }
-
-    // Split text by lines
-    lines() {
-        this.words();
-
-        let startIndex = 0;
-        let lineArrays = [];
-
-        const appendToLineArray = () => {
-
-        lineArrays.forEach((lineArray) => {
-            const lineDiv = createElement(
-            "div",
-            "",
-            `${this.options.globalClass}`,
-            `${this.options.lineClass}`
-            );
-
-            lineArray.forEach(lineWord => {
-                lineDiv.append(lineWord);
-                lineDiv.append(" ");
-            })
-            this.target.append(lineDiv);
-        });
-        };
-
-        // detect new line based on word offsetTop
-        this.wrappedWords.reduce((oldOffsetTop, word, index) => {
-            const currentOffsetTop = word.offsetTop;
-
-            if (
-                (oldOffsetTop !== currentOffsetTop && oldOffsetTop !== null) ||
-                index === this.wrappedWords.length - 1
-            ) {
-                const computedIndex =
-                index === this.wrappedWords.length - 1 ? index + 1 : index;
-                const lineArray = this.wrappedWords.slice(startIndex, computedIndex);
-                lineArrays.push(lineArray);
-                startIndex = index;
-            }
-
-            return currentOffsetTop;
-        }, null);
-
-        appendToLineArray();
-    }
-
-    init(elementOrSelector) {
-        this.target = getElement(elementOrSelector);
-
-        if (!elementOrSelector instanceof Element) {
-            if (elementOrSelector === "") {
-                console.error(`Selector is empty! Please give a valid selector!`);
-            } else if (!this.target) {
-                console.error(`Can't found ${elementOrSelector} in DOM tree!`);
-            }
-        }
-
-        if(this.target === null) return;
-
-        this.textContent = this.target.textContent;
-        this.clearContent();
-
-        // save text
-        this.getChars();
-        this.getWords();
-    }
+    // save text
+    this.getChars();
+    this.getWords();
+  }
 }
