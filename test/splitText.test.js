@@ -24,4 +24,14 @@ describe('splitText', () => {
     const wordsEls = div.querySelectorAll('span');
     expect(wordsEls.length).toEqual(4);
   });
+
+  it('splitText options correctly', () => {
+    let div = document.createElement('div');
+    div.innerHTML = 'Text with 4 words.';
+    document.body.appendChild(div);
+    const splitText = new SplitText(div, { wordClass : 'word-item' });
+    splitText.words();
+    const wordsEls = div.querySelectorAll('.word-item');
+    expect(wordsEls.length).toEqual(4);
+  });
 });
