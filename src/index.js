@@ -36,4 +36,5 @@ export { default as responsiveImageUpdate } from './responsiveImageUpdate';
 export { default as scrolled } from './scrolled.js';
 export { default as sendEventToSegmentio } from './sendEventToSegmentio.js';
 export { default as setFocusOnTarget } from './setFocusOnTarget';
+export { default as SplitText } from './splitText';
 export { default as Store } from './store';

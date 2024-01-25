@@ -39,7 +39,7 @@ const DEFAULT_OPTIONS = {
   globalClass: "split",
 };
 
-export class SplitText {
+export default class SplitText {
   // DOM
   target = null;
   textContent = null;
