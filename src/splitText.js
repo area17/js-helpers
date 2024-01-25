@@ -3,9 +3,12 @@
 
 // Usage:
 // const splitText = new SplitText('.js-split-text')
+// Then :
 // splitText.chars()
 // splitText.words()
 // splitText.lines()
+// For lines, you will need to call again lines() on window resize event.
+// Demo : https://codepen.io/mrdoinel/pen/jOJLYXQ
 
 // Helper function to retrieve an (and only one) element from DOM
 function getElement(selectorOrElement) {
