@@ -7,16 +7,18 @@
 // splitText.words()
 // splitText.lines()
 
+// Helper function to retrieve an (and only one) element from DOM
 function getElement(selectorOrElement) {
   if (selectorOrElement instanceof Element) {
+    // If it's an HTML element, return it
     return selectorOrElement;
+  } else if (selectorOrElement instanceof NodeList) {
+    // If it's a NodeList, return the first element or null if it's empty
+    return selectorOrElement.length > 0 ? selectorOrElement[0] : null;
   } else if (typeof selectorOrElement === 'string') {
-    // If it's a string, assume it's a query selector and retrieve the element
     return document.querySelector(selectorOrElement);
-  } else {
-    // If it's neither an element nor a string, return null or handle as needed
-    return null;
   }
+  return null;
 }
 
 const createElement = (tagname, content = "", ...cssClass) => {
@@ -166,7 +168,7 @@ export class SplitText {
   init(elementOrSelector) {
     this.target = getElement(elementOrSelector);
 
-    if (!elementOrSelector instanceof Element) {
+    if (typeof selectorOrElement === 'string') {
       if (elementOrSelector === "") {
         console.error(`Selector is empty! Please give a valid selector!`);
       } else if (!this.target) {
