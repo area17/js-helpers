@@ -1,5 +1,8 @@
-var sendEventToSegmentio = function() {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/sentEventToSegmentio
+/**
+ * sendEventToSegmentio : Tracks site wide requests for analytics events. Catches events before segment.io is ready, stores them and tries them again when it is ready.
+*/
+const sendEventToSegmentio = function() {
+  // Doc: https://github.com/area17/js-helpers/wiki/sentEventToSegmentio
 
   var analyticsReady = false;
   var tempStore = [];

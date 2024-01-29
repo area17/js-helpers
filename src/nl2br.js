@@ -1,13 +1,12 @@
 /**
- * This function is similar to PHP's nl2br()
+ * nl2br : This function is similar to PHP's nl2br()
  *
  * @param {string} str Input text
  * @param {boolean} replaceMode Use replace instead of insert
  * @return {string} Filtered text
  */
-
 const nl2br = function(str, replaceMode = true) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/nl2br
+  // Doc: https://github.com/area17/js-helpers/wiki/nl2br
 
   if (typeof str === 'string') {
     const breakTag = '<br>';

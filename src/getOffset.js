@@ -1,5 +1,11 @@
-var getOffset = function(node) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/getOffset
+/**
+ * getOffset : Get the current coordinates of a node, relative to the document, corrected by scroll. Uses getBoundingClientRect
+ *
+ * @param {HTMLElement} node The node to get the offset of
+ * @returns {Object|null} The offset of the node
+ */
+const getOffset = function(node) {
+  // Doc: https://github.com/area17/js-helpers/wiki/getOffset
 
   if (node) {
     var rect = node.getBoundingClientRect();

@@ -1,5 +1,5 @@
 var objectifyForm = function(form) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/objectifyForm
+  // Doc: https://github.com/area17/js-helpers/wiki/objectifyForm
 
   var field;
   var obj = {};

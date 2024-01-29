@@ -1,6 +1,6 @@
 const listeners = {
   add(nodes, type, func, options = false) {
-    // Doc: https://github.com/area17/a17-behaviors/wiki/addListener
+    // Doc: https://github.com/area17/js-helpers/wiki/addListener
 
     if (NodeList.prototype.isPrototypeOf(nodes)) {
       nodes.forEach($node => {
@@ -12,7 +12,7 @@ const listeners = {
     }
   },
   remove(nodes, type, func, options = false) {
-    // Doc: https://github.com/area17/a17-behaviors/wiki/removeListener
+    // Doc: https://github.com/area17/js-helpers/wiki/removeListener
     if (NodeList.prototype.isPrototypeOf(nodes)) {
       nodes.forEach($node => {
         $node.removeEventListener(type, func, options);

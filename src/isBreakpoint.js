@@ -1,7 +1,14 @@
 import getCurrentMediaQuery from './getCurrentMediaQuery';
 
+/**
+ * isBreakpoint : Checks if the current breakpoint matches the passed breakpoint. It supports querying with or without +/- modifiers.
+ *
+ * @param {string} breakpoint The breakpoint to check against
+ * @param {array} [breakpoints] Array of breakpoint names to test against
+ * @returns {boolean} Returns true if the breakpoint matches, false if not
+ */
 const isBreakpoint = function (breakpoint, breakpoints) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/isBreakpoint
+  // Doc: https://github.com/area17/js-helpers/wiki/isBreakpoint
 
   // bail if no breakpoint is passed
   if (!breakpoint) {

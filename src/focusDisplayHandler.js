@@ -1,14 +1,16 @@
-var focusDisplayHandler = function() {
+/**
+ * focusDisplayHandler : Adds data-focus-method to document.activeElement which differentiates between keyboard, mouse and touch focus - values of which can be touch, key or mouse. This allows you to style keyboard focus events and hide the focus ring for mouse events (because designers hate those!)
+ */
+const focusDisplayHandler = function() {
+  // Doc: https://github.com/area17/js-helpers/wiki/focusDisplayHandler
 
-  // Doc: https://github.com/area17/a17-behaviors/wiki/focusDisplayHandler
+  const attr = 'data-focus-method';
+  const touch = 'touch';
+  const mouse = 'mouse';
+  const key = 'key';
 
-  var attr = 'data-focus-method';
-  var touch = 'touch';
-  var mouse = 'mouse';
-  var key = 'key';
-
-  var focusMethod = false;
-  var lastFocusMethod;
+  let focusMethod = false;
+  let lastFocusMethod;
 
   function _onKeyDown() {
     focusMethod = key;
@@ -52,7 +54,6 @@ var focusDisplayHandler = function() {
   document.addEventListener('focus', _onFocus, true);
   document.addEventListener('blur', _onBlur, true);
   window.addEventListener('blur', _onWindowBlur);
-
 };
 
 export default focusDisplayHandler;

@@ -1,5 +1,5 @@
 var messages = function() {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/messages
+  // Doc: https://github.com/area17/js-helpers/wiki/messages
 
   var target = document.querySelectorAll('[data-message-target]');
 

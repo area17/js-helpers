@@ -1,5 +1,5 @@
-var purgeProperties = function(obj) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/purgeProperties
+const purgeProperties = function(obj) {
+  // Doc: https://github.com/area17/js-helpers/wiki/purgeProperties
   for (var prop in obj) {
     if (obj.hasOwnProperty(prop)) {
       delete obj[prop];

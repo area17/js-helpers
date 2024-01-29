@@ -1,6 +1,6 @@
-// Doc: https://github.com/area17/a17-behaviors/wiki/keyCodes
+// Doc: https://github.com/area17/js-helpers/wiki/keyCodes
 
-var keyCodes = {
+const keyCodes = {
   tab:   9,
   enter: 13,
   esc:   27,

@@ -1,7 +1,13 @@
 import getFocusableElements from './getFocusableElements';
 
+/**
+ * setFocusOnTarget : move focus on the node
+ *
+ * @param {HTMLElement} $node an HTML Element
+ * @param {Boolean} exact Tell if the focus should be set on the exact element or on the first focusable element inside it.
+*/
 var setFocusOnTarget = function($node, exact = true) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/setFocusOnTarget
+  // Doc: https://github.com/area17/js-helpers/wiki/setFocusOnTarget
 
   if (!($node instanceof Element) && !($node instanceof HTMLDocument)) {
     return;

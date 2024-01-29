@@ -1,7 +1,13 @@
 import queryStringHandler from './queryStringHandler';
 
-var jsonpRequest = function(settings) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/jsonpRequest
+/**
+ * isBreakpoint : Performs jsonp requests - by writing script tags into the page and setting up the callback function to run on success
+ *
+ * @param {Object} settings required - settings object
+ * @returns {void}
+ */
+const jsonpRequest = function(settings) {
+  // Doc: https://github.com/area17/js-helpers/wiki/jsonpRequest
 
   var options = settings;
   var script = document.createElement('script');

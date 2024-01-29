@@ -1,6 +1,11 @@
-var copyTextToClipboard = function(textToCopy,successMsg) {
-
-  // Doc: https://github.com/area17/a17-behaviors/wiki/copyTextToClipboard
+/**
+ * copyTextToClipboard : Copies a string to the clipboard, if successful shows an alert with a message
+ *
+ * @param {string} textToCopy - required - string of text to copy
+ * @param {string} [successMsg] - optional - string of text to display in the alert if successful, default says "Copied to clipboard"
+*/
+const copyTextToClipboard = function(textToCopy,successMsg) {
+  // Doc: https://github.com/area17/js-helpers/wiki/copyTextToClipboard
 
   // http://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript#answer-30810322
 

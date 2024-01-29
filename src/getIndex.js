@@ -1,11 +1,18 @@
-var getIndex = function (node, nodeList) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/getIndex
+/**
+ * getIndex : Returns the index of a node in a nodeList
+ *
+ * @param {HTMLElement} node The node to get the index of
+ * @param {NodeList} nodeList The nodeList to search in
+ * @returns {number} The index of the node
+ */
+const getIndex = function (node, nodeList) {
+  // Doc: https://github.com/area17/js-helpers/wiki/getIndex
 
-  var nodes = nodeList || node.parentNode.childNodes;
-  var nodesLength = nodes.length;
-  var n = 0;
+  const nodes = nodeList || node.parentNode.childNodes;
+  const nodesLength = nodes.length;
+  let n = 0;
 
-  for (var i = 0; i < nodesLength; i++) {
+  for (let i = 0; i < nodesLength; i++) {
     if (nodes[i] === node) {
       return n;
     }
@@ -15,7 +22,6 @@ var getIndex = function (node, nodeList) {
   }
 
   return -1;
-
 };
 
 export default getIndex;

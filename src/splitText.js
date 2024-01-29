@@ -1,3 +1,5 @@
+import toChars from './toChars'
+
 // SplitText : Split text by Chars, Words or Lines
 // To use with animation library to animate each chars, words or lines within a given element.
 
@@ -39,6 +41,12 @@ const DEFAULT_OPTIONS = {
   globalClass: "split",
 };
 
+/**
+ * SplitText the text content of a target element into words and/or characters.
+ *
+ * @param {string|HTMLElement} elementOrSelector an HTML Element or string selector
+ * @param {Object} options SplitText options
+ */
 export default class SplitText {
   // DOM
   target = null;
@@ -56,11 +64,7 @@ export default class SplitText {
   }
 
   getChars() {
-    const textChars = `${this.textContent}`.split("");
-
-    textChars.forEach((char) => {
-      this.rawChars.push(char === " " ? " " : char);
-    });
+    this.rawChars = toChars(this.textContent);
     this.rawChars.push(" ");
 
     this.rawChars.forEach((char) => {

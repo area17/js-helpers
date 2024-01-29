@@ -4,9 +4,17 @@
 
   A demo is available here : http://bp7store.dev.area17.com/
 
-  Doc: https://github.com/area17/a17-behaviors/wiki/Store
+  Doc: https://github.com/area17/js-helpers/wiki/Store
 */
 
+/**
+ * Store : A tiny state management library
+ * @class Store
+ * @param {object} params
+ * @param {object} params.actions
+ * @param {object} params.mutations
+ * @param {object} params.initialState
+ */
 export default class Store {
   constructor(params) {
       const self = this;

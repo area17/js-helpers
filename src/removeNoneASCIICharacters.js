@@ -1,5 +1,5 @@
 const removeNoneASCIICharacters = function (str) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/removeNoneASCIICharacters
+  // Doc: https://github.com/area17/js-helpers/wiki/removeNoneASCIICharacters
 
   // Easy way to spot hidden characters - https://www.soscisurvey.de/tools/view-chars.php
 

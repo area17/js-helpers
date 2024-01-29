@@ -1,5 +1,11 @@
-var extend = function () {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/extend
+/**
+ * extend : Merges the contents of two objects together
+ *
+ * @param {Object} object - any number of objects
+ * @returns {Object} merged object
+*/
+const extend = function () {
+  // Doc: https://github.com/area17/js-helpers/wiki/extend
 
   var obj = {};
   var i = 0;
@@ -15,7 +21,6 @@ var extend = function () {
   }
 
   return obj;
-
 };
 
 export default extend;

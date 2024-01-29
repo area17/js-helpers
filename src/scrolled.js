@@ -1,5 +1,5 @@
 var scrolled = function() {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/scrolled
+  // Doc: https://github.com/area17/js-helpers/wiki/scrolled
   var lastScrollPos = 0;
   var prevScrollPos = -1;
   var ticking = false;

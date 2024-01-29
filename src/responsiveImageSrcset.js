@@ -1,12 +1,12 @@
-/*
-  * outputs HTML srcset string, with default sizes
+/**
+  * responsiveImageSrcset : outputs HTML srcset string, with default sizes
   * @param {string} url - base url of image
   * @param {object} options - output options
   * @returns {string} - for image `srcset` attribute
   *
 */
 const responsiveImageSrcset = (url, options = {}) => {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/responsiveImageSrcset
+  // Doc: https://github.com/area17/js-helpers/wiki/responsiveImageSrcset
   if (!url) {
     return '';
   }

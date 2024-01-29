@@ -11,7 +11,7 @@ describe('splitText', () => {
     const splitText = new SplitText(div);
     splitText.chars();
     const charsEls = div.querySelectorAll('span');
-    // one extra empty chars for the space
+    // one extra empty chars for additional space at the end
     expect(charsEls.length).toEqual(19 + 1);
   });
 

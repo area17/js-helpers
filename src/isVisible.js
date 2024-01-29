@@ -1,5 +1,11 @@
-var isVisible = function($el) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/isVisible
+/**
+ * isVisible : determine if an element is visible or not
+ *
+ * @param {HTMLElement} $el an HTML Element
+ * @returns {Boolean} true if element is visible, false otherwise
+ */
+const isVisible = function($el) {
+  // Doc: https://github.com/area17/js-helpers/wiki/isVisible
 
   // March 2023 - surprisingly little documentation on `Element.checkVisibility()`
   // https://caniuse.com/mdn-api_element_checkvisibility

@@ -1,7 +1,10 @@
 import getCurrentMediaQuery from './getCurrentMediaQuery';
 
-var resized = function() {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/resized
+/**
+ * resized : Debounces window resize, also checks if current media query has changed
+*/
+const resized = function() {
+  // Doc: https://github.com/area17/js-helpers/wiki/resized
 
   var resizeTimer;
   var resizedDelay = 250;

@@ -1,8 +1,11 @@
 import getFocusableElements from './getFocusableElements';
 import setFocusOnTarget from './setFocusOnTarget';
 
+/**
+ * focusTrap : Traps keyboard tabbing focus within a node
+*/
 const focusTrap = function() {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/focusTrap
+  // Doc: https://github.com/area17/js-helpers/wiki/focusTrap
 
   let $target;
   let $focusable = [];

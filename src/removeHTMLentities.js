@@ -1,5 +1,5 @@
 const removeHTMLentities = function(str, replaceMode = false) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/removeHTMLentities
+  // Doc: https://github.com/area17/js-helpers/wiki/removeHTMLentities
 
   if (typeof str === 'string') {
     if (replaceMode) {

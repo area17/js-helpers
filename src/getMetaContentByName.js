@@ -1,13 +1,14 @@
-var getMetaContentByName = function(name) {
-  // Doc: https://github.com/area17/a17-behaviors/wiki/getMetaContentByName
+/**
+ * getMetaContentByName : Returns a metatag content by name
+ *
+ * @param {string} name The name of the metatag
+ * @returns {string|null} The content of the metatag
+ */
+const getMetaContentByName = function(name) {
+  // Doc: https://github.com/area17/js-helpers/wiki/getMetaContentByName
 
   const tag = document.querySelector('meta[name=\''+name+'\']');
-
-  if (tag) {
-    return tag.getAttribute('content');
-  } else {
-    return null;
-  }
+  return tag ? tag.getAttribute('content') : null;
 };
 
 export default getMetaContentByName;

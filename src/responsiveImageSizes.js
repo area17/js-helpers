@@ -1,13 +1,12 @@
-/*
-  * outputs HTML sizes string
-  * @param {object, array, string} sizes - size information to convert
-  * @param {object} feConfig - front end breakpoint, columns
-  * @param {boolean} relativeUnits - convert PX to REM, defaults to true
-  * @returns {string} - for image `sizes` attribute
-  *
+/**
+ * responsiveImageSizes : outputs HTML sizes string
+ * @param {object, array, string} sizes - size information to convert
+ * @param {Object} feConfig - front end breakpoint, columns
+ * @param {boolean} relativeUnits - convert PX to REM, defaults to true
+ * @returns {string} - for image `sizes` attribute
 */
 const responsiveImageSizes = (sizes, feConfig = {}, relativeUnits = true) => {
-    // Doc: https://github.com/area17/a17-behaviors/wiki/responsiveImageSizes
+    // Doc: https://github.com/area17/js-helpers/wiki/responsiveImageSizes
     if (!feConfig.structure || !feConfig.structure.columns || !feConfig.structure.container || !feConfig.structure.gutters || !feConfig.structure.gutters.inner) {
       return '100vw';
     }
@@ -48,7 +47,7 @@ const responsiveImageSizes = (sizes, feConfig = {}, relativeUnits = true) => {
       sizesSet[name] = null;
     });
     // generate sizes
-    if (sizes !== {}) {
+    if (Object.keys(sizes).length !== 0) {
         // if a string for sizes is passed through
         if (typeof sizes === 'string') {
             return sizes;

@@ -38,3 +38,4 @@ export { default as sendEventToSegmentio } from './sendEventToSegmentio.js';
 export { default as setFocusOnTarget } from './setFocusOnTarget';
 export { default as SplitText } from './splitText';
 export { default as Store } from './store';
+export { default as toChars } from './toChars';

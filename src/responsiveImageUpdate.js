@@ -1,6 +1,5 @@
 export function responsiveImageUpdate() {
-
-  // Doc: https://github.com/area17/a17-behaviors/wiki/responsiveImageUpdate
+  // Doc: https://github.com/area17/js-helpers/wiki/responsiveImageUpdate
 
   function update() {
     var sources = document.querySelectorAll('img[srcset][sizes], source[srcset][sizes]');
