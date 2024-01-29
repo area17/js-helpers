@@ -1,3 +1,9 @@
+/**
+ * Removes Emoji from a string
+ *
+ * @param {string} str - The string to convert.
+ * @returns {string} - Returns the converted string.
+ */
 const removeEmoji = function (str) {
   // Doc: https://github.com/area17/js-helpers/wiki/removeEmoji
 

@@ -1,6 +1,6 @@
 {
   "name": "@area17/a17-helpers",
-  "version": "3.2.5",
+  "version": "3.2.6",
   "description": "A js helper package",
   "scripts": {
     "test": "jest --watchAll"

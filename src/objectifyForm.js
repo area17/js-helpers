@@ -1,4 +1,10 @@
-var objectifyForm = function(form) {
+/**
+ * Generates a JS Object out of a form. Note: does not add items from input[type=file] or input[disabled].
+ *
+ * @param {HTMLFormElement} form - The form node
+ * @returns {Object} - JS Object compiled from the form
+*/
+const objectifyForm = function(form) {
   // Doc: https://github.com/area17/js-helpers/wiki/objectifyForm
 
   var field;

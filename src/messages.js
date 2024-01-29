@@ -1,4 +1,7 @@
-var messages = function() {
+/**
+ * Growl like messages
+ */
+const messages = function() {
   // Doc: https://github.com/area17/js-helpers/wiki/messages
 
   var target = document.querySelectorAll('[data-message-target]');

@@ -1,3 +1,6 @@
+/**
+ * Removes all properties from an object, useful in cleaning up when destroying a method
+*/
 const purgeProperties = function(obj) {
   // Doc: https://github.com/area17/js-helpers/wiki/purgeProperties
   for (var prop in obj) {

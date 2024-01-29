@@ -1,8 +1,12 @@
-var scrolled = function() {
+/**
+ * scrolled : Dispatch a 'scrolled' event when the user scrolls the page
+ * @example document.addEventListener('scrolled', function(event) { console.log(event.detail.last); });
+*/
+const scrolled = function() {
   // Doc: https://github.com/area17/js-helpers/wiki/scrolled
-  var lastScrollPos = 0;
-  var prevScrollPos = -1;
-  var ticking = false;
+  let lastScrollPos = 0;
+  let prevScrollPos = -1;
+  let ticking = false;
 
   window.addEventListener('scroll', function() {
     if (!ticking) {

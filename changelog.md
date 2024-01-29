@@ -4,14 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# 3.2.6
+
+## Updated
+* JSDoc : add JSDoc documentation to remaining helpers
+
 # 3.2.5
 
 ## Fixed
-* responsiveImageSizes : Fix test of empty sizes object
+* `responsiveImageSizes` : Fix test of empty sizes object
 
 ## Updated
 * `SplitText` : Use now the toChars utility to split the string by chars.
-* JsDoc : add jsdoc to most individual helpers
+* JSDoc : add JSDoc basic documentation to most of the individual helpers
 
 ## Added
 * `toChars` : Split text by Chars utility : more complete utility to split a string by a separator.

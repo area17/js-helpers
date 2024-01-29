@@ -1,3 +1,9 @@
+/**
+ * Remove none ASCII characters from a string
+ *
+ * @param {string} str - The string to convert.
+ * @returns {string} - Returns the converted string.
+ */
 const removeNoneASCIICharacters = function (str) {
   // Doc: https://github.com/area17/js-helpers/wiki/removeNoneASCIICharacters
 

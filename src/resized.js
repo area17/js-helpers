@@ -2,6 +2,7 @@ import getCurrentMediaQuery from './getCurrentMediaQuery';
 
 /**
  * resized : Debounces window resize, also checks if current media query has changed
+ * @example document.addEventListener('resized', function(event) { console.log(event.detail.breakpoint); });
 */
 const resized = function() {
   // Doc: https://github.com/area17/js-helpers/wiki/resized
