@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Fixed
 * Add Typescript support
+* Package json - Set `type : module` : A17 helpers are now forced to be treated like mjs files (ES modules)
 
 # 3.2.6
 
