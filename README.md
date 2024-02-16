@@ -56,7 +56,8 @@ If you are using Webpack to compile your code and you are using it in production
 When modifying or creating JS helpers, dont forget to generate declaration files of your helpers so these can be imported into TS projects.
 
 Please run : `npm run types`
-This will add declaration files at the same place your JS files.
+
+This will add the declaration files at the same place of your JS files.
 
 ## Major revision notes:
 
