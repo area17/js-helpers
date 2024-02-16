@@ -66,7 +66,7 @@ export default class Store {
    * collection and runs the action if it can find it
    *
    * @param {string} actionKey
-   * @param {mixed} payload
+   * @param {any} payload
    * @returns {boolean}
    * @memberof Store
    */
@@ -93,7 +93,7 @@ export default class Store {
    * if that mutation exists by calling it
    *
    * @param {string} mutationKey
-   * @param {mixed} payload
+   * @param {any} payload
    * @returns {boolean}
    * @memberof Store
    */

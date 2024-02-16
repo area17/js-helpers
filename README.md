@@ -51,6 +51,12 @@ Cherry picking from the source file will bring in _just_ the chosen helper and s
 
 If you are using Webpack to compile your code and you are using it in production mode, it is likely doing this treeshaking and removing unused code for you automatically.
 
+### Typescript
+
+When modifying or creating helpers, dont forget to generate declaration files of your helpers.
+Please run : `npm run types`
+This will add declaration files at the same place your JS files.
+
 ## Major revision notes:
 
 ### v2.0.0+

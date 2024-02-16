@@ -9,8 +9,8 @@ const focusDisplayHandler = function() {
   const mouse = 'mouse';
   const key = 'key';
 
-  let focusMethod = false;
-  let lastFocusMethod;
+  let focusMethod = '';
+  let lastFocusMethod = '';
 
   function _onKeyDown() {
     focusMethod = key;
@@ -34,7 +34,7 @@ const focusDisplayHandler = function() {
     if (event.target && typeof(event.target.setAttribute) === 'function') {
       event.target.setAttribute(attr, focusMethod);
       lastFocusMethod = focusMethod;
-      focusMethod = false;
+      focusMethod = '';
     }
   }
 
@@ -45,7 +45,7 @@ const focusDisplayHandler = function() {
   }
 
   function _onWindowBlur() {
-    focusMethod = false;
+    focusMethod = null;
   }
 
   document.addEventListener('keydown', _onKeyDown, true);

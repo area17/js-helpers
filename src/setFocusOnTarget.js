@@ -9,7 +9,7 @@ import getFocusableElements from './getFocusableElements';
 var setFocusOnTarget = function($node, exact = true) {
   // Doc: https://github.com/area17/js-helpers/wiki/setFocusOnTarget
 
-  if (!($node instanceof Element) && !($node instanceof HTMLDocument)) {
+  if (!($node instanceof Element) && !($node instanceof Document)) {
     return;
   }
 

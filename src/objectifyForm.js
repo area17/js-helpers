@@ -7,13 +7,12 @@
 const objectifyForm = function(form) {
   // Doc: https://github.com/area17/js-helpers/wiki/objectifyForm
 
-  var field;
-  var obj = {};
+  const obj = {};
 
   if (typeof form === 'object' && form.nodeName === 'FORM') {
-    var len = form.elements.length;
-    for (var i = 0; i < len; i++) {
-      field = form.elements[i];
+    const len = form.elements.length;
+    for (let i = 0; i < len; i++) {
+      const field = form.elements[i];
       if (field.name && !field.disabled && field.type !== 'file' && field.type !== 'reset' && field.type !== 'submit' && field.type !== 'button') {
         if (field.type === 'select-multiple') {
           for (var j = form.elements[i].options.length-1; j >= 0; j--) {

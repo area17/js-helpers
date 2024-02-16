@@ -1,0 +1,9 @@
+{
+  "include": ["src/*.js"],
+  "exclude": ["src/*.d.ts"],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+  }
+}

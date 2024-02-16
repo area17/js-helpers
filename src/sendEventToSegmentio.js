@@ -8,6 +8,10 @@ const sendEventToSegmentio = function() {
   var tempStore = [];
 
   function pushAnalytics(data) {
+    if(typeof analytics === undefined) {
+      return;
+    }
+
     if (Object.getOwnPropertyNames(data).length > 0) {
       switch(data.type.toLowerCase()) {
         case 'track':
@@ -57,7 +61,7 @@ const sendEventToSegmentio = function() {
 
   function init() {
     if (typeof analytics !== undefined) {
-      analytics.ready(function() {
+      analytics.ready(() => {
         analytics.debug(false);
         analyticsReady = true;
         identify();
@@ -75,7 +79,6 @@ const sendEventToSegmentio = function() {
   document.addEventListener('analytics_identify', identify);
 
   init();
-
 };
 
 export default sendEventToSegmentio;

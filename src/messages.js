@@ -4,23 +4,21 @@
 const messages = function() {
   // Doc: https://github.com/area17/js-helpers/wiki/messages
 
-  var target = document.querySelectorAll('[data-message-target]');
+  const target = document.querySelector('[data-message-target]');
 
-  if (target.length > 0) {
-    target = target[0];
-  } else {
+  if(!target) {
     return;
   }
 
-  var messageVisible = false;
-  var messageTimer;
-  var messages = [];
-  var loadMessage = target.getAttribute('data-message') || false;
-  var loadMessageType = target.getAttribute('data-message-type') || '';
+  let messageVisible = false;
+  let messageTimer;
+  let messages = [];
+  const loadMessage = target.getAttribute('data-message') || false;
+  const loadMessageType = target.getAttribute('data-message-type') || '';
 
   function createMessage(message, type) {
-    var div = document.createElement('div');
-    var span = document.createElement('span');
+    const div = document.createElement('div');
+    const span = document.createElement('span');
     span.textContent = message;
     div.appendChild(span);
     div.className = (type !== '') ? 'message message--'+type+' s-hide' : 'message s-hide';
@@ -59,7 +57,7 @@ const messages = function() {
   document.addEventListener('message', newMessage, false);
 
   if (loadMessage && loadMessage.length > 0) {
-    var loadMessageData = {
+    const loadMessageData = {
       data: {
         message: loadMessage,
         time: 5000,

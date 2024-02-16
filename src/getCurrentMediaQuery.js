@@ -5,7 +5,7 @@
  */
 const getCurrentMediaQuery = function() {
   // Doc: https://github.com/area17/js-helpers/wiki/getCurrentMediaQuery
-
+  if(typeof window === 'undefined') return '';
   return getComputedStyle(document.documentElement).getPropertyValue('--breakpoint').trim().replace(/"/g, '');
 };
 

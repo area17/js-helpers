@@ -20,7 +20,7 @@ function focusableFilter($el) {
  *
  * @param {HTMLElement} $target an HTML Element
  * @param {Boolean} includeTarget Whether or not to include the target itself in the returned array
- * @returns {array} An array of focusable elements
+ * @returns {Array} An array of focusable elements
  */
 const getFocusableElements = function($target, includeTarget = false) {
   if (!$target) {

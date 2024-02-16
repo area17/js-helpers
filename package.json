@@ -1,8 +1,10 @@
 {
   "name": "@area17/a17-helpers",
-  "version": "3.2.6",
+  "version": "3.3.0",
+  "type": "module",
   "description": "A js helper package",
   "scripts": {
+    "types": "rm -f src/*.d.ts && tsc",
     "test": "jest --watchAll"
   },
   "repository": {
@@ -19,7 +21,9 @@
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "24.0.0",
     "jsdom-global": "^3.0.2",
-    "regenerator-runtime": "^0.14.1"
+    "regenerator-runtime": "^0.14.1",
+    "@types/node": "^20.11.19",
+    "typescript": "^5.3.3"
   },
   "jest": {
     "testEnvironment": "jsdom",

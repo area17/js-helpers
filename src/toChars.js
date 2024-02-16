@@ -62,7 +62,7 @@ const reHasUnicode = RegExp(`[${unicodeRange.join('')}]`)
  *
  * @private
  * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
+ * @returns {string[]} Returns the converted array.
  */
 function asciiToArray(string) {
   return string.split('')
@@ -84,7 +84,7 @@ function hasUnicode(string) {
  *
  * @private
  * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
+ * @returns {string[]} Returns the converted array.
  */
 function unicodeToArray(string) {
   return string.match(reUnicode) || []
@@ -95,7 +95,7 @@ function unicodeToArray(string) {
  *
  * @private
  * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
+ * @returns {string[]} Returns the converted array.
  */
 export function stringToArray(string) {
   return hasUnicode(string) ? unicodeToArray(string) : asciiToArray(string)
@@ -128,7 +128,7 @@ function toString(value) {
  *
  * @param {string} [string=''] The string to split.
  * @param {RegExp|string} [separator=''] The separator pattern to split by.
- * @returns {Array} Returns the string segments.
+ * @returns {string[]} Returns the string segments.
  * @example
  * toChars('foo');
  * // => ['f', 'o', 'o']
