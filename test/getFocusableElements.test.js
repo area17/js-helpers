@@ -1,4 +1,4 @@
-import getFocusableElements from './../src/getFocusableElements';
+import getFocusableElements from './../src/getFocusableElements.js';
 
 function createMockEl(tag, width, height, styles) {
     const el = document.createElement(tag);

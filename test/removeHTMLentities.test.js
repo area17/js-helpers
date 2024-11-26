@@ -1,4 +1,4 @@
-import removeHTMLentities from './../src/removeHTMLentities';
+import removeHTMLentities from './../src/removeHTMLentities.js';
 
 describe('removeHTMLentities utility', () => {
     it('exists', () => {

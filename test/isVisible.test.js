@@ -1,4 +1,4 @@
-import isVisible from './../src/isVisible';
+import isVisible from './../src/isVisible.js';
 
 function createMockEl(tag, width, height, styles) {
     const el = document.createElement(tag);

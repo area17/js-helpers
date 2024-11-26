@@ -1,4 +1,4 @@
-import getOffset from './../src/getOffset';
+import getOffset from './../src/getOffset.js';
 
 describe('getOffset utility', () => {
   it('exists', () => {

@@ -1,4 +1,4 @@
-import listeners from './../src/listeners';
+import listeners from './../src/listeners.js';
 
 describe('listeners utility', () => {
     it('exists', () => {

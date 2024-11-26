@@ -1,4 +1,4 @@
-import replaceAccentedCharacters from './../src/replaceAccentedCharacters';
+import replaceAccentedCharacters from './../src/replaceAccentedCharacters.js';
 
 describe('replaceAccentedCharacters utility', () => {
     it('exists', () => {

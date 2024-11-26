@@ -1,4 +1,4 @@
-import ajaxRequest from './../src/ajaxRequest';
+import ajaxRequest from './../src/ajaxRequest.js';
 
 describe('ajaxRequest', () => {
   it('exists', () => {

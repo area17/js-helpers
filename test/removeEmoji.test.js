@@ -1,4 +1,4 @@
-import removeEmoji from './../src/removeEmoji';
+import removeEmoji from './../src/removeEmoji.js';
 
 describe('removeEmoji utility', () => {
     it('exists', () => {

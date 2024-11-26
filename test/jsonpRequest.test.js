@@ -1,4 +1,4 @@
-import jsonpRequest from './../src/jsonpRequest';
+import jsonpRequest from './../src/jsonpRequest.js';
 
 describe('jsonpRequest', () => {
   it('exists', () => {

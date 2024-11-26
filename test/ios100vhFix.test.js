@@ -1,4 +1,4 @@
-import ios100vhFix from './../src/ios100vhFix';
+import ios100vhFix from './../src/ios100vhFix.js';
 
 describe('ios100vhFix utility', () => {
 

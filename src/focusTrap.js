@@ -1,5 +1,5 @@
-import getFocusableElements from './getFocusableElements';
-import setFocusOnTarget from './setFocusOnTarget';
+import getFocusableElements from './getFocusableElements.js';
+import setFocusOnTarget from './setFocusOnTarget.js';
 
 /**
  * focusTrap : Traps keyboard tabbing focus within a node

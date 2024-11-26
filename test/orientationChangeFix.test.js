@@ -1,4 +1,4 @@
-import orientationChangeFix from './../src/orientationChangeFix';
+import orientationChangeFix from './../src/orientationChangeFix.js';
 
 jest.useFakeTimers();
 

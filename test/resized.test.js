@@ -1,4 +1,4 @@
-import resized from './../src/resized';
+import resized from './../src/resized.js';
 
 jest.useFakeTimers();
 

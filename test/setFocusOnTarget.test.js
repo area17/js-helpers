@@ -1,4 +1,4 @@
-import setFocusOnTarget from './../src/setFocusOnTarget';
+import setFocusOnTarget from './../src/setFocusOnTarget.js';
 describe('setFocusOnTarget', () => {
   it('exists', () => {
     expect(typeof setFocusOnTarget).toBe('function');

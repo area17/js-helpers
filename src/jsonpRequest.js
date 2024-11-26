@@ -1,4 +1,4 @@
-import queryStringHandler from './queryStringHandler';
+import queryStringHandler from './queryStringHandler.js';
 
 /**
  * isBreakpoint : Performs jsonp requests - by writing script tags into the page and setting up the callback function to run on success

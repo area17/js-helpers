@@ -1,4 +1,4 @@
-import isBreakpoint from './../src/isBreakpoint';
+import isBreakpoint from './../src/isBreakpoint.js';
 
 function setup(bp) {
   const styles = document.createElement('style');

@@ -1,4 +1,4 @@
-import queryStringHandler from './queryStringHandler';
+import queryStringHandler from './queryStringHandler.js';
 
 /**
  * ajaxRequest : Performs ajax requests

@@ -1,4 +1,4 @@
-import extend from './../src/extend';
+import extend from './../src/extend.js';
 
 describe('extend utility', () => {
   it('extend exists', () => {

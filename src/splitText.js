@@ -1,4 +1,4 @@
-import toChars from './toChars'
+import toChars from './toChars.js';
 
 // SplitText : Split text by Chars, Words or Lines
 // To use with animation library to animate each chars, words or lines within a given element.

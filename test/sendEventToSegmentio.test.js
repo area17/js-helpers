@@ -1,4 +1,4 @@
-import sendEventToSegmentio from './../src/sendEventToSegmentio';
+import sendEventToSegmentio from './../src/sendEventToSegmentio.js';
 
 describe('sendEventToSegmentio', () => {
   it('exists', () => {

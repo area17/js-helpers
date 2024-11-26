@@ -1,4 +1,4 @@
-import isVisible from './isVisible';
+import isVisible from './isVisible.js';
 
 function focusableFilter($el) {
   // Doc: https://github.com/area17/js-helpers/wiki/focusableFilter

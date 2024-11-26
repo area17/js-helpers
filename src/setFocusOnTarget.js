@@ -1,4 +1,4 @@
-import getFocusableElements from './getFocusableElements';
+import getFocusableElements from './getFocusableElements.js';
 
 /**
  * setFocusOnTarget : move focus on the node

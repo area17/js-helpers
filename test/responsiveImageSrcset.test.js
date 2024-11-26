@@ -1,4 +1,4 @@
-import responsiveImageSrcset from './../src/responsiveImageSrcset';
+import responsiveImageSrcset from './../src/responsiveImageSrcset.js';
 
 const baseImgUrl = 'https://area17.imgix.net/0000/image.jpg';
 const complexImgUrl = 'https://area17.imgix.net/0000/image.jpg?px=10&q=90&w=1480';

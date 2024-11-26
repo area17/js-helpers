@@ -1,7 +1,5 @@
 # A17 JS Helpers
 
-[![https://nodei.co/npm/@area17/a17-helpers.png?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/@area17/a17-helpers.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/@area17/a17-helpers)
-
 ## Introduction
 
 A collection of documented vanilla JS widgets.

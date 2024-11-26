@@ -1,4 +1,4 @@
-import cookieHandler from './../src/cookieHandler';
+import cookieHandler from './../src/cookieHandler.js';
 describe('cookieHandler', () => {
   it('exists', () => {
     expect(typeof cookieHandler).toBe('object');

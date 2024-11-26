@@ -1,4 +1,4 @@
-import generateCsv from './../src/generateCsv';
+import generateCsv from './../src/generateCsv.js';
 
 describe('generateCsv utility', () => {
     it('exists', () => {

@@ -1,4 +1,4 @@
-import SplitText from './../src/splitText';
+import SplitText from './../src/splitText.js';
 describe('splitText', () => {
   it('exists', () => {
     expect(typeof SplitText).toBe('function');

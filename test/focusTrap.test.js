@@ -1,4 +1,4 @@
-import focusTrap from './../src/focusTrap';
+import focusTrap from './../src/focusTrap.js';
 
 jest.useFakeTimers();
 

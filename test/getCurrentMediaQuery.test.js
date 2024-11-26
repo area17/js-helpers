@@ -1,4 +1,4 @@
-import getCurrentMediaQuery from './../src/getCurrentMediaQuery';
+import getCurrentMediaQuery from './../src/getCurrentMediaQuery.js';
 
 describe('getCurrentMediaQuery utility', () => {
 

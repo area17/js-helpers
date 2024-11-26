@@ -1,4 +1,4 @@
-import getCurrentMediaQuery from './getCurrentMediaQuery';
+import getCurrentMediaQuery from './getCurrentMediaQuery.js';
 
 /**
  * isBreakpoint : Checks if the current breakpoint matches the passed breakpoint. It supports querying with or without +/- modifiers.

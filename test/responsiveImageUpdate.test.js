@@ -1,4 +1,4 @@
-import responsiveImageUpdate from './../src/responsiveImageUpdate';
+import responsiveImageUpdate from './../src/responsiveImageUpdate.js';
 
 describe('responsiveImageUpdate', () => {
   it('exists', () => {

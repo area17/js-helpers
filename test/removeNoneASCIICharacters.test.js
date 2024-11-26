@@ -1,4 +1,4 @@
-import removeNoneASCIICharacters from './../src/removeNoneASCIICharacters';
+import removeNoneASCIICharacters from './../src/removeNoneASCIICharacters.js';
 
 describe('removeNoneASCIICharacters utility', () => {
     it('exists', () => {

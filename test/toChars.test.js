@@ -1,4 +1,4 @@
-import toChars from './../src/toChars';
+import toChars from './../src/toChars.js';
 
 describe('utils.toChars(value)', () => {
   it(`Splits a string into an array of characters`, () => {

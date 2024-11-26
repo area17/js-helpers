@@ -1,4 +1,4 @@
-import queryStringHandler from './../src/queryStringHandler';
+import queryStringHandler from './../src/queryStringHandler.js';
 
 const setUpHtml = () => {
   const div = document.createElement('div');

@@ -1,4 +1,4 @@
-import removeNonePrintableCharacters from './../src/removeNonePrintableCharacters';
+import removeNonePrintableCharacters from './../src/removeNonePrintableCharacters.js';
 
 describe('removeNonePrintableCharacters utility', () => {
     it('exists', () => {

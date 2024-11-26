@@ -1,4 +1,4 @@
-import nl2br from './../src/nl2br';
+import nl2br from './../src/nl2br.js';
 
 describe('nl2br utility', () => {
     it('exists', () => {

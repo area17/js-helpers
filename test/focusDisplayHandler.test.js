@@ -1,4 +1,4 @@
-import focusDisplayHandler from './../src/focusDisplayHandler';
+import focusDisplayHandler from './../src/focusDisplayHandler.js';
 
 describe('focusDisplayHandler utility', () => {
   it('focusDisplayHandler exists', () => {

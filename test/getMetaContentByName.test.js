@@ -1,4 +1,4 @@
-import getMetaContentByName from './../src/getMetaContentByName';
+import getMetaContentByName from './../src/getMetaContentByName.js';
 
 describe('getMetaContentByName utility', () => {
 

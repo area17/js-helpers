@@ -1,4 +1,4 @@
-import queryStringHandler from './queryStringHandler';
+import queryStringHandler from './queryStringHandler.js';
 
 /**
  * getUrlParameterByName : Returns value of a parameter from a query string

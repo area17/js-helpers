@@ -1,4 +1,4 @@
-import responsiveImageSizes from './../src/responsiveImageSizes';
+import responsiveImageSizes from './../src/responsiveImageSizes.js';
 
 const feConfig = {
   "structure": {

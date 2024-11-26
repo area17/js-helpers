@@ -1,4 +1,4 @@
-import copyTextToClipboard from './../src/copyTextToClipboard';
+import copyTextToClipboard from './../src/copyTextToClipboard.js';
 
 // ------- Mock -------
 //Solution for mocking clipboard so it can be tested credit: https://stackoverflow.com/questions/62351935/how-to-mock-navigator-clipboard-writetext-in-jest

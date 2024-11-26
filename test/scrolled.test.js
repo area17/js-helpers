@@ -1,4 +1,4 @@
-import scrolled from './../src/scrolled';
+import scrolled from './../src/scrolled.js';
 const realDispatchEvent = document.dispatchEvent;
 document.dispatchEvent = jest.fn();
 

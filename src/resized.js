@@ -1,4 +1,4 @@
-import getCurrentMediaQuery from './getCurrentMediaQuery';
+import getCurrentMediaQuery from './getCurrentMediaQuery.js';
 
 /**
  * resized : Debounces window resize, also checks if current media query has changed
